@@ -1,6 +1,6 @@
 import logo from "@/images/logo.png";
 import Image from "next/image";
-import { FaTelegram, FaTwitter, FaLocationDot } from "react-icons/fa";
+import { FaTelegram, FaTwitter } from "react-icons/fa";
 import { MdEmail, MdLocationPin } from "react-icons/md";
 
 function Footer() {
