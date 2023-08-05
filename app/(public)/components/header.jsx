@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Nav from "./nav";
 import logo from "@/images/logo.png";
+import Link from "next/link";
 
 function Header() {
 	return (
@@ -25,7 +26,11 @@ function Header() {
 					</svg>
 				</label>
 			</div>
-			<div className="flex-1 flex px-2 mx-2">
+
+			<Link
+				className="flex-1 flex px-2 mx-2"
+				href="/"
+			>
 				<div className="w-5 h-5 relative">
 					<Image
 						src={logo}
@@ -35,7 +40,8 @@ function Header() {
 					/>
 				</div>
 				<div>Clatras</div>
-			</div>
+			</Link>
+
 			<div className="flex-none hidden lg:block">
 				<ul className="menu menu-horizontal">
 					{/* Navbar menu content here */}
