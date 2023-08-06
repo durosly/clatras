@@ -24,7 +24,7 @@ export default function Home() {
 						<div>
 							<Link
 								className="btn btn-sm md:btn-md md:btn-wide btn-primary rounded-full"
-								href="/nice"
+								href="/login"
 							>
 								Join US
 							</Link>
@@ -144,7 +144,7 @@ export default function Home() {
 						</div>
 						<Link
 							className="btn btn-outline"
-							href="/nice"
+							href="/login"
 						>
 							Get Started
 							<span className="text-lg">
