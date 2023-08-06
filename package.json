@@ -20,6 +20,7 @@
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
     "next": "13.4.12",
+    "next-auth": "^4.22.3",
     "node-appwrite": "^9.0.0",
     "phone": "^3.1.37",
     "postcss": "8.4.27",
