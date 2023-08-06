@@ -4,13 +4,13 @@ function Nav() {
 	return (
 		<>
 			<li>
-				<details>
+				<details className="z-50">
 					<summary>Services</summary>
 					<ul>
 						<li>
 							<Link
 								className="whitespace-nowrap"
-								href="/nice"
+								href="/services/bitcoin"
 							>
 								Bitcoin
 							</Link>
@@ -18,7 +18,7 @@ function Nav() {
 						<li>
 							<Link
 								className="whitespace-nowrap"
-								href="/nice"
+								href="/services/zelle"
 							>
 								Zelle
 							</Link>
@@ -61,7 +61,7 @@ function Nav() {
 			<li>
 				<Link
 					className="whitespace-nowrap"
-					href="/nice"
+					href="/about-us"
 				>
 					About
 				</Link>
@@ -69,7 +69,7 @@ function Nav() {
 			<li>
 				<Link
 					className="whitespace-nowrap"
-					href="/nice"
+					href="/terms"
 				>
 					Terms
 				</Link>
@@ -77,7 +77,7 @@ function Nav() {
 			<li>
 				<Link
 					className="whitespace-nowrap"
-					href="/nice"
+					href="/contact-us"
 				>
 					Contact
 				</Link>
@@ -85,7 +85,7 @@ function Nav() {
 			<li className="">
 				<Link
 					className="bg-primary"
-					href="/nice"
+					href="/login"
 				>
 					Log in
 				</Link>
