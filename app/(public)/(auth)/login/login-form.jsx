@@ -1,8 +1,10 @@
 "use client";
-import { signIn } from "next-auth/react";
+import { appwriteClient } from "@/lib/client";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { useRouter } from "next/navigation";
+import { setCookie } from "cookies-next";
 
 const initialState = {
 	email: "",
@@ -13,6 +15,7 @@ function LoginForm() {
 	const [data, setData] = useState(initialState);
 	const [isLoading, setIsLoading] = useState(false);
 	const [isVisible, setIsVisible] = useState(false);
+	const router = useRouter();
 
 	async function handleSubmit(e) {
 		e.preventDefault();
@@ -21,19 +24,29 @@ function LoginForm() {
 		try {
 			setIsLoading(true);
 
-			const res = await signIn("credentials", {
-				redirect: false,
-				...data,
-			});
+			const account = await appwriteClient.loginUser(
+				data.email,
+				data.password
+			);
 
-			if (res?.ok && !res.error) {
+			if (account) {
 				toast.success("Login successful", { id: toastId });
+
+				const token = await appwriteClient.getJWT();
+				// console.log(token);
+				setCookie(process.env.NEXT_PUBLIC_COOKIE_AUTH_KEY, token.jwt, {
+					path: "/user",
+					domain: "localhost",
+				});
+				// console.log(account);
+				router.push("/user");
 				setData({ ...initialState });
 			} else {
 				throw new Error(res?.error);
 			}
 		} catch (error) {
-			let message = "Something went wrong";
+			console.log(error);
+			let message = "Invalid credentials";
 
 			toast.error(message, { id: toastId });
 			setIsLoading(false);
@@ -62,7 +75,7 @@ function LoginForm() {
 					<span className="label-text">Password</span>
 				</label>
 				<input
-					type="password"
+					type={isVisible ? "text" : "password"}
 					placeholder="Password..."
 					className="input input-bordered w-full"
 					name="password"
