@@ -6,13 +6,13 @@ import Nav from "./nav";
 
 function Wrapper({ children }) {
 	return (
-		<div className="drawer">
+		<div className="drawer block">
 			<input
 				id="my-drawer-3"
 				type="checkbox"
 				className="drawer-toggle"
 			/>
-			<div className="drawer-content flex flex-col">
+			<div className="drawer-content">
 				{/* Navbar */}
 				<Header />
 				{/* Page content here */}
