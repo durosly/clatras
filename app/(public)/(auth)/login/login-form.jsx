@@ -42,7 +42,7 @@ function LoginForm() {
 				router.push("/user");
 				setData({ ...initialState });
 			} else {
-				throw new Error(res?.error);
+				throw new Error("invalid credentials");
 			}
 		} catch (error) {
 			console.log(error);
