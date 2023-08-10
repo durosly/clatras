@@ -50,6 +50,8 @@ export async function POST(request) {
 			);
 		}
 
+		clientServer.setKey(process.env.APPWRITE_API_KEY);
+
 		const users = new Users(clientServer);
 
 		const response = await users.createBcryptUser(
