@@ -32,12 +32,17 @@ function LoginForm() {
 			if (account) {
 				toast.success("Login successful", { id: toastId });
 
-				const token = await appwriteClient.getJWT();
-				// console.log(token);
-				setCookie(process.env.NEXT_PUBLIC_COOKIE_AUTH_KEY, token.jwt, {
-					path: "/user",
-					domain: "localhost",
-				});
+				// const token = await appwriteClient.getJWT();
+				// // console.log(token);
+				setCookie(
+					process.env.NEXT_PUBLIC_COOKIE_AUTH_KEY,
+					account.userId,
+					{
+						path: "/user",
+						domain: "localhost",
+						maxAge: 60 * 60 * 24,
+					}
+				);
 				// console.log(account);
 				router.push("/user");
 				setData({ ...initialState });
