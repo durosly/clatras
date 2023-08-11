@@ -1,4 +1,5 @@
 import clientServer from "@/lib/client-server";
+import { calculateReturns } from "@/lib/utils";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { Databases, ID } from "node-appwrite";
@@ -29,6 +30,10 @@ async function createNewTransaction(request) {
 		if (type === "crypto") {
 			collectionId =
 				process.env.NEXT_PUBLIC_APPRWRITE_CRYPTO_INFO_COLLECTION_ID;
+		} else if (type === "account") {
+			collectionId =
+				process.env
+					.NEXT_PUBLIC_APPRWRITE_EXCHANGE_ACCOUNT_INFO_COLLECTION_ID;
 		}
 
 		const doc = await databases.getDocument(
@@ -37,18 +42,28 @@ async function createNewTransaction(request) {
 			doc_id
 		);
 
-		let description = "Exchange";
+		let description = "";
 		let address = "nil";
 		let item_name = doc.name;
 		let rate = 1;
 		let returns = 1;
+		let email = "support@clatras.com";
+		let tag = "";
+		let phonenumber = "";
 
 		if (type === "crypto") {
-			description += `: ${doc.name}`;
+			description = `Exchange: ${doc.name}`;
 			address = doc.address;
 			rate = doc.rate;
 
-			returns = amt * doc.rate;
+			returns = calculateReturns(type, amt, doc.rate);
+		} else if (type === "account") {
+			description = `Sent funds to ${doc.name}`;
+			email = doc?.email || "support@clatras.com";
+			tag = doc?.tag || "";
+			phonenumber = doc?.phone || "";
+			rate = doc.fee;
+			returns = calculateReturns(type, amt, doc.fee);
 		}
 
 		const data = {
@@ -61,6 +76,9 @@ async function createNewTransaction(request) {
 			rate,
 			returns,
 			status: "pending",
+			email,
+			tag,
+			phonenumber,
 		};
 
 		await databases.createDocument(
