@@ -38,7 +38,7 @@ function LoginForm() {
 					process.env.NEXT_PUBLIC_COOKIE_AUTH_KEY,
 					account.userId,
 					{
-						path: "/user",
+						path: "/",
 						domain: "localhost",
 						maxAge: 60 * 60 * 24,
 					}
