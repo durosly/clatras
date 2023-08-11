@@ -8,15 +8,22 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import ExchangeSuccessModal from "./modal";
 import axios from "axios";
+import { calculateReturns as calReturns } from "@/lib/utils";
 
 function ExchangeDisplay({ type, document }) {
 	const [returns, setReturns] = useState(null);
 	const [step, setStep] = useState(1);
 	const [amt, setAmt] = useState();
 	function calculateReturns() {
-		if (type === "crypto") {
-			setReturns((document?.rate * amt).toFixed(2));
-		}
+		let rate =
+			type === "crypto"
+				? document.rate
+				: type === "account"
+				? document.fee
+				: 1;
+		const returns = calReturns(type, amt, rate);
+
+		setReturns(returns);
 	}
 
 	function nextStep() {
@@ -94,6 +101,13 @@ function StepOne({
 							<span>Rate</span>
 							<span className="font-bold">
 								&#8358; {commaNumber(document.rate)}
+							</span>
+						</div>
+					) : type === "account" ? (
+						<div className="flex justify-between gap-2">
+							<span>Charge</span>
+							<span className="font-bold">
+								&#8358; {commaNumber(document.fee)}
 							</span>
 						</div>
 					) : (
@@ -181,8 +195,11 @@ function StepTwo({ type, document, returns, amt, prevStep, showSuccessModal }) {
 			<div>
 				<div className="flex justify-between gap-2">
 					<span>Sending</span>
+
 					<span className="uppercase">
-						{amt} {type === "crypto" ? document.abbr : "nil"}
+						{type !== "crypto" ? <span>&#8358;</span> : null}
+						{commaNumber(Number(amt).toFixed(2))}{" "}
+						{type === "crypto" ? document.abbr : null}
 					</span>
 				</div>
 				<div className="flex justify-between gap-2">
@@ -210,6 +227,27 @@ function StepTwo({ type, document, returns, amt, prevStep, showSuccessModal }) {
 							</CopyToClipboard>
 						</div>
 					</>
+				) : type === "account" ? (
+					<>
+						{document?.tag && (
+							<div className="flex gap-2 justify-between flex-wrap items-center">
+								<p className="text-sm">Tag:</p>
+								<p className="text-xs">{document.tag}</p>
+							</div>
+						)}
+						{document?.email && !!document.email && (
+							<div className="flex gap-2 justify-between flex-wrap items-center">
+								<p className="text-sm">E-mail:</p>
+								<p className="text-xs">{document.email}</p>
+							</div>
+						)}
+						{document?.phone && !!document.phone && (
+							<div className="flex gap-2 justify-between flex-wrap items-center">
+								<p className="text-sm">Phonenumber:</p>
+								<p className="text-xs">{document.phone}</p>
+							</div>
+						)}
+					</>
 				) : null}
 			</div>
 			<div>
@@ -221,7 +259,9 @@ function StepTwo({ type, document, returns, amt, prevStep, showSuccessModal }) {
 							width: "100%",
 						}}
 						size={256}
-						value={type === "crypto" ? document.address : "nil"}
+						value={
+							type === "crypto" ? document.address : document.tag
+						}
 					/>
 				</div>
 			</div>
@@ -248,7 +288,7 @@ function StepTwo({ type, document, returns, amt, prevStep, showSuccessModal }) {
 				</p>
 				<div className=" mt-2">
 					<button
-						className="btn btn-ghost"
+						className=" flex gap-2 items-center"
 						onClick={prevStep}
 					>
 						<AiOutlineArrowLeft />
