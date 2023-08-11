@@ -18,6 +18,11 @@ async function ExchangeTypePage({ params: { type } }) {
 		collection_id =
 			process.env.NEXT_PUBLIC_APPRWRITE_CRYPTO_INFO_COLLECTION_ID;
 		doc_style = "crypto";
+	} else if (type === "cashapp" || type === "zelle") {
+		doc_style = "account";
+		collection_id =
+			process.env
+				.NEXT_PUBLIC_APPRWRITE_EXCHANGE_ACCOUNT_INFO_COLLECTION_ID;
 	}
 
 	const docs = await database.listDocuments(database_id, collection_id, [
