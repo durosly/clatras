@@ -52,7 +52,7 @@ async function createNewTransaction(request) {
 		let phonenumber = "";
 
 		if (type === "crypto") {
-			description = `Exchange: ${doc.name}`;
+			description = `Exchange: ${doc.name} ${doc?.network || ""}`;
 			address = doc.address;
 			rate = doc.rate;
 
