@@ -23,7 +23,7 @@ async function ExchangeTypePage({ params: { type } }) {
 	const docs = await database.listDocuments(database_id, collection_id, [
 		Query.equal("abbr", type),
 	]);
-	console.log(docs);
+	// console.log(docs);
 
 	if (docs.total < 1) {
 		notFound();
