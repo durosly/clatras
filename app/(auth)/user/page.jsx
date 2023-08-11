@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import Link from "next/link";
 import { TbArrowsExchange, TbCalendarDown, TbMathPi } from "react-icons/tb";
 import { FaBitcoin } from "react-icons/fa";
@@ -6,17 +5,9 @@ import { RiSecurePaymentLine } from "react-icons/ri";
 import { SiCashapp, SiZelle } from "react-icons/si";
 import { AiOutlineGooglePlus } from "react-icons/ai";
 import { BsCartPlus } from "react-icons/bs";
-import { HiXMark } from "react-icons/hi2";
-import getActiveUser from "../lib/get-user";
+import ListItemContainer from "./components/list-item-container";
 
 async function UserHomePage() {
-	// let user = await getActiveUser();
-
-	// console.log(user);
-	// if (!user) {
-	// 	redirect("/login");
-	// }
-
 	return (
 		<div className="mx-5 sm:mx-10 py-5 space-y-4">
 			{/* <div className="alert flex gap-2">
@@ -134,29 +125,7 @@ async function UserHomePage() {
 									<th>Status</th>
 								</tr>
 							</thead>
-							<tbody>
-								{/* row 1 */}
-								<tr>
-									<th>1</th>
-									<td>Cy Ganderton</td>
-									<td>Quality Control Specialist</td>
-									<td>Blue</td>
-								</tr>
-								{/* row 2 */}
-								<tr>
-									<th>2</th>
-									<td>Hart Hagerty</td>
-									<td>Desktop Support Technician</td>
-									<td>Purple</td>
-								</tr>
-								{/* row 3 */}
-								<tr>
-									<th>3</th>
-									<td>Brice Swyre</td>
-									<td>Tax Accountant</td>
-									<td>Red</td>
-								</tr>
-							</tbody>
+							<ListItemContainer />
 						</table>
 					</div>
 				</div>
