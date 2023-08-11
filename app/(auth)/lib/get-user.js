@@ -11,7 +11,7 @@ async function getActiveUser() {
 
 		throw new Error("No session found");
 	} catch (error) {
-		console.log("error", error);
+		// console.log("error", error);
 		return null;
 	}
 }
