@@ -5,6 +5,17 @@ export async function middleware(request) {
 
 	console.log(token);
 	if (!token) {
+		if (request.nextUrl.pathname.startsWith("/api")) {
+			return new Response(
+				JSON.stringify({ status: false, message: "Invalid request" }),
+				{
+					status: 401,
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}
+			);
+		}
 		return NextResponse.redirect(new URL("/login", request.url));
 	}
 
@@ -16,7 +27,9 @@ export async function middleware(request) {
 	// if (request.nextUrl.pathname.startsWith('/dashboard')) {
 	//   return NextResponse.rewrite(new URL('/dashboard/user', request.url))
 	// }
-	console.log("middleware");
+	// console.log("middleware");
 }
 
-export const config = { matcher: ["/user/:path*", "/admin/:path*"] };
+export const config = {
+	matcher: ["/user/:path*", "/admin/:path*", "/api/:path"],
+};
