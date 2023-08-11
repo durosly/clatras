@@ -18,8 +18,6 @@ async function ListItemContainer() {
 		]
 	);
 
-	console.log(documents);
-
 	return (
 		<tbody>
 			{documents.documents.map((d, i) => (
