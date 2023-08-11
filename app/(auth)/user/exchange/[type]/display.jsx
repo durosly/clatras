@@ -7,6 +7,7 @@ import QRCode from "react-qr-code";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import ExchangeSuccessModal from "./modal";
+import axios from "axios";
 
 function ExchangeDisplay({ type, document }) {
 	const [returns, setReturns] = useState(null);
@@ -153,10 +154,26 @@ function StepTwo({ type, document, returns, amt, prevStep, showSuccessModal }) {
 	const [isLoading, setIsLoading] = useState(false);
 
 	async function handleSubmit() {
+		if (isLoading) return;
+		setIsLoading(true);
 		try {
-			showSuccessModal();
+			const response = await axios.post("/api/transactions/create", {
+				type,
+				doc_id: document.$id,
+				amt,
+			});
+			// console.log(response);
+			if (response.data.status) {
+				showSuccessModal();
+				toast.success("success");
+			} else {
+				throw new Error(response.data.message);
+			}
 		} catch (error) {
+			console.log(error);
 			toast.error(error.message);
+		} finally {
+			setIsLoading(false);
 		}
 	}
 	return (
