@@ -18,7 +18,7 @@ function ListItem({ doc, count }) {
 		<>
 			<tr>
 				<th>{count}</th>
-				<td>{doc.description}</td>
+				<td className="whitespace-nowrap">{doc.description}</td>
 				<td className="space-x-2">
 					{doc.type === "account" && <span>&#8358;</span>}
 					<span>{commaNumber(doc.amount)}</span>
@@ -32,6 +32,13 @@ function ListItem({ doc, count }) {
 					<button onClick={() => setShowDetails(true)}>
 						<AiFillEye />
 					</button>
+				</td>
+				<td className="whitespace-nowrap">
+					{new Intl.DateTimeFormat("en-GB", {
+						dateStyle: "full",
+						timeStyle: "long",
+						hour12: true,
+					}).format(new Date(doc.$createdAt))}
 				</td>
 			</tr>
 			{showDetails &&
