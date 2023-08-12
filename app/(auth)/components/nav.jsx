@@ -1,16 +1,14 @@
+import Link from "next/link";
 import LogoutButton from "./logout-btn";
 
 function Nav() {
 	return (
 		<>
 			<li>
-				<a className="justify-between">
-					Profile
-					<span className="badge">New</span>
-				</a>
+				<Link href="/user/profile">Profile</Link>
 			</li>
 			<li>
-				<a>Settings</a>
+				<Link href="/user/transactions">History</Link>
 			</li>
 			<li>
 				<LogoutButton />
