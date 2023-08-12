@@ -14,7 +14,7 @@ async function ListItemContainer() {
 		[
 			Query.equal("userId", userId.value),
 			Query.limit(5),
-			Query.orderAsc("$createdAt"),
+			Query.orderDesc("$createdAt"),
 		]
 	);
 
