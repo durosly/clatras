@@ -25,12 +25,6 @@ function ExchangeSuccessModal() {
 						</div>
 						<div className="space-y-2">
 							<Link
-								href="/nice"
-								className="btn btn-sm btn-block btn-primary"
-							>
-								Transaction Status
-							</Link>
-							<Link
 								href="/user"
 								className="btn btn-sm btn-block"
 							>
