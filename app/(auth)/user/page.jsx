@@ -123,10 +123,19 @@ async function UserHomePage() {
 									<th>Summary</th>
 									<th>Amount</th>
 									<th>Status</th>
+									<th>Date/Time</th>
 								</tr>
 							</thead>
 							<ListItemContainer />
 						</table>
+					</div>
+					<div className="text-right">
+						<Link
+							className="link-hover"
+							href="/user/transactions"
+						>
+							See all &rarr;
+						</Link>
 					</div>
 				</div>
 			</div>
