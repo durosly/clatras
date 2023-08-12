@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { AiOutlineEye } from "react-icons/ai";
-import LoginForm from "./login-form";
+import LoginForm from "./components/login-form";
 
 function LoginPage() {
 	return (
