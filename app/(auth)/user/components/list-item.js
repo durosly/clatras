@@ -23,6 +23,7 @@ function ListItem({ doc, count }) {
 					{doc.type === "account" && <span>&#8358;</span>}
 					<span>{commaNumber(doc.amount)}</span>
 					{doc.type === "crypto" && <span>{doc.item_name}</span>}
+					{doc.type === "g-voice" && <span>{doc.item_name}</span>}
 				</td>
 				<td className="flex items-center gap-2">
 					<span className={`capitalize badge p-3 text-xs ${type}`}>
@@ -84,10 +85,17 @@ function ListItem({ doc, count }) {
 									</li>
 									<li className="flex flex-wrap gap-2 justify-between border-b py-3 last:border-b-0">
 										<span>Returns</span>
-										<span>
-											<span>&#8358;</span>
-											{commaNumber(doc.returns)}
-										</span>
+										{doc.type === "g-voice" ? (
+											<span>
+												{commaNumber(doc.amount)}{" "}
+												Account{doc.amount > 1 && "s"}
+											</span>
+										) : (
+											<span>
+												<span>&#8358;</span>
+												{commaNumber(doc.returns)}
+											</span>
+										)}
 									</li>
 								</ul>
 								<div className="divider">Payment details</div>
@@ -104,6 +112,34 @@ function ListItem({ doc, count }) {
 												<li className="flex flex-wrap gap-2 justify-between">
 													<span>Tag</span>
 													<span>{doc.tag}</span>
+												</li>
+											)}
+										</>
+									)}
+									{doc.type === "g-voice" && (
+										<>
+											{doc?.account_bank && (
+												<li className="flex flex-wrap gap-2 justify-between">
+													<span>Bank name</span>
+													<span>
+														{doc.account_bank}
+													</span>
+												</li>
+											)}
+											{doc?.account_number && (
+												<li className="flex flex-wrap gap-2 justify-between">
+													<span>Account Number</span>
+													<span>
+														{doc.account_number}
+													</span>
+												</li>
+											)}
+											{doc?.account_name && (
+												<li className="flex flex-wrap gap-2 justify-between">
+													<span>Account Name</span>
+													<span>
+														{doc.account_name}
+													</span>
 												</li>
 											)}
 										</>
