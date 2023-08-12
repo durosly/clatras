@@ -34,6 +34,9 @@ async function createNewTransaction(request) {
 			collectionId =
 				process.env
 					.NEXT_PUBLIC_APPRWRITE_EXCHANGE_ACCOUNT_INFO_COLLECTION_ID;
+		} else if (type === "g-voice") {
+			collectionId =
+				process.env.NEXT_PUBLIC_APPRWRITE_G_VOICE_COLLECTION_ID;
 		}
 
 		const doc = await databases.getDocument(
@@ -64,6 +67,9 @@ async function createNewTransaction(request) {
 			phonenumber = doc?.phone || "";
 			rate = doc.fee;
 			returns = calculateReturns(type, amt, doc.fee);
+		} else if (type === "g-voice") {
+			description = `Purchase google voice accounts`;
+			rate = doc.cost;
 		}
 
 		const data = {
@@ -80,6 +86,13 @@ async function createNewTransaction(request) {
 			tag,
 			phonenumber,
 		};
+
+		if (type === "g-voice") {
+			data.account_name = doc.account_name;
+			data.account_bank = doc.bank_name;
+
+			data.account_number = doc.account_number;
+		}
 
 		await databases.createDocument(
 			databaseId,
