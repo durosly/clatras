@@ -20,7 +20,7 @@ function Wrapper({ children }) {
 					{children}
 
 					{/* footer */}
-					<Footer />
+					{/* <Footer /> */}
 				</div>
 				<div className="drawer-side">
 					<label
