@@ -100,7 +100,7 @@ async function UserHomePage() {
 					<div className="mt-4 space-x-2">
 						<Link
 							className="btn btn-sm btn-outline"
-							href="/nice"
+							href="/user/google-voice"
 						>
 							<BsCartPlus />
 							<span>Purchase</span>
