@@ -2,7 +2,7 @@ import Image from "next/image";
 import Nav from "./nav";
 import logo from "@/images/logo.png";
 import Link from "next/link";
-import LogoutButton from "./logout-btn";
+import ProfileImgDisplay from "../user/profile/components/profile-img-display";
 
 function Header() {
 	return (
@@ -58,9 +58,7 @@ function Header() {
 						tabIndex={0}
 						className="btn btn-ghost btn-circle avatar"
 					>
-						<div className="w-10 rounded-full">
-							<img src="https://picsum.photos/200" />
-						</div>
+						<ProfileImgDisplay />
 					</label>
 					<ul
 						tabIndex={0}
