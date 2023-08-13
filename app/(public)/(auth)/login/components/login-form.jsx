@@ -43,7 +43,7 @@ function LoginForm() {
 						maxAge: 60 * 60 * 24,
 					}
 				);
-				// console.log(account);
+
 				router.push("/user");
 				setData({ ...initialState });
 			} else {
