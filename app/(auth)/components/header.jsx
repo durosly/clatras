@@ -30,7 +30,7 @@ function Header() {
 				</div>
 
 				<Link
-					className="flex-1 flex px-2 mx-2"
+					className="flex-1 flex items-center gap-1 px-2 mx-2"
 					href="/user"
 				>
 					<div className="w-5 h-5 relative">
