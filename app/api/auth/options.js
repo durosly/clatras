@@ -2,6 +2,10 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { AppwriteServerClient } from "@/lib/client-server";
 
 export const authOptions = {
+	session: {
+		// Seconds - How long until an idle session expires and is no longer valid.
+		maxAge: 30 * 24 * 60 * 2, // 2 days
+	},
 	// Configure one or more authentication providers
 	providers: [
 		CredentialsProvider({
@@ -24,9 +28,7 @@ export const authOptions = {
 				return {
 					userId: account.$id,
 					name: account.name,
-					isAdmin: account.prefs?.isAdmin
-						? Boolean(account.prefs.isAdmin)
-						: false,
+					isAdmin: account.prefs?.isAdmin === "true" ? true : false,
 				};
 			},
 		}),
