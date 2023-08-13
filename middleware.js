@@ -1,34 +1,36 @@
 import { NextResponse } from "next/server";
+import { withAuth } from "next-auth/middleware";
 
-export async function middleware(request) {
-	const token = request.cookies.get(process.env.NEXT_PUBLIC_COOKIE_AUTH_KEY);
+async function middleware(request) {
+	const path = request.nextUrl.pathname;
+	const token = request.nextauth.token;
 
 	console.log(token);
-	if (!token) {
-		if (request.nextUrl.pathname.startsWith("/api")) {
-			return new Response(
-				JSON.stringify({ status: false, message: "Invalid request" }),
-				{
-					status: 401,
-					headers: {
-						"Content-Type": "application/json",
-					},
-				}
-			);
-		}
-		return NextResponse.redirect(new URL("/login", request.url));
+
+	if (path.startsWith("/admin") && !token?.isAdmin) {
+		return NextResponse.redirect(new URL("/user", request.url));
+	} else if (path.startsWith("/api/admin") && !token?.isAdmin) {
+		return new Response(
+			JSON.stringify({ status: false, message: "Unauthorized access" }),
+			{
+				status: 401,
+				headers: {
+					"Content-Type": "application/json",
+				},
+			}
+		);
 	}
-
-	// const account = clientServer
-	// if (request.nextUrl.pathname.startsWith('/about')) {
-	//   return NextResponse.rewrite(new URL('/about-2', request.url))
-	// }
-
-	// if (request.nextUrl.pathname.startsWith('/dashboard')) {
-	//   return NextResponse.rewrite(new URL('/dashboard/user', request.url))
-	// }
-	// console.log("middleware");
 }
+
+export default withAuth(
+	// `withAuth` augments your `Request` with the user's token.
+	middleware,
+	{
+		callbacks: {
+			authorized: ({ token }) => !!token,
+		},
+	}
+);
 
 export const config = {
 	matcher: ["/user/:path*", "/admin/:path*", "/api/:path"],
