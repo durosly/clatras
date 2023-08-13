@@ -5,6 +5,7 @@ import { toast } from "react-hot-toast";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { setCookie } from "cookies-next";
+import { signIn } from "next-auth/react";
 
 const initialState = {
 	email: "",
@@ -32,20 +33,19 @@ function LoginForm() {
 			if (account) {
 				toast.success("Login successful", { id: toastId });
 
-				// const token = await appwriteClient.getJWT();
-				// // console.log(token);
-				setCookie(
-					process.env.NEXT_PUBLIC_COOKIE_AUTH_KEY,
-					account.userId,
-					{
-						path: "/",
-						domain: "localhost",
-						maxAge: 60 * 60 * 24,
-					}
-				);
+				const token = await appwriteClient.getJWT();
+				const res = await signIn("credentials", {
+					redirect: false,
+					token: token?.jwt || null,
+				});
 
-				router.push("/user");
-				setData({ ...initialState });
+				if (res && res?.ok) {
+					router.push("/user");
+					setIsLoading(false);
+					// setData({ ...initialState });
+				} else {
+					throw new Error(res.error);
+				}
 			} else {
 				throw new Error("invalid credentials");
 			}
