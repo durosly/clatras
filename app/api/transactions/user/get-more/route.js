@@ -1,8 +1,7 @@
 import clientServer from "@/lib/client-server";
-import { calculateReturns } from "@/lib/utils";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { Databases, ID, Query } from "node-appwrite";
+import { Databases, Query } from "node-appwrite";
 
 async function getNextTransactions(request) {
 	try {
@@ -10,7 +9,6 @@ async function getNextTransactions(request) {
 		const lastId = searchParams.get("lastId");
 		const cookieStore = cookies();
 		const cookie = cookieStore.get(process.env.NEXT_PUBLIC_COOKIE_AUTH_KEY);
-		// console.log("server", cookie);
 		if (!cookie?.value) {
 			throw new Error("Invalid access");
 		}
