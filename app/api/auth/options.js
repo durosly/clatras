@@ -28,7 +28,7 @@ export const authOptions = {
 				return {
 					userId: account.$id,
 					name: account.name,
-					isAdmin: account.prefs?.isAdmin === "true" ? true : false,
+					isAdmin: account.prefs?.isAdmin === true ? true : false,
 				};
 			},
 		}),
