@@ -1,6 +1,5 @@
 import logo from "@/images/logo.png";
 import Image from "next/image";
-import Footer from "./footer";
 import Header from "./header";
 import Nav from "./nav";
 
