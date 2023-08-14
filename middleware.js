@@ -5,8 +5,6 @@ async function middleware(request) {
 	const path = request.nextUrl.pathname;
 	const token = request.nextauth.token;
 
-	console.log(token);
-
 	if (path.startsWith("/admin") && !token?.isAdmin) {
 		return NextResponse.redirect(new URL("/user", request.url));
 	} else if (path.startsWith("/api/admin") && !token?.isAdmin) {
@@ -19,6 +17,8 @@ async function middleware(request) {
 				},
 			}
 		);
+	} else if (path.startsWith("/user") && token?.isAdmin) {
+		return NextResponse.redirect(new URL("/admin", request.url));
 	}
 }
 
