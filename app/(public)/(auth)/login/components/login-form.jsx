@@ -4,7 +4,6 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useRouter } from "next/navigation";
-import { setCookie } from "cookies-next";
 import { signIn } from "next-auth/react";
 
 const initialState = {
@@ -31,8 +30,6 @@ function LoginForm() {
 			);
 
 			if (account) {
-				toast.success("Login successful", { id: toastId });
-
 				const token = await appwriteClient.getJWT();
 				const res = await signIn("credentials", {
 					redirect: false,
@@ -41,7 +38,8 @@ function LoginForm() {
 
 				if (res && res?.ok) {
 					router.push("/user");
-					setIsLoading(false);
+					// setIsLoading(false);
+					toast.success("Login successful", { id: toastId });
 					// setData({ ...initialState });
 				} else {
 					throw new Error(res.error);
