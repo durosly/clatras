@@ -1,28 +1,31 @@
-import clientServer from "@/lib/client-server";
+import clientServer, { AppwriteServerClient } from "@/lib/client-server";
 import { calculateReturns } from "@/lib/utils";
-import { cookies } from "next/headers";
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { Databases, ID } from "node-appwrite";
+import { authOptions } from "@/auth/options";
 
 async function createNewTransaction(request) {
 	try {
-		const cookieStore = cookies();
-		const cookie = cookieStore.get(process.env.NEXT_PUBLIC_COOKIE_AUTH_KEY);
-		// console.log("server", cookie);
-		if (!cookie?.value) {
-			throw new Error("Invalid access");
-		}
+		const session = await getServerSession(authOptions);
 
-		const { type, doc_id, amt } = await request.json();
-		// console.log(res);
+		const { type, doc_id, amt, user_jwt } = await request.json();
+
+		if (!user_jwt) {
+			throw new Error("token error");
+		}
 
 		if (!type || !doc_id || !amt) {
 			throw new Error("Enter all fields");
 		}
 
-		clientServer.setKey(process.env.APPWRITE_API_KEY);
+		const app = new AppwriteServerClient();
+		app.setToken(user_jwt);
 
-		const databases = new Databases(clientServer);
+		const server = app.getServer();
+
+		const databases = new Databases(server);
+		const userId = session.user.userId;
 
 		let databaseId = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID;
 		let collectionId = null;
@@ -73,7 +76,7 @@ async function createNewTransaction(request) {
 		}
 
 		const data = {
-			userId: cookie.value,
+			userId,
 			description,
 			type,
 			address,
