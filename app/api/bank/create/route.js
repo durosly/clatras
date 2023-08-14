@@ -1,17 +1,19 @@
-import clientServer from "@/lib/client-server";
-import { cookies } from "next/headers";
+import { authOptions } from "@/auth/options";
+import { AppwriteServerClient } from "@/lib/client-server";
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { Databases, ID, Query } from "node-appwrite";
 
 async function setBankDetails(request) {
 	try {
-		const { bank_name, account_name, account_number } =
+		const session = await getServerSession(authOptions);
+		const userId = session.user.userId;
+
+		const { bank_name, account_name, account_number, token } =
 			await request.json();
-		const cookieStore = cookies();
-		const cookie = cookieStore.get(process.env.NEXT_PUBLIC_COOKIE_AUTH_KEY);
-		// console.log("server", cookie);
-		if (!cookie?.value) {
-			throw new Error("Invalid access");
+
+		if (!token) {
+			throw new Error("Token error");
 		}
 
 		if (!bank_name) {
@@ -21,10 +23,11 @@ async function setBankDetails(request) {
 		} else if (!account_name) {
 			throw new Error("Please Enter Your Account Number");
 		}
+		const app = new AppwriteServerClient();
+		app.setToken(token);
+		const server = app.getServer();
 
-		clientServer.setKey(process.env.APPWRITE_API_KEY);
-
-		const databases = new Databases(clientServer);
+		const databases = new Databases(server);
 
 		let databaseId = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID;
 		let collectionId =
@@ -33,7 +36,7 @@ async function setBankDetails(request) {
 		const existDoc = await databases.listDocuments(
 			databaseId,
 			collectionId,
-			[Query.equal("userId", cookie.value), Query.limit(1)]
+			[Query.equal("userId", userId), Query.limit(1)]
 		);
 
 		if (existDoc.total) {
@@ -42,7 +45,7 @@ async function setBankDetails(request) {
 				collectionId,
 				existDoc.documents[0].$id,
 				{
-					userId: cookie.value,
+					userId,
 					bank_name,
 					account_name,
 					account_number,
@@ -54,7 +57,7 @@ async function setBankDetails(request) {
 				collectionId,
 				ID.unique(),
 				{
-					userId: cookie.value,
+					userId,
 					bank_name,
 					account_name,
 					account_number,
