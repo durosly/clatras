@@ -4,6 +4,7 @@ import { useState } from "react";
 import ListItem from "../components/list-item";
 import { toast } from "react-hot-toast";
 import axios from "axios";
+import { appwriteClient } from "@/lib/client";
 
 function ListWrapper({ documents }) {
 	const [list, setList] = useState(documents);
@@ -13,10 +14,11 @@ function ListWrapper({ documents }) {
 		if (isLoading) return;
 		try {
 			setIsLoading(true);
+			const token = await appwriteClient.getJWT();
 			const response = await axios(
 				`/api/transactions/user/get-more?lastId=${
 					list[list.length - 1].$id
-				}`
+				}&token=${token.jwt}`
 			);
 
 			if (response.data.status) {
