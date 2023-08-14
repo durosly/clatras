@@ -2,18 +2,20 @@ import { TbCalendarDown } from "react-icons/tb";
 import ListWrapper from "./lits-wrapper";
 import { Databases, Query } from "node-appwrite";
 import clientServer from "@/lib/client-server";
-import getActiveUser from "../../lib/get-user";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/auth/options";
 
 async function UserTransactionHistoryPage() {
+	const session = await getServerSession(authOptions);
+	const userId = session.user.userId;
 	clientServer.setKey(process.env.APPWRITE_API_KEY);
 	const databases = new Databases(clientServer);
-	const userId = await getActiveUser();
 
 	const documents = await databases.listDocuments(
 		process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
 		process.env.NEXT_PUBLIC_APPRWRITE_TRANSACTION_COLLECTION_ID,
 		[
-			Query.equal("userId", userId.value),
+			Query.equal("userId", userId),
 			Query.limit(5),
 			Query.orderDesc("$createdAt"),
 		]
