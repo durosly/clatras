@@ -18,7 +18,9 @@ function Header() {
 				</div>
 			</div>
 			<div className="navbar-center">
-				<a className="btn btn-ghost normal-case text-xl">Dashboard</a>
+				<a className="btn btn-ghost normal-case sm:text-xl">
+					Dashboard
+				</a>
 			</div>
 			<div className="navbar-end">
 				<div className="dropdown dropdown-end">
