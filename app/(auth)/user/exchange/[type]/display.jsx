@@ -9,6 +9,7 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 import ExchangeSuccessModal from "./modal";
 import axios from "axios";
 import { calculateReturns as calReturns } from "@/lib/utils";
+import { appwriteClient } from "@/lib/client";
 
 function ExchangeDisplay({ type, document }) {
 	const [returns, setReturns] = useState(null);
@@ -171,10 +172,12 @@ function StepTwo({ type, document, returns, amt, prevStep, showSuccessModal }) {
 		if (isLoading) return;
 		setIsLoading(true);
 		try {
+			const token = await appwriteClient.getJWT();
 			const response = await axios.post("/api/transactions/create", {
 				type,
 				doc_id: document.$id,
 				amt,
+				user_jwt: token.jwt,
 			});
 			// console.log(response);
 			if (response.data.status) {
