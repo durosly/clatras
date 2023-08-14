@@ -3,7 +3,7 @@ import { appwriteClient } from "@/lib/client";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 
-function LogoutButton() {
+function LogoutButton({ className, children }) {
 	const router = useRouter();
 	async function handleLogout() {
 		await appwriteClient.logoutCurrent();
@@ -11,7 +11,14 @@ function LogoutButton() {
 		router.push(data.url);
 	}
 
-	return <a onClick={handleLogout}>Logout</a>;
+	return (
+		<a
+			className={className}
+			onClick={handleLogout}
+		>
+			{children}
+		</a>
+	);
 }
 
 export default LogoutButton;
