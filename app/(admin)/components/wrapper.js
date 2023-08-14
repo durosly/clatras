@@ -18,15 +18,15 @@ import LogoutButton from "@/app/(auth)/components/logout-btn";
 function Wrapper({ children }) {
 	return (
 		<>
-			<div className="drawer lg:drawer-open ">
+			<div className="drawer block lg:flex flex-row-reverse lg:drawer-open ">
 				<input
 					id="my-drawer-2"
 					type="checkbox"
 					className="drawer-toggle"
 				/>
-				<div className="drawer-content flex flex-col items-center justify-center">
+				<div className="drawer-content flex-1">
 					{/* Page content here */}
-					<div className="flex-1 w-full">
+					<div className="">
 						<Header />
 
 						<main className="p-5">{children}</main>
