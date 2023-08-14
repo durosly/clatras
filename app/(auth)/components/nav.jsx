@@ -11,7 +11,7 @@ function Nav() {
 				<Link href="/user/transactions">History</Link>
 			</li>
 			<li>
-				<LogoutButton />
+				<LogoutButton>Logout</LogoutButton>
 			</li>
 		</>
 	);
