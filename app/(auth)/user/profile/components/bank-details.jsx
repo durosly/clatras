@@ -22,8 +22,12 @@ function BankDetails() {
 		const toastId = toast.loading("Updating...");
 		try {
 			setIsUpdating(true);
+			const token = await appwriteClient.getJWT();
 
-			const response = await axios.post("/api/bank/create", data);
+			const response = await axios.post("/api/bank/create", {
+				...data,
+				token: token.jwt,
+			});
 
 			if (response?.data.status) {
 				toast.success("Account added", { id: toastId });
@@ -42,7 +46,10 @@ function BankDetails() {
 	useEffect(() => {
 		async function loadBankDetails() {
 			try {
-				const response = await axios("/api/bank/get-details");
+				const token = await appwriteClient.getJWT();
+				const response = await axios(
+					`/api/bank/get-details?token=${token.jwt}`
+				);
 				if (response.data.status) {
 					const {
 						doc: { account_name, account_number, bank_name },
