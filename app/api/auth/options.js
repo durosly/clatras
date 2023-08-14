@@ -29,6 +29,7 @@ export const authOptions = {
 					userId: account.$id,
 					name: account.name,
 					isAdmin: account.prefs?.isAdmin === true ? true : false,
+					email: account.email,
 				};
 			},
 		}),
@@ -43,7 +44,7 @@ export const authOptions = {
 		},
 		async jwt({ token, user }) {
 			if (user) {
-				token.userId = user.$id;
+				token.userId = user.userId;
 				token.isAdmin = user.isAdmin;
 			}
 			return token;
