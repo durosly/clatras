@@ -3,7 +3,8 @@
     "paths": {
       "@/*": ["./*"],
       "@/images/*": ["./public/images/*"],
-      "@/svg/illustrations/*": ["./app/components/svg/illustrations/*"]
+      "@/svg/illustrations/*": ["./app/components/svg/illustrations/*"],
+      "@/auth/*": ["./app/api/auth/*"],
     }
   }
 }
