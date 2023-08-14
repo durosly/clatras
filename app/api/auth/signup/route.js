@@ -1,10 +1,8 @@
 import clientServer from "@/lib/client-server";
 import UserSchema from "@/validators/signupSchema";
-import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 import { phone } from "phone";
-import { AppwriteException, Users } from "node-appwrite";
-import { v4 as uuidv4 } from "uuid";
+import { AppwriteException, Users, ID } from "node-appwrite";
 
 export async function POST(request) {
 	try {
@@ -31,8 +29,6 @@ export async function POST(request) {
 			data: { firstname, lastname, email, password, phonenumber },
 		} = parse;
 
-		const hash = bcrypt.hashSync(password, 10);
-		const userId = uuidv4();
 		const pValid = phone(phonenumber, { country: "NG" });
 
 		if (!pValid.isValid) {
@@ -54,17 +50,15 @@ export async function POST(request) {
 
 		const users = new Users(clientServer);
 
-		const response = await users.createBcryptUser(
-			userId,
+		const response = await users.create(
+			ID.unique(),
 			email,
-			// pValid.phoneNumber,
-			hash,
+			pValid.phoneNumber,
+			password,
 			`${firstname} ${lastname}`
 		);
 
-		users.updatePhone(response.$id, pValid.phoneNumber);
-
-		// console.log(response);
+		await users.updatePrefs(response.$id, { isAdmin: false });
 
 		return NextResponse.json({
 			status: true,
