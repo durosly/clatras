@@ -19,7 +19,11 @@ function ListWrapper() {
 		async (loadMore) => {
 			if (isLoading) return;
 
-			setIsLoading(true);
+			if (loadMore) {
+				setIsLoadingMore(true);
+			} else {
+				setIsLoading(true);
+			}
 			try {
 				const response = await axios.get(`/api/admin/transactions`, {
 					params: {
@@ -42,7 +46,11 @@ function ListWrapper() {
 				toast.error(error.message);
 				console.error(error);
 			} finally {
-				setIsLoading(false);
+				if (loadMore) {
+					setIsLoadingMore(false);
+				} else {
+					setIsLoading(false);
+				}
 			}
 		},
 		[query.date, query.status, list, isLoadingMore]
@@ -61,7 +69,7 @@ function ListWrapper() {
 
 	const handleMoreList = (entryList) => {
 		setList((prevList) => [...prevList, ...entryList]);
-		setIsLoadingMore(false);
+
 		setLastId(!entryList[0]?.$id ? null : entryList?.slice(-1)[0].$id);
 	};
 
@@ -141,11 +149,20 @@ function ListWrapper() {
 										update={updateItemInList}
 									/>
 								))}
+								{isLoadingMore && (
+									<tr>
+										<td colSpan={5}>
+											<span className="loading loading-ball"></span>{" "}
+											<span>Loading...</span>
+										</td>
+									</tr>
+								)}
 							</tbody>
 						</table>
 					)
 				)}
 			</div>
+
 			<div className="mt-2 text-right">
 				{!isLoading && list && list.length > 0 && (
 					<button
