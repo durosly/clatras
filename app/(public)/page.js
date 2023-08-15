@@ -9,10 +9,10 @@ import UserJoin from "@/svg/illustrations/user-join";
 export default function Home() {
 	return (
 		<main className="">
-			<div className="md:h-[80vh] md:min-h-[500px] flex justify-center px-10">
-				<div className="md:flex mt-20 md:mt-0 items-center max-w-6xl">
-					<div className="h-screen max-h-[700px] md:h-auto md:flex-1 text-center md:text-left space-y-24 md:space-y-3 mb-10 md:mb-0">
-						<div>
+			<div className="flex justify-center px-10">
+				<div className="md:flex mt-20 items-center max-w-6xl">
+					<div className=" max-h-[700px] md:h-auto md:flex-1 text-center md:text-left space-y-14 md:space-y-3 mb-10">
+						<div className="mb-5">
 							<h2 className="max-[340px]:text-4xl text-6xl md:text-8xl font-bold mb-5 md:mb-0">
 								Smart Financial Service
 							</h2>
@@ -23,7 +23,7 @@ export default function Home() {
 						</div>
 						<div>
 							<Link
-								className="btn btn-sm md:btn-md md:btn-wide btn-primary rounded-full"
+								className="btn btn-md md:btn-wide btn-primary rounded-full"
 								href="/login"
 							>
 								Join US
@@ -44,27 +44,27 @@ export default function Home() {
 			{/* services logos */}
 			<div className="px-10 mt-10 md:mt-0">
 				<ul className="flex flex-wrap justify-center gap-3">
-					<li className="flex gap-4 p-3 rounded-full border items-center">
+					<li className="flex text-sm md:text-base gap-2 md:gap-4 p-1 md:p-3 rounded-full border items-center">
 						<span className="inline-block w-4 h-4 rounded-full bg-green-500"></span>
 						<span>Zelle</span>
 						<span className="inline-block w-4 h-4 rounded-full bg-green-500"></span>
 					</li>
-					<li className="flex gap-4 p-3 rounded-full border items-center">
+					<li className="flex text-sm md:text-base gap-2 md:gap-4 p-1 md:p-3 rounded-full border items-center">
 						<span className="inline-block w-4 h-4 rounded-full bg-blue-500"></span>
 						<span>Gift Cards</span>
 						<span className="inline-block w-4 h-4 rounded-full bg-blue-500"></span>
 					</li>
-					<li className="flex gap-4 p-3 rounded-full border items-center">
+					<li className="flex text-sm md:text-base gap-2 md:gap-4 p-1 md:p-3 rounded-full border items-center">
 						<span className="inline-block w-4 h-4 rounded-full bg-red-500"></span>
 						<span>Paypal</span>
 						<span className="inline-block w-4 h-4 rounded-full bg-red-500"></span>
 					</li>
-					<li className="flex gap-4 p-3 rounded-full border items-center">
+					<li className="flex text-sm md:text-base gap-2 md:gap-4 p-1 md:p-3 rounded-full border items-center">
 						<span className="inline-block w-4 h-4 rounded-full bg-primary"></span>
 						<span>Bitcoin</span>
 						<span className="inline-block w-4 h-4 rounded-full bg-primary"></span>
 					</li>
-					<li className="flex gap-4 p-3 rounded-full border items-center">
+					<li className="flex text-sm md:text-base gap-2 md:gap-4 p-1 md:p-3 rounded-full border items-center">
 						<span className="inline-block w-4 h-4 rounded-full bg-pink-500"></span>
 						<span>Zelle</span>
 						<span className="inline-block w-4 h-4 rounded-full bg-pink-500"></span>
