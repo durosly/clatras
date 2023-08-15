@@ -26,7 +26,7 @@ export async function POST(request) {
 		}
 
 		const {
-			data: { firstname, lastname, email, password, phonenumber },
+			data: { name, email, password, phonenumber },
 		} = parse;
 
 		const pValid = phone(phonenumber, { country: "NG" });
@@ -55,7 +55,7 @@ export async function POST(request) {
 			email,
 			pValid.phoneNumber,
 			password,
-			`${firstname} ${lastname}`
+			name
 		);
 
 		await users.updatePrefs(response.$id, { isAdmin: false });
