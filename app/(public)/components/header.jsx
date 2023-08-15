@@ -5,7 +5,7 @@ import Link from "next/link";
 
 function Header() {
 	return (
-		<div className="w-full navbar border-b">
+		<div className="w-full navbar ">
 			<div className="flex-none lg:hidden">
 				<label
 					htmlFor="my-drawer-3"
