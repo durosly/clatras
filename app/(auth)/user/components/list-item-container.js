@@ -24,13 +24,19 @@ async function ListItemContainer() {
 
 	return (
 		<tbody>
-			{documents.documents.map((d, i) => (
-				<ListItem
-					key={d.$id}
-					doc={d}
-					count={i + 1}
-				/>
-			))}
+			{documents.documents.length > 0 ? (
+				documents.documents.map((d, i) => (
+					<ListItem
+						key={d.$id}
+						doc={d}
+						count={i + 1}
+					/>
+				))
+			) : (
+				<tr>
+					<td colSpan={5}>No Transaction history</td>
+				</tr>
+			)}
 		</tbody>
 	);
 }
