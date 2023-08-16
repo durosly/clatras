@@ -286,7 +286,7 @@ function StepTwo({ type, document, returns, amt, prevStep, showSuccessModal }) {
 				</div>
 			</div>
 			<div>
-				<p className="text-xs">
+				<p className="text-xs font-bold">
 					* only click done after make transaction to avoid delay
 				</p>
 				<div className=" mt-2">
