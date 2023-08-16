@@ -6,6 +6,7 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 import ExchangeSuccessModal from "../../exchange/[type]/modal";
 import { toast } from "react-hot-toast";
 import axios from "axios";
+import { appwriteClient } from "@/lib/client";
 
 function PurchaseDisplay({ doc }) {
 	const [step, setStep] = useState(1);
@@ -129,11 +130,14 @@ function StepTwo({ document, cost, amt, prevStep, showSuccessModal }) {
 	async function handleSubmit() {
 		if (isLoading) return;
 		setIsLoading(true);
+
 		try {
+			const token = await appwriteClient.getJWT();
 			const response = await axios.post("/api/transactions/create", {
 				type: "g-voice",
 				doc_id: document.$id,
 				amt,
+				user_jwt: token.jwt,
 			});
 			// console.log(response);
 			if (response.data.status) {
@@ -202,7 +206,7 @@ function StepTwo({ document, cost, amt, prevStep, showSuccessModal }) {
 				</div>
 			</div>
 			<div>
-				<p className="text-xs">
+				<p className="text-xs font-bold">
 					* only click done after making transfer to avoid delay
 				</p>
 				<div className=" mt-2">
