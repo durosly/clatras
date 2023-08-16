@@ -6,6 +6,7 @@ import { SiCashapp, SiZelle } from "react-icons/si";
 import { AiOutlineGooglePlus } from "react-icons/ai";
 import { BsCartPlus } from "react-icons/bs";
 import ListItemContainer from "./components/list-item-container";
+import { Suspense } from "react";
 
 async function UserHomePage() {
 	return (
@@ -126,7 +127,18 @@ async function UserHomePage() {
 									<th>Date/Time</th>
 								</tr>
 							</thead>
-							<ListItemContainer />
+							<Suspense
+								fallback={
+									<tr>
+										<td
+											className="bg-slate-400 animate-pulse"
+											colSpan={5}
+										></td>
+									</tr>
+								}
+							>
+								<ListItemContainer />
+							</Suspense>
 						</table>
 					</div>
 					<div className="text-right">
