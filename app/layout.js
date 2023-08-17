@@ -10,7 +10,6 @@ export const metadata = {
 	applicationName: "Clatras",
 	keywords: ["Crypto", "PI coin", "Bitcoin"],
 	metadataBase: new URL(`${process.env.NEXT_PUBLIC_URL}`),
-	manifest: "/meta/manifest.json",
 	themeColor: "#00eaaf",
 	openGraph: {
 		title: "Clatras exchange",
