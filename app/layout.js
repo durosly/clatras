@@ -7,6 +7,21 @@ export const metadata = {
 	title: "Clatras",
 	description:
 		"Your one stop shop to online payments and related transactions",
+	applicationName: "Clatras",
+	keywords: ["Crypto", "PI coin", "Bitcoin"],
+	metadataBase: new URL(`${process.env.NEXT_PUBLIC_URL}`),
+	manifest: "/meta/manifest.json",
+	themeColor: "#00eaaf",
+	openGraph: {
+		title: "Clatras exchange",
+		description:
+			"Your one stop shop to online payments and related transactions",
+
+		siteName: "Clatras",
+		images: "/meta/open-graph.png",
+		locale: "en_US",
+		type: "website",
+	},
 };
 
 export default function RootLayout({ children }) {
