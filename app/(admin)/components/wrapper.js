@@ -8,6 +8,7 @@ import { AiOutlineGoogle } from "react-icons/ai";
 import {
 	HiOutlineBriefcase,
 	HiOutlineClipboardList,
+	HiOutlineCurrencyDollar,
 	HiOutlineViewGrid,
 	HiUserGroup,
 } from "react-icons/hi";
@@ -86,6 +87,14 @@ function Wrapper({ children }) {
 										<HiOutlineBriefcase className="w-6 h-6 stroke-current" />
 									</span>
 									<span>Wallets</span>
+								</Link>
+							</li>
+							<li>
+								<Link href="/admin/rate">
+									<span>
+										<HiOutlineCurrencyDollar className="w-6 h-6 stroke-current" />
+									</span>
+									<span>Dollar rate</span>
 								</Link>
 							</li>
 							<li>
