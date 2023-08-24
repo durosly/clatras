@@ -19,7 +19,7 @@ function RateForm() {
 
 		try {
 			const response = await axios.post("/api/admin/rate", { rate });
-			console.log(response);
+
 			toast.success("Done", { id: toastId });
 			setRate("");
 			router.refresh();
