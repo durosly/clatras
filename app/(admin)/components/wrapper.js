@@ -4,7 +4,7 @@ import Image from "next/image";
 // import Nav from "./nav";
 
 import Link from "next/link";
-import { AiOutlineGoogle } from "react-icons/ai";
+import { AiOutlineBank, AiOutlineGoogle } from "react-icons/ai";
 import {
 	HiOutlineBriefcase,
 	HiOutlineClipboardList,
@@ -15,6 +15,9 @@ import {
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import Header from "./header";
 import LogoutButton from "@/app/(auth)/components/logout-btn";
+import { FaBitcoin } from "react-icons/fa";
+import { MdOutlinePayment, MdVerifiedUser } from "react-icons/md";
+import { LuGift } from "react-icons/lu";
 
 function Wrapper({ children }) {
 	return (
@@ -90,6 +93,46 @@ function Wrapper({ children }) {
 								</Link>
 							</li>
 							<li>
+								<Link href="/admin/crypto">
+									<span>
+										<FaBitcoin className="w-6 h-6 stroke-current" />
+									</span>
+									<span>Cryptocurrencies</span>
+								</Link>
+							</li>
+							<li>
+								<Link href="/admin/payments-accounts">
+									<span>
+										<MdOutlinePayment className="w-6 h-6 stroke-current" />
+									</span>
+									<span>Payment accounts</span>
+								</Link>
+							</li>
+							<li>
+								<Link href="/admin/verification-accounts">
+									<span>
+										<MdVerifiedUser className="w-6 h-6 stroke-current" />
+									</span>
+									<span>Verification Accounts</span>
+								</Link>
+							</li>
+							<li>
+								<Link href="/admin/gift-card">
+									<span>
+										<LuGift className="w-6 h-6 stroke-current" />
+									</span>
+									<span>Giftcards</span>
+								</Link>
+							</li>
+							<li>
+								<Link href="/admin/bank-details">
+									<span>
+										<AiOutlineBank className="w-6 h-6 stroke-current" />
+									</span>
+									<span>Bank details</span>
+								</Link>
+							</li>
+							<li>
 								<Link href="/admin/rate">
 									<span>
 										<HiOutlineCurrencyDollar className="w-6 h-6 stroke-current" />
@@ -97,14 +140,7 @@ function Wrapper({ children }) {
 									<span>Dollar rate</span>
 								</Link>
 							</li>
-							<li>
-								<Link href="/admin/google-voice">
-									<span>
-										<AiOutlineGoogle className="w-6 h-6 stroke-current" />
-									</span>
-									<span>Google Voice</span>
-								</Link>
-							</li>
+
 							<li>
 								<LogoutButton className="link-error">
 									<span>
