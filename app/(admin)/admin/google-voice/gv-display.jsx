@@ -28,8 +28,6 @@ function GoogleVoiceDetails() {
 
 			if (response?.data.status) {
 				toast.success("Updated", { id: toastId });
-
-				// setData({ ...initialState });
 			} else {
 				throw new Error("invalid credentials");
 			}
@@ -53,7 +51,7 @@ function GoogleVoiceDetails() {
 						account_name: doc.account_name,
 						account_number: doc.account_number,
 					});
-					console.log(doc);
+					// console.log(doc);
 				}
 				// console.log(response);
 			} catch (error) {
