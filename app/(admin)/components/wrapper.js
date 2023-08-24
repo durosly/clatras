@@ -1,23 +1,20 @@
 import logo from "@/images/logo.png";
 import Image from "next/image";
-// import Header from "./header";
-// import Nav from "./nav";
 
+import LogoutButton from "@/app/(auth)/components/logout-btn";
 import Link from "next/link";
-import { AiOutlineBank, AiOutlineGoogle } from "react-icons/ai";
+import { AiOutlineBank } from "react-icons/ai";
+import { FaBitcoin } from "react-icons/fa";
 import {
-	HiOutlineBriefcase,
 	HiOutlineClipboardList,
 	HiOutlineCurrencyDollar,
 	HiOutlineViewGrid,
 	HiUserGroup,
 } from "react-icons/hi";
+import { LuGift } from "react-icons/lu";
+import { MdOutlinePayment, MdVerifiedUser } from "react-icons/md";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import Header from "./header";
-import LogoutButton from "@/app/(auth)/components/logout-btn";
-import { FaBitcoin } from "react-icons/fa";
-import { MdOutlinePayment, MdVerifiedUser } from "react-icons/md";
-import { LuGift } from "react-icons/lu";
 
 function Wrapper({ children }) {
 	return (
@@ -82,14 +79,6 @@ function Wrapper({ children }) {
 										<HiUserGroup className="w-6 h-6 stroke-current" />
 									</span>
 									<span>Users</span>
-								</Link>
-							</li>
-							<li>
-								<Link href="/admin/wallets">
-									<span>
-										<HiOutlineBriefcase className="w-6 h-6 stroke-current" />
-									</span>
-									<span>Wallets</span>
 								</Link>
 							</li>
 							<li>
