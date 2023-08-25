@@ -4,13 +4,14 @@ import { FaBitcoin } from "react-icons/fa";
 import { RiSecurePaymentLine } from "react-icons/ri";
 import { SiCashapp, SiZelle } from "react-icons/si";
 import { AiOutlineGooglePlus } from "react-icons/ai";
-import { BsCartPlus } from "react-icons/bs";
+import { BsCartPlus, BsGift } from "react-icons/bs";
 import ListItemContainer from "./components/list-item-container";
 import { Suspense } from "react";
+import { MdOutlinePayment, MdOutlineVerifiedUser } from "react-icons/md";
 
 async function UserHomePage() {
 	return (
-		<div className="mx-5 sm:mx-10 py-5 space-y-4">
+		<div className="mx-5 sm:mx-10 py-5 space-y-8">
 			{/* <div className="alert flex gap-2">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -42,8 +43,50 @@ async function UserHomePage() {
 				</div>
 			</div> */}
 
+			<div className="bg-primary/10 p-5 rounded-2xl">
+				<h2 className="text-xl font-bold">Welcome to Clatras</h2>
+				<p className="text-sm">Experience fast and easy transactions</p>
+			</div>
+			<div className="flex flex-wrap justify-center gap-4">
+				<Link
+					href="/giftcards"
+					className="flex-1 max-w-[130px] group hover:bg-slate-100 hover:border-primary text-center border p-5 rounded-xl"
+				>
+					<div className="w-20 aspect-square rounded-full bg-primary/10 flex justify-center items-center">
+						<BsGift className="w-10 h-10" />
+					</div>
+					<p>Gift Cards</p>
+				</Link>
+				<Link
+					href="/nice"
+					className="flex-1 max-w-[130px] group hover:bg-slate-100 hover:border-primary text-center border p-5 rounded-xl"
+				>
+					<div className="w-20 aspect-square rounded-full bg-primary/10 flex justify-center items-center">
+						<MdOutlineVerifiedUser className="w-10 h-10" />
+					</div>
+					<p>Verifications</p>
+				</Link>
+				<Link
+					href="/nice"
+					className="flex-1 max-w-[130px] group hover:bg-slate-100 hover:border-primary text-center border p-5 rounded-xl"
+				>
+					<div className="w-20 aspect-square rounded-full bg-primary/10 flex justify-center items-center">
+						<MdOutlinePayment className="w-10 h-10" />
+					</div>
+					<p>Payment</p>
+				</Link>
+				<Link
+					href="/nice"
+					className="flex-1 max-w-[130px] group hover:bg-slate-100 hover:border-primary text-center border p-5 rounded-xl"
+				>
+					<div className="w-20 aspect-square rounded-full bg-primary/10 flex justify-center items-center">
+						<FaBitcoin className="w-10 h-10" />
+					</div>
+					<p>Crypto</p>
+				</Link>
+			</div>
 			<div className="space-y-8">
-				<div className="border p-5 rounded-md">
+				{/* <div className="border p-5 rounded-md">
 					<div className="flex gap-2 items-center">
 						<span className="w-8 aspect-square rounded-full bg-primary/20 flex justify-center items-center">
 							<TbArrowsExchange className="w-5 h-5" />
@@ -107,7 +150,7 @@ async function UserHomePage() {
 							<span>Purchase</span>
 						</Link>
 					</div>
-				</div>
+				</div> */}
 				<div className="border p-5 rounded-md">
 					<div className="flex gap-2 items-center">
 						<span className="w-8 aspect-square rounded-full bg-primary/20 flex justify-center items-center">
