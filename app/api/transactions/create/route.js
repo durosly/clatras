@@ -2,14 +2,16 @@ import clientServer, { AppwriteServerClient } from "@/lib/client-server";
 import { calculateReturns } from "@/lib/utils";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { Databases, ID } from "node-appwrite";
+import { Databases, ID, Query } from "node-appwrite";
 import { authOptions } from "@/auth/options";
 
 async function createNewTransaction(request) {
 	try {
 		const session = await getServerSession(authOptions);
 
-		const { type, doc_id, amt, user_jwt } = await request.json();
+		const resData = await request.json();
+
+		const { type, doc_id, amt, user_jwt } = resData;
 
 		if (!user_jwt) {
 			throw new Error("token error");
@@ -40,6 +42,9 @@ async function createNewTransaction(request) {
 		} else if (type === "g-voice") {
 			collectionId =
 				process.env.NEXT_PUBLIC_APPRWRITE_G_VOICE_COLLECTION_ID;
+		} else if (type === "gift-card") {
+			collectionId =
+				process.env.NEXT_PUBLIC_APPRWRITE_GIFTCARD_COLLECTION_ID;
 		}
 
 		const doc = await databases.getDocument(
@@ -53,9 +58,7 @@ async function createNewTransaction(request) {
 		let item_name = doc.name;
 		let rate = 1;
 		let returns = 1;
-		let email = "support@clatras.com";
-		let tag = "";
-		let phonenumber = "";
+		let market = "";
 
 		if (type === "crypto") {
 			description = `Exchange: ${doc.name} ${doc?.network || ""}`;
@@ -65,14 +68,16 @@ async function createNewTransaction(request) {
 			returns = calculateReturns(type, amt, doc.rate);
 		} else if (type === "account") {
 			description = `Sent funds to ${doc.name}`;
-			email = doc?.email || "support@clatras.com";
-			tag = doc?.tag || "";
-			phonenumber = doc?.phone || "";
+
 			rate = doc.fee;
 			returns = calculateReturns(type, amt, doc.fee);
 		} else if (type === "g-voice") {
 			description = `Purchase google voice accounts`;
 			rate = doc.cost;
+		} else if (type === "gift-card") {
+			description = `Purchase giftcard`;
+			rate = doc.fee;
+			market = "buy";
 		}
 
 		const data = {
@@ -85,17 +90,27 @@ async function createNewTransaction(request) {
 			rate,
 			returns,
 			status: "pending",
-			email,
-			tag,
-			phonenumber,
+			market,
 		};
 
-		if (type === "g-voice") {
+		if (type === "gift-card") {
+			const { bankId } = resData;
+			const doc = await databases.getDocument(
+				databaseId,
+				process.env.NEXT_PUBLIC_APPRWRITE_BANK_DETAILS_COLLECTION_ID,
+				bankId,
+				[Query.equal("userId", "admin")]
+			);
 			data.account_name = doc.account_name;
 			data.account_bank = doc.bank_name;
 
 			data.account_number = doc.account_number;
+			if (market === "buy") {
+				data.sending = rate * amt;
+			}
 		}
+
+		console.log(market, data);
 
 		await databases.createDocument(
 			databaseId,
