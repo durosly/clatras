@@ -49,7 +49,7 @@ async function UserHomePage() {
 			</div>
 			<div className="flex flex-wrap justify-center gap-4">
 				<Link
-					href="/giftcards"
+					href="/user/giftcards"
 					className="flex-1 max-w-[130px] group hover:bg-slate-100 hover:border-primary text-center border p-5 rounded-xl"
 				>
 					<div className="w-20 aspect-square rounded-full bg-primary/10 flex justify-center items-center">
