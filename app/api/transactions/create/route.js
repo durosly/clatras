@@ -39,9 +39,10 @@ async function createNewTransaction(request) {
 			collectionId =
 				process.env
 					.NEXT_PUBLIC_APPRWRITE_EXCHANGE_ACCOUNT_INFO_COLLECTION_ID;
-		} else if (type === "g-voice") {
+		} else if (type === "verification") {
 			collectionId =
-				process.env.NEXT_PUBLIC_APPRWRITE_G_VOICE_COLLECTION_ID;
+				process.env
+					.NEXT_PUBLIC_APPRWRITE_VERIFICATION_ACCOUNT_COLLECTION_ID;
 		} else if (type === "gift-card") {
 			collectionId =
 				process.env.NEXT_PUBLIC_APPRWRITE_GIFTCARD_COLLECTION_ID;
@@ -71,9 +72,10 @@ async function createNewTransaction(request) {
 
 			rate = doc.fee;
 			returns = calculateReturns(type, amt, doc.fee);
-		} else if (type === "g-voice") {
-			description = `Purchase google voice accounts`;
-			rate = doc.cost;
+		} else if (type === "verification") {
+			description = `Purchase ${amt} ${doc.name}${amt > 1 && "s"}`;
+			rate = doc.fee;
+			market = "buy";
 		} else if (type === "gift-card") {
 			description = `Purchase giftcard`;
 			rate = doc.fee;
@@ -93,7 +95,7 @@ async function createNewTransaction(request) {
 			market,
 		};
 
-		if (type === "gift-card") {
+		if (type === "gift-card" || type === "verification") {
 			const { bankId } = resData;
 			const doc = await databases.getDocument(
 				databaseId,
