@@ -69,6 +69,7 @@ async function createNewTransaction(request) {
 			rate = doc.rate;
 
 			returns = calculateReturns(type, amt, doc.rate);
+			market = "sell";
 		} else if (type === "payment") {
 			description = `Sent funds to ${doc.name}`;
 
@@ -113,7 +114,7 @@ async function createNewTransaction(request) {
 			if (market === "buy") {
 				data.sending = rate * amt;
 			}
-		} else if (type === "payment") {
+		} else if (type === "payment" || type === "crypto") {
 			const { bankId } = resData;
 			const doc = await databases.getDocument(
 				databaseId,
@@ -129,6 +130,8 @@ async function createNewTransaction(request) {
 				data.returns = rate * amt;
 			}
 		}
+
+		console.log(data);
 
 		await databases.createDocument(
 			databaseId,
