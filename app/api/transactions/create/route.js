@@ -35,7 +35,7 @@ async function createNewTransaction(request) {
 		if (type === "crypto") {
 			collectionId =
 				process.env.NEXT_PUBLIC_APPRWRITE_CRYPTO_INFO_COLLECTION_ID;
-		} else if (type === "account") {
+		} else if (type === "payment") {
 			collectionId =
 				process.env
 					.NEXT_PUBLIC_APPRWRITE_EXCHANGE_ACCOUNT_INFO_COLLECTION_ID;
@@ -47,6 +47,8 @@ async function createNewTransaction(request) {
 			collectionId =
 				process.env.NEXT_PUBLIC_APPRWRITE_GIFTCARD_COLLECTION_ID;
 		}
+
+		console.log(resData);
 
 		const doc = await databases.getDocument(
 			databaseId,
@@ -67,11 +69,11 @@ async function createNewTransaction(request) {
 			rate = doc.rate;
 
 			returns = calculateReturns(type, amt, doc.rate);
-		} else if (type === "account") {
+		} else if (type === "payment") {
 			description = `Sent funds to ${doc.name}`;
 
 			rate = doc.fee;
-			returns = calculateReturns(type, amt, doc.fee);
+			market = "sell";
 		} else if (type === "verification") {
 			description = `Purchase ${amt} ${doc.name}${amt > 1 && "s"}`;
 			rate = doc.fee;
@@ -97,6 +99,7 @@ async function createNewTransaction(request) {
 
 		if (type === "gift-card" || type === "verification") {
 			const { bankId } = resData;
+
 			const doc = await databases.getDocument(
 				databaseId,
 				process.env.NEXT_PUBLIC_APPRWRITE_BANK_DETAILS_COLLECTION_ID,
@@ -110,9 +113,22 @@ async function createNewTransaction(request) {
 			if (market === "buy") {
 				data.sending = rate * amt;
 			}
-		}
+		} else if (type === "payment") {
+			const { bankId } = resData;
+			const doc = await databases.getDocument(
+				databaseId,
+				process.env.NEXT_PUBLIC_APPRWRITE_BANK_DETAILS_COLLECTION_ID,
+				bankId,
+				[Query.equal("userId", userId)]
+			);
+			data.account_name = doc.account_name;
+			data.account_bank = doc.bank_name;
 
-		console.log(market, data);
+			data.account_number = doc.account_number;
+			if (market === "sell") {
+				data.returns = rate * amt;
+			}
+		}
 
 		await databases.createDocument(
 			databaseId,
