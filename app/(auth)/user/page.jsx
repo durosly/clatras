@@ -58,7 +58,7 @@ async function UserHomePage() {
 					<p>Gift Cards</p>
 				</Link>
 				<Link
-					href="/nice"
+					href="/user/verification-accounts"
 					className="flex-1 max-w-[130px] group hover:bg-slate-100 hover:border-primary text-center border p-5 rounded-xl"
 				>
 					<div className="w-20 aspect-square rounded-full bg-primary/10 flex justify-center items-center">
@@ -67,7 +67,7 @@ async function UserHomePage() {
 					<p>Verifications</p>
 				</Link>
 				<Link
-					href="/nice"
+					href="/user/payments"
 					className="flex-1 max-w-[130px] group hover:bg-slate-100 hover:border-primary text-center border p-5 rounded-xl"
 				>
 					<div className="w-20 aspect-square rounded-full bg-primary/10 flex justify-center items-center">
@@ -76,7 +76,7 @@ async function UserHomePage() {
 					<p>Payment</p>
 				</Link>
 				<Link
-					href="/nice"
+					href="/user/crypto"
 					className="flex-1 max-w-[130px] group hover:bg-slate-100 hover:border-primary text-center border p-5 rounded-xl"
 				>
 					<div className="w-20 aspect-square rounded-full bg-primary/10 flex justify-center items-center">
