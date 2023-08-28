@@ -1,4 +1,3 @@
-import getActiveUser from "@/app/(auth)/lib/get-user";
 import clientServer from "@/lib/client-server";
 import { Databases, Query } from "node-appwrite";
 import ListItem from "./list-item";
@@ -22,6 +21,11 @@ async function ListItemContainer() {
 		]
 	);
 
+	const d_rate = await databases.listDocuments(
+		process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+		process.env.NEXT_PUBLIC_APPRWRITE_DOLLAR_RATE_COLLECTION_ID
+	);
+
 	return (
 		<tbody>
 			{documents.documents.length > 0 ? (
@@ -30,6 +34,7 @@ async function ListItemContainer() {
 						key={d.$id}
 						doc={d}
 						count={i + 1}
+						d_rate={d_rate?.documents[0]?.rate || 1}
 					/>
 				))
 			) : (
