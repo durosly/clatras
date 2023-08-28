@@ -73,7 +73,10 @@ async function UserHomePage() {
 					<div className="w-20 aspect-square rounded-full bg-primary/10 flex justify-center items-center">
 						<MdOutlinePayment className="w-10 h-10" />
 					</div>
-					<p>Payment</p>
+					<p className="flex flex-col">
+						<span>Funds</span>
+						<span>Exchange</span>
+					</p>
 				</Link>
 				<Link
 					href="/user/crypto"

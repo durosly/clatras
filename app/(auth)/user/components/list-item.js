@@ -20,10 +20,14 @@ function ListItem({ doc, count }) {
 				<th>{count}</th>
 				<td className="whitespace-nowrap">{doc.description}</td>
 				<td className="space-x-2">
-					{doc.type === "account" && <span>&#8358;</span>}
+					{doc.type === "payment" && <span>$</span>}
 					<span>{commaNumber(doc.amount)}</span>
-					{doc.type === "crypto" && <span>{doc.item_name}</span>}
-					{doc.type === "g-voice" && <span>{doc.item_name}</span>}
+					{/* {(doc.type === "crypto" ||
+						doc.type === "payment" ||
+						doc.type === "gift-card") && (
+						<span>{doc.item_name}</span>
+					)} */}
+					{<span>{doc.item_name}</span>}
 				</td>
 				<td className="flex items-center gap-2">
 					<span className={`capitalize badge p-3 text-xs ${type}`}>
@@ -72,7 +76,7 @@ function ListItem({ doc, count }) {
 									<li className="flex flex-wrap gap-2 justify-between border-b py-3 last:border-b-0">
 										<span>Amount</span>
 										<span>
-											{doc.type === "account" && (
+											{doc.type === "payment" && (
 												<span>&#8358;</span>
 											)}
 											{commaNumber(doc.amount)}
@@ -85,14 +89,14 @@ function ListItem({ doc, count }) {
 												<span>&#8358;</span>
 											)}
 											{commaNumber(doc.rate)}
-											{doc.type === "account" && (
+											{doc.type === "payment" && (
 												<span>%</span>
 											)}
 										</span>
 									</li>
 									<li className="flex flex-wrap gap-2 justify-between border-b py-3 last:border-b-0">
 										<span>Returns</span>
-										{doc.type === "g-voice" ? (
+										{doc.type === "verification" ? (
 											<span>
 												{commaNumber(doc.amount)}{" "}
 												Account{doc.amount > 1 && "s"}
@@ -113,17 +117,16 @@ function ListItem({ doc, count }) {
 											<span>{doc.address}</span>
 										</li>
 									)}
-									{doc.type === "account" && (
+									{doc.type === "payment" && (
 										<>
-											{doc?.tag && (
-												<li className="flex flex-wrap gap-2 justify-between">
-													<span>Tag</span>
-													<span>{doc.tag}</span>
-												</li>
-											)}
+											<li className="flex flex-wrap gap-2 justify-between">
+												<span>Details</span>
+												<span>**sent via email**</span>
+											</li>
 										</>
 									)}
-									{doc.type === "g-voice" && (
+									{(doc.type === "verification" ||
+										doc.type === "gift-card") && (
 										<>
 											{doc?.account_bank && (
 												<li className="flex flex-wrap gap-2 justify-between">
