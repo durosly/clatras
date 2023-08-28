@@ -1,6 +1,9 @@
 import PasswordUpdate from "@/app/(auth)/user/profile/components/password-update";
 import { BsFillUnlockFill } from "react-icons/bs";
 
+// Opt out of caching for all data requests in the route segment
+export const dynamic = "force-dynamic";
+
 function AdminPasswordChange() {
 	return (
 		<div>

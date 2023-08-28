@@ -1,7 +1,7 @@
-import { BsGoogle } from "react-icons/bs";
-import { GrBitcoin } from "react-icons/gr";
-import { SiCashapp, SiZelle } from "react-icons/si";
 import TransactionsData from "./components/transactions-data";
+
+// Opt out of caching for all data requests in the route segment
+export const dynamic = "force-dynamic";
 
 function AdminDashboard() {
 	return (

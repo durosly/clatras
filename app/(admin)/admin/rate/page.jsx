@@ -2,6 +2,9 @@ import { AppwriteServerClient } from "@/lib/client-server";
 import RateForm from "./components/rate-form";
 import { Databases, Query } from "node-appwrite";
 
+// Opt out of caching for all data requests in the route segment
+export const dynamic = "force-dynamic";
+
 async function DollarRatePage() {
 	const app = new AppwriteServerClient();
 	app.setKey();

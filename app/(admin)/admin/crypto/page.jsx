@@ -3,6 +3,9 @@ import Link from "next/link";
 import CryptoListItem from "./components/crypto-list-item";
 import { Databases } from "node-appwrite";
 
+// Opt out of caching for all data requests in the route segment
+export const dynamic = "force-dynamic";
+
 async function AdminCryptoPage() {
 	const app = new AppwriteServerClient();
 	app.setKey();
@@ -36,8 +39,6 @@ async function AdminCryptoPage() {
 							<th>Network</th>
 							<th>Address</th>
 							<th>Rate($)</th>
-							<th>Bulk rate($)</th>
-							<th>Bulk rate qty</th>
 							<td>Action</td>
 						</tr>
 					</thead>

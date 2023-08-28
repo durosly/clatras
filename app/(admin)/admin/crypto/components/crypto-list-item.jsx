@@ -15,8 +15,7 @@ function CryptoListItem({ doc, count }) {
 	const [showModal, setShowModal] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [isDeleting, setIsDeleting] = useState(false);
-	const { name, abbr, network, address, rate, bulk_rate, bulk_rate_qty } =
-		doc;
+	const { name, abbr, network, address, rate } = doc;
 
 	async function updateToken(e) {
 		e.preventDefault();
@@ -70,8 +69,6 @@ function CryptoListItem({ doc, count }) {
 				<td>{network ?? "nil"}</td>
 				<td>{address}</td>
 				<td>{rate}</td>
-				<td>{bulk_rate}</td>
-				<td>{bulk_rate_qty}</td>
 				<td className="flex gap-2">
 					<button
 						onClick={() => setShowModal(true)}
@@ -166,9 +163,7 @@ function CryptoListItem({ doc, count }) {
 									/>
 								</div>
 								<div className="form-control">
-									<label className="label">
-										Retail Rate($)
-									</label>
+									<label className="label">Rate($)</label>
 									<input
 										type="text"
 										className="input input-bordered"
@@ -183,40 +178,6 @@ function CryptoListItem({ doc, count }) {
 									/>
 								</div>
 
-								<div className="form-control">
-									<label className="label">
-										Bulk Rate($)
-									</label>
-									<input
-										type="text"
-										className="input input-bordered"
-										name="bulk_rate"
-										value={data.bulk_rate}
-										onChange={(e) =>
-											setData({
-												...data,
-												[e.target.name]: e.target.value,
-											})
-										}
-									/>
-								</div>
-								<div className="form-control">
-									<label className="label">
-										Bulk Rate Quantity
-									</label>
-									<input
-										type="text"
-										className="input input-bordered"
-										name="bulk_rate_qty"
-										value={data.bulk_rate_qty}
-										onChange={(e) =>
-											setData({
-												...data,
-												[e.target.name]: e.target.value,
-											})
-										}
-									/>
-								</div>
 								<button
 									disabled={isLoading}
 									className="btn btn-primary mt-4"

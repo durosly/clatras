@@ -1,6 +1,9 @@
 import { FiUsers } from "react-icons/fi";
 import UsersListWrapper from "./users-list-wrapper";
 
+// Opt out of caching for all data requests in the route segment
+export const dynamic = "force-dynamic";
+
 function AdminUsersPage() {
 	return (
 		<div>

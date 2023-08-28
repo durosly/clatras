@@ -1,7 +1,7 @@
 import { AppwriteServerClient } from "@/lib/client-server";
 import CryptoSchema from "@/validators/newCryptoSchema";
 import { NextResponse } from "next/server";
-import { Databases, ID } from "node-appwrite";
+import { Databases } from "node-appwrite";
 
 export default async function updateCrypto(request) {
 	try {

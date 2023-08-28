@@ -3,6 +3,9 @@ import PaymentCreationForm from "./components/payment-creation-form";
 import PaymentListItem from "./components/payment-list-item";
 import { Databases } from "node-appwrite";
 
+// Opt out of caching for all data requests in the route segment
+export const dynamic = "force-dynamic";
+
 async function PaymentAccountPage() {
 	const app = new AppwriteServerClient();
 	app.setKey();

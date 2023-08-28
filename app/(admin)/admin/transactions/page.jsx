@@ -1,6 +1,9 @@
 import { TbCalendarDown } from "react-icons/tb";
 import ListWrapper from "./list-wrapper";
 
+// Opt out of caching for all data requests in the route segment
+export const dynamic = "force-dynamic";
+
 function AdminTransactionsPage() {
 	return (
 		<div>

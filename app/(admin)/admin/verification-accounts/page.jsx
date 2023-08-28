@@ -4,6 +4,9 @@ import { Databases } from "node-appwrite";
 import VerificationAccountCreationForm from "./components/verification-account-form";
 import VerificationListItem from "./components/verification-list-item";
 
+// Opt out of caching for all data requests in the route segment
+export const dynamic = "force-dynamic";
+
 async function VerificationsAccountPage() {
 	const app = new AppwriteServerClient();
 	app.setKey();

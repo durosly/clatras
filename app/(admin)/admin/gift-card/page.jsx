@@ -5,6 +5,9 @@ import { Databases } from "node-appwrite";
 import GiftCardCreationForm from "./components/gitfcard-creation-form";
 import GiftCardListItem from "./components/giftcard-list-item";
 
+// Opt out of caching for all data requests in the route segment
+export const dynamic = "force-dynamic";
+
 async function GiftCardPage() {
 	const app = new AppwriteServerClient();
 	app.setKey();
