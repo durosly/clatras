@@ -12,7 +12,11 @@ import {
 	HiUserGroup,
 } from "react-icons/hi";
 import { LuGift } from "react-icons/lu";
-import { MdOutlinePayment, MdVerifiedUser } from "react-icons/md";
+import {
+	MdNotificationsNone,
+	MdOutlinePayment,
+	MdVerifiedUser,
+} from "react-icons/md";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import Header from "./header";
 
@@ -127,6 +131,14 @@ function Wrapper({ children }) {
 										<HiOutlineCurrencyDollar className="w-6 h-6 stroke-current" />
 									</span>
 									<span>Dollar rate</span>
+								</Link>
+							</li>
+							<li>
+								<Link href="/admin/notification">
+									<span>
+										<MdNotificationsNone className="w-6 h-6 stroke-current" />
+									</span>
+									<span>E-mail Notification</span>
 								</Link>
 							</li>
 
