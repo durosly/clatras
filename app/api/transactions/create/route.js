@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { Databases, ID, Query } from "node-appwrite";
 import { authOptions } from "@/auth/options";
+import sendEmail from "@/lib/send-email";
 
 async function createNewTransaction(request) {
 	try {
@@ -48,8 +49,6 @@ async function createNewTransaction(request) {
 				process.env.NEXT_PUBLIC_APPRWRITE_GIFTCARD_COLLECTION_ID;
 		}
 
-		console.log(resData);
-
 		const doc = await databases.getDocument(
 			databaseId,
 			collectionId,
@@ -85,6 +84,11 @@ async function createNewTransaction(request) {
 			market = "buy";
 		}
 
+		const d_rate = await databases.listDocuments(
+			process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+			process.env.NEXT_PUBLIC_APPRWRITE_DOLLAR_RATE_COLLECTION_ID
+		);
+
 		const data = {
 			userId,
 			description,
@@ -96,6 +100,7 @@ async function createNewTransaction(request) {
 			returns,
 			status: "pending",
 			market,
+			dollar_rate: d_rate.total > 0 ? d_rate.documents[0].rate : 1,
 		};
 
 		if (type === "gift-card" || type === "verification") {
@@ -131,14 +136,38 @@ async function createNewTransaction(request) {
 			}
 		}
 
-		console.log(data);
+		// get admin notification email
 
+		const docEmail = await databases.listDocuments(
+			databaseId,
+			process.env
+				.NEXT_PUBLIC_APPRWRITE_ADMIN_EMAIL_NOTIFICATION_COLLECTION_ID,
+			[Query.limit(1)]
+		);
+
+		const current = docEmail.total > 0 ? docEmail.documents[0].email : "";
 		await databases.createDocument(
 			databaseId,
 			process.env.NEXT_PUBLIC_APPRWRITE_TRANSACTION_COLLECTION_ID,
 			ID.unique(),
 			data
 		);
+
+		let emailMessage = "";
+
+		for (const key in data) {
+			if (key !== "userId") {
+				emailMessage += `<p style="font-size: 12px;">${key}: ${data[key]}</p>`;
+			}
+		}
+
+		await sendEmail(
+			session.user.email,
+			"Pending transaction",
+			emailMessage
+		);
+
+		await sendEmail(current, "New Pending transaction", emailMessage);
 
 		return NextResponse.json({
 			status: true,
