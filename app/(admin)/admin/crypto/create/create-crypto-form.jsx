@@ -11,8 +11,6 @@ const initialState = {
 	address: "",
 	rate: "",
 	abbr: "",
-	bulk_rate: "",
-	bulk_rate_qty: "",
 };
 
 function CreateCryptoForm() {
@@ -102,30 +100,6 @@ function CreateCryptoForm() {
 				/>
 			</div>
 
-			<div className="form-control">
-				<label className="label">Bulk Rate</label>
-				<input
-					type="text"
-					className="input input-bordered"
-					name="bulk_rate"
-					value={data.bulk_rate}
-					onChange={(e) =>
-						setData({ ...data, [e.target.name]: e.target.value })
-					}
-				/>
-			</div>
-			<div className="form-control">
-				<label className="label">Bulk Rate Quantity</label>
-				<input
-					type="text"
-					className="input input-bordered"
-					name="bulk_rate_qty"
-					value={data.bulk_rate_qty}
-					onChange={(e) =>
-						setData({ ...data, [e.target.name]: e.target.value })
-					}
-				/>
-			</div>
 			<button
 				disabled={isLoading}
 				className="btn btn-primary mt-4"
