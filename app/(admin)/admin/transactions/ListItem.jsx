@@ -17,6 +17,8 @@ function ListItem({ doc, count, update }) {
 		type = "badge-success";
 	}
 
+	console.log(doc);
+
 	async function updateState(status) {
 		if (isLoading) return;
 		const toastId = toast.loading("Updating");
@@ -47,10 +49,26 @@ function ListItem({ doc, count, update }) {
 				<th>{count}</th>
 				<td className="whitespace-nowrap">{doc.description}</td>
 				<td className="space-x-2">
-					{doc.type === "account" && <span>&#8358;</span>}
-					<span>{commaNumber(doc.amount)}</span>
-					{doc.type === "crypto" && <span>{doc.item_name}</span>}
-					{doc.type === "g-voice" && <span>{doc.item_name}</span>}
+					{doc.type === "crypto" ? (
+						<>
+							<span className="mr-1">{doc.sending}</span>
+							<span>{doc.item_name}</span>
+						</>
+					) : doc.type === "gift-card" ? (
+						<>
+							<span>${doc.amount}</span>
+							<span>{doc.item_name}</span>
+						</>
+					) : doc.type === "verification" ? (
+						<>
+							<span>{doc.amount}</span>
+							<span>{doc.item_name}</span>
+						</>
+					) : doc.type === "payment" ? (
+						<>
+							<span>${commaNumber(doc.amount)}</span>
+						</>
+					) : null}
 				</td>
 				<td className="flex items-center gap-2">
 					<span className={`capitalize badge p-3 text-xs ${type}`}>
@@ -121,31 +139,72 @@ function ListItem({ doc, count, update }) {
 									<li className="flex flex-wrap gap-2 justify-between border-b py-3 last:border-b-0">
 										<span>Amount</span>
 										<span>
-											{doc.type === "account" && (
-												<span>&#8358;</span>
-											)}
-											{commaNumber(doc.amount)}
+											{doc.type === "crypto" ? (
+												<>
+													<span className="mr-1">
+														{doc.sending}
+													</span>
+													<span>{doc.item_name}</span>
+												</>
+											) : doc.type === "gift-card" ? (
+												<>
+													<span>${doc.amount}</span>
+													<span>{doc.item_name}</span>
+												</>
+											) : doc.type === "verification" ? (
+												<>
+													<span className="mr-1">
+														{doc.amount}
+													</span>
+													<span>{doc.item_name}</span>
+												</>
+											) : doc.type === "payment" ? (
+												<>
+													<span className="">
+														${doc.amount}
+													</span>
+												</>
+											) : null}
 										</span>
 									</li>
 									<li className="flex flex-wrap gap-2 justify-between border-b py-3 last:border-b-0">
 										<span>Rate</span>
 										<span>
-											{doc.type === "crypto" && (
-												<span>&#8358;</span>
+											{(doc.type === "crypto" ||
+												doc.type === "verification" ||
+												doc.type === "payment") && (
+												<span>$</span>
 											)}
 											{commaNumber(doc.rate)}
-											{doc.type === "account" && (
-												<span>%</span>
+
+											{doc.type === "gift-card" && (
+												<span>/$</span>
 											)}
 										</span>
 									</li>
+									{doc.type === "verification" && (
+										<li className="flex flex-wrap gap-2 justify-between">
+											<span>Sending</span>
+											<span>
+												&#8358;{" "}
+												{commaNumber(doc.sending)}
+											</span>
+										</li>
+									)}
 									<li className="flex flex-wrap gap-2 justify-between border-b py-3 last:border-b-0">
 										<span>Returns</span>
-										{doc.type === "g-voice" ? (
+										{doc.type === "verification" ? (
 											<span>
 												{commaNumber(doc.amount)}{" "}
 												Account{doc.amount > 1 && "s"}
 											</span>
+										) : doc.type === "gift-card" ? (
+											<>
+												<span className="">
+													${doc.amount}{" "}
+													{doc.item_name}
+												</span>
+											</>
 										) : (
 											<span>
 												<span>&#8358;</span>
@@ -162,17 +221,14 @@ function ListItem({ doc, count, update }) {
 											<span>{doc.address}</span>
 										</li>
 									)}
-									{doc.type === "account" && (
-										<>
-											{doc?.tag && (
-												<li className="flex flex-wrap gap-2 justify-between">
-													<span>Tag</span>
-													<span>{doc.tag}</span>
-												</li>
-											)}
-										</>
+									{doc.type === "payment" && (
+										<li className="flex flex-wrap gap-2 justify-between">
+											<span>Tag</span>
+											<span>** sent via email **</span>
+										</li>
 									)}
-									{doc.type === "g-voice" && (
+									{(doc.type === "gift-card" ||
+										doc.type === "verification") && (
 										<>
 											{doc?.account_bank && (
 												<li className="flex flex-wrap gap-2 justify-between">
@@ -204,7 +260,7 @@ function ListItem({ doc, count, update }) {
 								<div className="divider">Customer details</div>
 								<ul className="">
 									{(doc.type === "crypto" ||
-										doc.type === "account") && (
+										doc.type === "payment") && (
 										<>
 											{doc?.user?.account?.bank_name && (
 												<li className="flex flex-wrap gap-2 justify-between">
@@ -244,7 +300,9 @@ function ListItem({ doc, count, update }) {
 										</>
 									)}
 
-									{doc.type === "g-voice" && (
+									{(doc.type === "gift-card" ||
+										doc.type === "verification" ||
+										doc.type === "payment") && (
 										<>
 											{doc?.user?.name && (
 												<li className="flex flex-wrap gap-2 justify-between">

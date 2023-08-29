@@ -51,7 +51,7 @@ export default async function getTransactions(request) {
 		const data = [];
 
 		for (const item of doc.documents) {
-			if (item.type === "crypto" || item.type === "account") {
+			if (item.type === "crypto" || item.type === "payment") {
 				const account = await databases.listDocuments(
 					databaseId,
 					process.env
@@ -60,7 +60,19 @@ export default async function getTransactions(request) {
 				);
 
 				item.user = { account: account.documents[0] };
-			} else if (item.type === "g-voice") {
+				if (item.type === "payment") {
+					const users = new Users(server);
+					const user = await users.get(item.userId);
+					item.user = {
+						...item.user,
+						name: user.name,
+						email: user.email,
+					};
+				}
+			} else if (
+				item.type === "gift-card" ||
+				item.type === "verification"
+			) {
 				const users = new Users(server);
 				const user = await users.get(item.userId);
 				item.user = { name: user.name, email: user.email };

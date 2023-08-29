@@ -20,14 +20,26 @@ function ListItem({ doc, count }) {
 				<th>{count}</th>
 				<td className="whitespace-nowrap">{doc.description}</td>
 				<td className="space-x-2">
-					{doc.type === "payment" && <span>$</span>}
-					<span>{commaNumber(doc.amount)}</span>
-					{/* {(doc.type === "crypto" ||
-						doc.type === "payment" ||
-						doc.type === "gift-card") && (
-						<span>{doc.item_name}</span>
-					)} */}
-					{<span>{doc.item_name}</span>}
+					{doc.type === "crypto" ? (
+						<>
+							<span>{commaNumber(doc.sending)}</span>
+							<span>{doc.item_name}</span>
+						</>
+					) : doc.type === "gift-card" ? (
+						<>
+							<span>$ {commaNumber(doc.amount)}</span>
+							<span>{doc.item_name}</span>
+						</>
+					) : doc.type === "verification" ? (
+						<>
+							<span>{commaNumber(doc.amount)}</span>
+							<span>{doc.item_name}</span>
+						</>
+					) : doc.type === "payment" ? (
+						<>
+							<span>${commaNumber(doc.amount)}</span>
+						</>
+					) : null}
 				</td>
 				<td className="flex items-center gap-2">
 					<span className={`capitalize badge p-3 text-xs ${type}`}>
@@ -76,21 +88,58 @@ function ListItem({ doc, count }) {
 									<li className="flex flex-wrap gap-2 justify-between border-b py-3 last:border-b-0">
 										<span>Amount</span>
 										<span>
-											{doc.type === "payment" && (
-												<span>&#8358;</span>
-											)}
-											{commaNumber(doc.amount)}
+											{doc.type === "crypto" ? (
+												<>
+													<span className="mr-1">
+														{commaNumber(
+															doc.sending
+														)}
+													</span>
+													<span>{doc.item_name}</span>
+												</>
+											) : doc.type === "gift-card" ? (
+												<>
+													<span className="mr-1">
+														$
+														{commaNumber(
+															doc.amount
+														)}
+													</span>
+													<span>{doc.item_name}</span>
+												</>
+											) : doc.type === "verification" ? (
+												<>
+													<span>
+														{commaNumber(
+															doc.amount
+														)}
+													</span>
+													<span>{doc.item_name}</span>
+												</>
+											) : doc.type === "payment" ? (
+												<>
+													<span>
+														$
+														{commaNumber(
+															doc.amount
+														)}
+													</span>
+												</>
+											) : null}
 										</span>
 									</li>
 									<li className="flex flex-wrap gap-2 justify-between border-b py-3 last:border-b-0">
 										<span>Rate</span>
 										<span>
-											{doc.type === "crypto" && (
-												<span>&#8358;</span>
+											{(doc.type === "crypto" ||
+												doc.type === "verification" ||
+												doc.type === "payment") && (
+												<span>$</span>
 											)}
 											{commaNumber(doc.rate)}
-											{doc.type === "payment" && (
-												<span>%</span>
+
+											{doc.type === "gift-card" && (
+												<span>/$</span>
 											)}
 										</span>
 									</li>
@@ -101,6 +150,47 @@ function ListItem({ doc, count }) {
 												{commaNumber(doc.amount)}{" "}
 												Account{doc.amount > 1 && "s"}
 											</span>
+										) : doc.type === "gift-card" ? (
+											<>
+												<span className="">
+													${doc.amount}{" "}
+													{doc.item_name}
+												</span>
+											</>
+										) : (
+											<span>
+												<span>&#8358;</span>
+												{commaNumber(doc.returns)}
+											</span>
+										)}
+									</li>
+									<li className="flex flex-wrap gap-2 justify-between border-b py-3 last:border-b-0">
+										<span>Sending</span>
+										{doc.type === "verification" ? (
+											<span className="">
+												&#8358;{" "}
+												{commaNumber(doc.sending)}
+											</span>
+										) : doc.type === "gift-card" ? (
+											<>
+												<span className="">
+													&#8358;{" "}
+													{commaNumber(doc.sending)}
+												</span>
+											</>
+										) : doc.type === "crypto" ? (
+											<>
+												<span className="">
+													{commaNumber(doc.sending)}{" "}
+													{doc.item_name}
+												</span>
+											</>
+										) : doc.type === "payment" ? (
+											<>
+												<span className="">
+													${commaNumber(doc.amount)}{" "}
+												</span>
+											</>
 										) : (
 											<span>
 												<span>&#8358;</span>

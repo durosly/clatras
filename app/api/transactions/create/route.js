@@ -1,4 +1,4 @@
-import clientServer, { AppwriteServerClient } from "@/lib/client-server";
+import { AppwriteServerClient } from "@/lib/client-server";
 import { calculateReturns } from "@/lib/utils";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
@@ -20,6 +20,10 @@ async function createNewTransaction(request) {
 
 		if (!type || !doc_id || !amt) {
 			throw new Error("Enter all fields");
+		}
+
+		if (!Number(amt)) {
+			throw new Error("Invalid amount");
 		}
 
 		const app = new AppwriteServerClient();
@@ -55,39 +59,46 @@ async function createNewTransaction(request) {
 			doc_id
 		);
 
+		const d_rate = await databases.listDocuments(
+			process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
+			process.env.NEXT_PUBLIC_APPRWRITE_DOLLAR_RATE_COLLECTION_ID
+		);
+
 		let description = "";
 		let address = "nil";
 		let item_name = doc.name;
+		let dollar_rate = d_rate.total > 0 ? d_rate.documents[0].rate : 1;
 		let rate = 1;
 		let returns = 1;
 		let market = "";
+
+		if (d_rate.total > 0) {
+			dollar_rate = d_rate.documents[0].rate;
+		}
 
 		if (type === "crypto") {
 			description = `Exchange: ${doc.name} ${doc?.network || ""}`;
 			address = doc.address;
 			rate = doc.rate;
 
-			returns = calculateReturns(type, amt, doc.rate);
+			returns = dollar_rate * amt;
 			market = "sell";
 		} else if (type === "payment") {
 			description = `Sent funds to ${doc.name}`;
 
-			rate = doc.fee;
+			rate = dollar_rate;
 			market = "sell";
+			returns = amt * dollar_rate;
 		} else if (type === "verification") {
-			description = `Purchase ${amt} ${doc.name}${amt > 1 && "s"}`;
+			description = `Purchase ${amt} ${doc.name}`;
 			rate = doc.fee;
 			market = "buy";
 		} else if (type === "gift-card") {
-			description = `Purchase giftcard`;
+			description = `Purchase ${doc.name} giftcard`;
 			rate = doc.fee;
 			market = "buy";
+			dollar_rate = rate;
 		}
-
-		const d_rate = await databases.listDocuments(
-			process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
-			process.env.NEXT_PUBLIC_APPRWRITE_DOLLAR_RATE_COLLECTION_ID
-		);
 
 		const data = {
 			userId,
@@ -100,7 +111,7 @@ async function createNewTransaction(request) {
 			returns,
 			status: "pending",
 			market,
-			dollar_rate: d_rate.total > 0 ? d_rate.documents[0].rate : 1,
+			dollar_rate,
 		};
 
 		if (type === "gift-card" || type === "verification") {
@@ -117,7 +128,7 @@ async function createNewTransaction(request) {
 
 			data.account_number = doc.account_number;
 			if (market === "buy") {
-				data.sending = rate * amt;
+				data.sending = rate * amt * dollar_rate;
 			}
 		} else if (type === "payment" || type === "crypto") {
 			const { bankId } = resData;
@@ -129,10 +140,12 @@ async function createNewTransaction(request) {
 			);
 			data.account_name = doc.account_name;
 			data.account_bank = doc.bank_name;
-
 			data.account_number = doc.account_number;
-			if (market === "sell") {
-				data.returns = rate * amt;
+
+			if (type === "crypto") {
+				data.sending = amt / rate;
+			} else if (type === "payment") {
+				data.sending = amt;
 			}
 		}
 

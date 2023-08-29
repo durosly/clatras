@@ -7,15 +7,16 @@ import ExchangeSuccessModal from "../../exchange/[type]/modal";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { appwriteClient } from "@/lib/client";
+import { BsInfoCircle } from "react-icons/bs";
 
-function PurchaseDisplay({ docs, details }) {
+function PurchaseDisplay({ docs, details, d_rate }) {
 	const [step, setStep] = useState(1);
 	const [amt, setAmt] = useState();
 	const [cost, setCost] = useState(null);
 	const [card, setCard] = useState("");
 	const [item, setItem] = useState({});
 	function calculateCost(fee) {
-		let costPrice = amt * parseFloat(fee);
+		let costPrice = amt * d_rate;
 		setCost(costPrice);
 	}
 
@@ -45,6 +46,7 @@ function PurchaseDisplay({ docs, details }) {
 					setCard={setCard}
 					item={item}
 					setItem={setItem}
+					d_rate={d_rate}
 				/>
 			)}
 			{step === 2 && (
@@ -73,6 +75,7 @@ function StepOne({
 	setCard,
 	item,
 	setItem,
+	d_rate,
 }) {
 	const [hasCalculated, setHasCalculated] = useState(false);
 
@@ -100,16 +103,15 @@ function StepOne({
 		<>
 			{/* step 1 */}
 			<div className="space-y-5">
-				{item?.fee && (
-					<div>
-						<div className="flex justify-between gap-2">
-							<span>Rate</span>
-							<span className="font-bold">
-								&#8358; {commaNumber(item?.fee)}/$
-							</span>
-						</div>
+				<div>
+					<div className="flex justify-between gap-2">
+						<span>Rate</span>
+						<span className="font-bold">
+							&#8358; {commaNumber(d_rate)}/$
+						</span>
 					</div>
-				)}
+				</div>
+
 				<div>
 					<div className="form-control mb-2">
 						<label className="label">Funds</label>
@@ -229,7 +231,10 @@ function StepTwo({ document, cost, amt, prevStep, showSuccessModal, details }) {
 					</span>
 				</div>
 			</div>
-
+			<p className="alert text-xs font-bold">
+				<BsInfoCircle />
+				Payment information would be sent to your email address
+			</p>
 			<div>
 				<div className="text-center">
 					<button
@@ -248,7 +253,9 @@ function StepTwo({ document, cost, amt, prevStep, showSuccessModal, details }) {
 				</div>
 			</div>
 			<div>
-				<p className="text-xs font-bold">* Click Confirm to proceed</p>
+				<p className="text-xs font-bold text-center">
+					* Click Confirm to proceed
+				</p>
 				<div className=" mt-2">
 					<button
 						className=" flex gap-2 items-center"

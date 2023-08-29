@@ -8,16 +8,18 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import { appwriteClient } from "@/lib/client";
 
-function PurchaseDisplay({ docs, details }) {
+function PurchaseDisplay({ docs, details, d_rate }) {
 	const [step, setStep] = useState(1);
-	const [amt, setAmt] = useState();
-	const [qty, setQty] = useState();
+	const [amt, setAmt] = useState("");
+	const [qty, setQty] = useState("");
 	const [cost, setCost] = useState(null);
 	const [rate, setRate] = useState(null);
 	const [card, setCard] = useState("");
 	const [item, setItem] = useState({});
+
 	function calculateCost(fee) {
-		let costPrice = amt * parseFloat(fee);
+		// console.log(amt, fee, d_rate);
+		let costPrice = qty * parseFloat(fee) * d_rate;
 		setCost(costPrice);
 	}
 
@@ -49,6 +51,7 @@ function PurchaseDisplay({ docs, details }) {
 					setItem={setItem}
 					qty={qty}
 					setQty={setQty}
+					d_rate={d_rate}
 				/>
 			)}
 			{step === 2 && (
@@ -81,6 +84,7 @@ function StepOne({
 	setItem,
 	qty,
 	setQty,
+	d_rate,
 }) {
 	const [hasCalculated, setHasCalculated] = useState(false);
 
@@ -132,9 +136,14 @@ function StepOne({
 					<div>
 						<div className="flex justify-between gap-2">
 							<span>Rate</span>
-							<span className="font-bold">
-								&#8358; {commaNumber(item?.rate)}
-							</span>
+							<div className="flex flex-col">
+								<span className="font-bold">
+									&#8358; {commaNumber(item?.rate * d_rate)}
+								</span>
+								<span className="font-bold text-xs">
+									$ {commaNumber(item?.rate)}
+								</span>
+							</div>
 						</div>
 					</div>
 				)}
