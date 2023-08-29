@@ -6,6 +6,9 @@ import { authOptions } from "@/app/api/auth/options";
 import Link from "next/link";
 import { FaBitcoin } from "react-icons/fa";
 
+// Opt out of caching for all data requests in the route segment
+export const dynamic = "force-dynamic";
+
 async function UserCryptoPage() {
 	const session = await getServerSession(authOptions);
 	const userId = session.user.userId;

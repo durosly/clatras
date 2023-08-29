@@ -5,6 +5,9 @@ import clientServer from "@/lib/client-server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth/options";
 
+// Opt out of caching for all data requests in the route segment
+export const dynamic = "force-dynamic";
+
 async function UserTransactionHistoryPage() {
 	const session = await getServerSession(authOptions);
 	const userId = session.user.userId;

@@ -1,13 +1,13 @@
 import Link from "next/link";
-import { TbArrowsExchange, TbCalendarDown, TbMathPi } from "react-icons/tb";
 import { FaBitcoin } from "react-icons/fa";
-import { RiSecurePaymentLine } from "react-icons/ri";
-import { SiCashapp, SiZelle } from "react-icons/si";
-import { AiOutlineGooglePlus } from "react-icons/ai";
-import { BsCartPlus, BsGift } from "react-icons/bs";
-import ListItemContainer from "./components/list-item-container";
+import { TbCalendarDown } from "react-icons/tb";
 import { Suspense } from "react";
+import { BsGift } from "react-icons/bs";
 import { MdOutlinePayment, MdOutlineVerifiedUser } from "react-icons/md";
+import ListItemContainer from "./components/list-item-container";
+
+// Opt out of caching for all data requests in the route segment
+export const dynamic = "force-dynamic";
 
 async function UserHomePage() {
 	return (

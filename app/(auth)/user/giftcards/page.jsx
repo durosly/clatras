@@ -6,6 +6,9 @@ import { authOptions } from "@/app/api/auth/options";
 import Link from "next/link";
 import { BsGift } from "react-icons/bs";
 
+// Opt out of caching for all data requests in the route segment
+export const dynamic = "force-dynamic";
+
 async function UserGiftcardPage() {
 	const session = await getServerSession(authOptions);
 	const userId = session.user.userId;
