@@ -21,7 +21,6 @@ function ExchangeSuccessModal() {
 								Transaction request has been sent and you would
 								be notified via email on completion
 							</p>
-							<p>Thank you for choosing Clatras</p>
 						</div>
 						<div className="space-y-2">
 							<Link
