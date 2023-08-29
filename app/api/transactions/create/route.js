@@ -1,10 +1,10 @@
 import { AppwriteServerClient } from "@/lib/client-server";
-import { calculateReturns } from "@/lib/utils";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { Databases, ID, Query } from "node-appwrite";
 import { authOptions } from "@/auth/options";
 import sendEmail from "@/lib/send-email";
+import convertObjToMessage from "@/lib/serialize-to-message";
 
 async function createNewTransaction(request) {
 	try {
@@ -174,13 +174,11 @@ async function createNewTransaction(request) {
 			}
 		}
 
-		await sendEmail(
-			session.user.email,
-			"Pending transaction",
-			emailMessage
-		);
+		const userEmail = convertObjToMessage(data, "user");
 
-		await sendEmail(current, "New Pending transaction", emailMessage);
+		await sendEmail(session.user.email, "Pending transaction", userEmail);
+		const adminEmail = convertObjToMessage(data, "admin");
+		await sendEmail(current, "📌New Pending transaction", adminEmail);
 
 		return NextResponse.json({
 			status: true,
