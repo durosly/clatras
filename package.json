@@ -23,6 +23,7 @@
     "encoding": "^0.1.13",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
+    "lodash": "^4.17.21",
     "next": "13.4.12",
     "next-auth": "^4.22.3",
     "nextjs-progressbar": "^0.0.16",
