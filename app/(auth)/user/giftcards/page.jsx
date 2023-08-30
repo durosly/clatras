@@ -41,8 +41,8 @@ async function UserGiftcardPage() {
 					<div className="w-14 mx-auto aspect-square rounded-full bg-primary/10 flex justify-center items-center">
 						<BsGift className="w-7 h-7" />
 					</div>
-					<h2 className="uppercase font-bold">Gift cards</h2>
-					<p className="text-xs">Purchase giftcard</p>
+					<h2 className="uppercase font-bold">Ecode</h2>
+					<p className="text-xs">Purchase Ecode</p>
 				</div>
 				{user.emailVerification ? (
 					<PurchaseDisplay

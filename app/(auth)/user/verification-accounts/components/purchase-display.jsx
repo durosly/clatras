@@ -158,7 +158,7 @@ function StepOne({
 							className="btn btn-block btn-primary mt-4"
 							onClick={handleClick}
 						>
-							Calculate
+							Proceed
 						</button>
 					</div>
 				</div>

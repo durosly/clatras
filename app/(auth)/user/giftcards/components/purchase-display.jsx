@@ -112,7 +112,7 @@ function StepOne({
 				)}
 				<div>
 					<div className="form-control mb-2">
-						<label className="label">Card</label>
+						<label className="label">Ecode</label>
 						<select
 							value={card}
 							onChange={(e) => handleSelect(e.target.value)}
@@ -122,7 +122,7 @@ function StepOne({
 								value=""
 								disabled
 							>
-								-- select card--
+								-- select Ecode--
 							</option>
 							{documents.map((d) => (
 								<option
@@ -151,7 +151,7 @@ function StepOne({
 							className="btn btn-block btn-primary mt-4"
 							onClick={handleClick}
 						>
-							Calculate
+							Proceed
 						</button>
 					</div>
 				</div>
