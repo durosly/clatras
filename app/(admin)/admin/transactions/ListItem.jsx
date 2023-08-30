@@ -17,8 +17,6 @@ function ListItem({ doc, count, update }) {
 		type = "badge-success";
 	}
 
-	console.log(doc);
-
 	async function updateState(status) {
 		if (isLoading) return;
 		const toastId = toast.loading("Updating");

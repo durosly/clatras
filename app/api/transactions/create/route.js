@@ -166,19 +166,23 @@ async function createNewTransaction(request) {
 			data
 		);
 
-		let emailMessage = "";
-
-		for (const key in data) {
-			if (key !== "userId") {
-				emailMessage += `<p style="font-size: 12px;">${key}: ${data[key]}</p>`;
-			}
-		}
-
 		const userEmail = convertObjToMessage(data, "user");
 
-		await sendEmail(session.user.email, "Pending transaction", userEmail);
+		await sendEmail(
+			session.user.email,
+			"⌛Pending transaction",
+			"Your transaction is being processed.",
+			userEmail,
+			"Thank your for choosing Clatras"
+		);
 		const adminEmail = convertObjToMessage(data, "admin");
-		await sendEmail(current, "📌New Pending transaction", adminEmail);
+		await sendEmail(
+			current,
+			"📌New Pending transaction",
+			"You have a new transaction request",
+			adminEmail,
+			"Pending transaction"
+		);
 
 		return NextResponse.json({
 			status: true,

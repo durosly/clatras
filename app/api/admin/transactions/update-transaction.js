@@ -1,6 +1,7 @@
 import { AppwriteServerClient } from "@/lib/client-server";
+import sendEmail from "@/lib/send-email";
 import { NextResponse } from "next/server";
-import { Databases } from "node-appwrite";
+import { Databases, Users } from "node-appwrite";
 
 async function updateTransactionStatus(request) {
 	try {
@@ -44,6 +45,29 @@ async function updateTransactionStatus(request) {
 		await databases.updateDocument(databaseId, collectionId, id, {
 			status,
 		});
+
+		const doc = await databases.getDocument(databaseId, collectionId, id);
+
+		const users = new Users(server);
+
+		const user = await users.get(doc.userId);
+
+		const title =
+			status === "success"
+				? "✅Transaction successful"
+				: "⚠️Transaction declined";
+		const message = `Your transaction request for ${doc.item_name} is ${
+			status === "success"
+				? "successful"
+				: "declined. Please, contact admin to learn more."
+		}.`;
+		await sendEmail(
+			user.email,
+			title,
+			message,
+			"",
+			"Thank your for choosing Clatras"
+		);
 
 		return NextResponse.json({ status: true, message: "Status updated" });
 	} catch (error) {
