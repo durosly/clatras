@@ -2,6 +2,7 @@ import logo from "@/images/logo.png";
 import Image from "next/image";
 import Header from "./header";
 import Nav from "./nav";
+import BottomNav from "./bottom-nav";
 
 function Wrapper({ children }) {
 	return (
@@ -20,6 +21,7 @@ function Wrapper({ children }) {
 
 					{/* footer */}
 					{/* <Footer /> */}
+					<BottomNav />
 				</div>
 				<div className="drawer-side">
 					<label
