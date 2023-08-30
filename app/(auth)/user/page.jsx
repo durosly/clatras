@@ -5,11 +5,16 @@ import { Suspense } from "react";
 import { BsGift } from "react-icons/bs";
 import { MdOutlinePayment, MdOutlineVerifiedUser } from "react-icons/md";
 import ListItemContainer from "./components/list-item-container";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/options";
 
 // Opt out of caching for all data requests in the route segment
 export const dynamic = "force-dynamic";
 
 async function UserHomePage() {
+	const session = await getServerSession(authOptions);
+	const name = session.user.name;
+
 	return (
 		<div className="mx-5 sm:mx-10 py-5 space-y-8">
 			{/* <div className="alert flex gap-2">
@@ -42,30 +47,13 @@ async function UserHomePage() {
 					</button>
 				</div>
 			</div> */}
+			<p>Hi, {name}</p>
 
 			<div className="bg-primary/10 p-5 rounded-2xl">
 				<h2 className="text-xl font-bold">Welcome to Clatras</h2>
 				<p className="text-sm">Experience fast and easy transactions</p>
 			</div>
 			<div className="flex flex-wrap justify-center gap-4">
-				<Link
-					href="/user/giftcards"
-					className="flex-1 max-w-[130px] group hover:bg-slate-100 hover:border-primary text-center border p-5 rounded-xl"
-				>
-					<div className="w-20 aspect-square rounded-full bg-primary/10 flex justify-center items-center">
-						<BsGift className="w-10 h-10" />
-					</div>
-					<p>Gift Cards</p>
-				</Link>
-				<Link
-					href="/user/verification-accounts"
-					className="flex-1 max-w-[130px] group hover:bg-slate-100 hover:border-primary text-center border p-5 rounded-xl"
-				>
-					<div className="w-20 aspect-square rounded-full bg-primary/10 flex justify-center items-center">
-						<MdOutlineVerifiedUser className="w-10 h-10" />
-					</div>
-					<p>Verifications</p>
-				</Link>
 				<Link
 					href="/user/payments"
 					className="flex-1 max-w-[130px] group hover:bg-slate-100 hover:border-primary text-center border p-5 rounded-xl"
@@ -86,6 +74,24 @@ async function UserHomePage() {
 						<FaBitcoin className="w-10 h-10" />
 					</div>
 					<p>Crypto</p>
+				</Link>
+				<Link
+					href="/user/giftcards"
+					className="flex-1 max-w-[130px] group hover:bg-slate-100 hover:border-primary text-center border p-5 rounded-xl"
+				>
+					<div className="w-20 aspect-square rounded-full bg-primary/10 flex justify-center items-center">
+						<BsGift className="w-10 h-10" />
+					</div>
+					<p>Gift Cards</p>
+				</Link>
+				<Link
+					href="/user/verification-accounts"
+					className="flex-1 max-w-[130px] group hover:bg-slate-100 hover:border-primary text-center border p-5 rounded-xl"
+				>
+					<div className="w-20 aspect-square rounded-full bg-primary/10 flex justify-center items-center">
+						<MdOutlineVerifiedUser className="w-10 h-10" />
+					</div>
+					<p>Verifications</p>
 				</Link>
 			</div>
 			<div className="space-y-8">
