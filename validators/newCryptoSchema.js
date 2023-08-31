@@ -6,6 +6,7 @@ const CryptoSchema = z.object({
 	network: z.any(),
 	rate: z.coerce.number().positive(),
 	abbr: z.string().trim().min(1, { message: "Abbreviation cannot be empty" }),
+	type: z.string().default(""),
 });
 
 export default CryptoSchema;

@@ -1,6 +1,8 @@
 import { AppwriteServerClient } from "@/lib/client-server";
 import CryptoSchema from "@/validators/newCryptoSchema";
 import { NextResponse } from "next/server";
+import { pick } from "lodash";
+import CoinMarketCap from "coinmarketcap-api";
 import { Databases, ID } from "node-appwrite";
 
 export default async function createCrypto(request) {
@@ -10,7 +12,6 @@ export default async function createCrypto(request) {
 		const parse = CryptoSchema.safeParse(data);
 
 		if (!parse.success) {
-			console.log(parse.error);
 			return new Response(
 				JSON.stringify({
 					status: false,
@@ -35,11 +36,33 @@ export default async function createCrypto(request) {
 		let collectionId =
 			process.env.NEXT_PUBLIC_APPRWRITE_CRYPTO_INFO_COLLECTION_ID;
 
+		if (parse.data.type === "predefined") {
+			const client = new CoinMarketCap(process.env.COINMARKETCAP_API);
+			const c_data = await client.getQuotes({
+				symbol: data.abbr.toUpperCase(),
+			});
+
+			if (c_data?.status.error_code)
+				throw new Error(c_data.status.error_message);
+
+			parse.data.rate =
+				c_data.data[data.abbr.toUpperCase()].quote.USD.price;
+		}
+
+		const newData = pick(parse.data, [
+			"name",
+			"network",
+			"address",
+			"rate",
+			"abbr",
+			"type",
+		]);
+
 		const doc = await databases.createDocument(
 			databaseId,
 			collectionId,
 			ID.unique(),
-			parse.data
+			newData
 		);
 
 		return NextResponse.json({
