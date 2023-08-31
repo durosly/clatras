@@ -27,7 +27,7 @@ function Wrapper({ children }) {
 			<NavigationEvents />
 			<div className="drawer block lg:flex flex-row-reverse lg:drawer-open ">
 				<input
-					id="my-drawer-2"
+					id="my-drawer-3"
 					type="checkbox"
 					className="drawer-toggle"
 				/>
@@ -41,7 +41,7 @@ function Wrapper({ children }) {
 				</div>
 				<div className="drawer-side">
 					<label
-						htmlFor="my-drawer-2"
+						htmlFor="my-drawer-3"
 						className="drawer-overlay"
 					></label>
 					<div className="bg-base-200 min-h-screen">

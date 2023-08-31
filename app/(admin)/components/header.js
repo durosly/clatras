@@ -9,7 +9,7 @@ function Header() {
 			<div className="navbar-start ">
 				<div className="flex items-center lg:hidden">
 					<label
-						htmlFor="my-drawer-2"
+						htmlFor="my-drawer-3"
 						className="btn btn-ghost btn-square drawer-button "
 					>
 						<HiBars3CenterLeft className="w-6 h-6" />
