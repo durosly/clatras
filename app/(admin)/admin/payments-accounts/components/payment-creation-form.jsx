@@ -5,7 +5,14 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 
-const initialData = { name: "", abbr: "", fee: "" };
+const initialData = {
+	name: "",
+	abbr: "",
+	fee: "",
+	email: "",
+	tag: "",
+	phone: "",
+};
 
 function PaymentCreationForm() {
 	const router = useRouter();
@@ -84,6 +91,60 @@ function PaymentCreationForm() {
 					placeholder="60..."
 					name="fee"
 					value={data.fee}
+					onChange={(e) =>
+						setData({ ...data, [e.target.name]: e.target.value })
+					}
+				/>
+			</div>
+			<div className="form-control">
+				<label
+					className="label"
+					htmlFor=""
+				>
+					Tag
+				</label>
+				<input
+					type="text"
+					className="input input-bordered"
+					placeholder="tag..."
+					name="tag"
+					value={data.tag}
+					onChange={(e) =>
+						setData({ ...data, [e.target.name]: e.target.value })
+					}
+				/>
+			</div>
+			<div className="form-control">
+				<label
+					className="label"
+					htmlFor=""
+				>
+					Email
+				</label>
+				<input
+					type="text"
+					className="input input-bordered"
+					placeholder="n@g.com..."
+					name="email"
+					value={data.email}
+					onChange={(e) =>
+						setData({ ...data, [e.target.name]: e.target.value })
+					}
+				/>
+			</div>
+			<div className="form-control">
+				<label
+					className="label"
+					htmlFor=""
+				>
+					Phone
+				</label>
+				<input
+					type="text"
+					className="input input-bordered"
+					placeholder="23470123.."
+					name="phone"
+					value={data.phone}
 					onChange={(e) =>
 						setData({ ...data, [e.target.name]: e.target.value })
 					}

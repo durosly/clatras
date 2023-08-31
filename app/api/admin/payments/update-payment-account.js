@@ -6,7 +6,7 @@ export default async function updatePaymentAccount(request) {
 	try {
 		const data = await request.json();
 
-		const { name, abbr, fee } = data;
+		const { name, abbr, fee, tag, email, phone } = data;
 
 		if (!name) {
 			return new Response(
@@ -58,7 +58,7 @@ export default async function updatePaymentAccount(request) {
 			databaseId,
 			collectionId,
 			data.$id,
-			{ name, abbr, fee }
+			{ name, abbr, fee, tag, email, phone }
 		);
 
 		return NextResponse.json({

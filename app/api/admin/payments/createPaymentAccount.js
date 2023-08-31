@@ -4,7 +4,7 @@ import { Databases, ID } from "node-appwrite";
 
 export default async function createPaymentAccount(request) {
 	try {
-		const { name, abbr, fee } = await request.json();
+		const { name, abbr, fee, tag, email, phone } = await request.json();
 
 		if (!name) {
 			return new Response(
@@ -60,6 +60,9 @@ export default async function createPaymentAccount(request) {
 				name,
 				abbr,
 				fee,
+				tag,
+				email,
+				phone,
 			}
 		);
 

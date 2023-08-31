@@ -142,7 +142,69 @@ function PaymentListItem({ count, doc }) {
 										}
 									/>
 								</div>
-
+								<div className="form-control">
+									<label
+										className="label"
+										htmlFor=""
+									>
+										Tag
+									</label>
+									<input
+										type="text"
+										className="input input-bordered"
+										placeholder="tag..."
+										name="tag"
+										value={data.tag}
+										onChange={(e) =>
+											setData({
+												...data,
+												[e.target.name]: e.target.value,
+											})
+										}
+									/>
+								</div>
+								<div className="form-control">
+									<label
+										className="label"
+										htmlFor=""
+									>
+										Email
+									</label>
+									<input
+										type="text"
+										className="input input-bordered"
+										placeholder="n@g.com..."
+										name="email"
+										value={data.email}
+										onChange={(e) =>
+											setData({
+												...data,
+												[e.target.name]: e.target.value,
+											})
+										}
+									/>
+								</div>
+								<div className="form-control">
+									<label
+										className="label"
+										htmlFor=""
+									>
+										Phone
+									</label>
+									<input
+										type="text"
+										className="input input-bordered"
+										placeholder="23470123.."
+										name="phone"
+										value={data.phone}
+										onChange={(e) =>
+											setData({
+												...data,
+												[e.target.name]: e.target.value,
+											})
+										}
+									/>
+								</div>
 								<button
 									disabled={isLoading}
 									className="btn btn-primary mt-4"
