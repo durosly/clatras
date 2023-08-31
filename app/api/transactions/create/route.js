@@ -132,20 +132,23 @@ async function createNewTransaction(request) {
 			}
 		} else if (type === "payment" || type === "crypto") {
 			const { bankId } = resData;
-			const doc = await databases.getDocument(
+			const u_doc = await databases.getDocument(
 				databaseId,
 				process.env.NEXT_PUBLIC_APPRWRITE_BANK_DETAILS_COLLECTION_ID,
 				bankId,
 				[Query.equal("userId", userId)]
 			);
-			data.account_name = doc.account_name;
-			data.account_bank = doc.bank_name;
-			data.account_number = doc.account_number;
+			data.account_name = u_doc.account_name;
+			data.account_bank = u_doc.bank_name;
+			data.account_number = u_doc.account_number;
 
 			if (type === "crypto") {
 				data.sending = amt / rate;
 			} else if (type === "payment") {
 				data.sending = amt;
+				data.email = doc?.email || "nil";
+				data.tag = doc?.tag || "nil";
+				data.phone = doc?.phone || "nil";
 			}
 		}
 

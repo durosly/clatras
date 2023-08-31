@@ -231,10 +231,35 @@ function StepTwo({ document, cost, amt, prevStep, showSuccessModal, details }) {
 					</span>
 				</div>
 			</div>
-			<p className="alert text-xs font-bold">
-				<BsInfoCircle />
-				Payment information would be sent to your email address
-			</p>
+			<div className="card bg-base-200 p-4">
+				<div className="flex flex-wrap items-center gap-1 mb-4 border-b pb-3">
+					<BsInfoCircle className="w-3 h-3" />
+					<p className="text-xs font-bold">Account info</p>
+				</div>
+				{document?.tag && document.tag && document.tag !== "nil" && (
+					<div className="flex flex-wrap justify-between text-sm gap-2">
+						<span>Tag</span>
+						<span className="font-bold">{document.tag}</span>
+					</div>
+				)}
+				{document?.email &&
+					document.email &&
+					document.email !== "nil" && (
+						<div className="flex flex-wrap justify-between text-sm gap-2">
+							<span>Email</span>
+							<span className="font-bold">{document.email}</span>
+						</div>
+					)}
+				{document?.phone &&
+					document.phone &&
+					document.phone !== "nil" && (
+						<div className="flex flex-wrap justify-between text-sm gap-2">
+							<span>Phone</span>
+							<span className="font-bold">{document.phone}</span>
+						</div>
+					)}
+			</div>
+
 			<div>
 				<div className="text-center">
 					<button
