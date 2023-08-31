@@ -82,7 +82,7 @@ async function UserHomePage() {
 					<div className="w-20 aspect-square rounded-full bg-primary/10 flex justify-center items-center">
 						<BsGift className="w-10 h-10" />
 					</div>
-					<p>Gift Cards</p>
+					<p>Ecode</p>
 				</Link>
 				<Link
 					href="/user/verification-accounts"
@@ -91,7 +91,10 @@ async function UserHomePage() {
 					<div className="w-20 aspect-square rounded-full bg-primary/10 flex justify-center items-center">
 						<MdOutlineVerifiedUser className="w-10 h-10" />
 					</div>
-					<p>Verifications</p>
+					<p className="flex flex-col">
+						<span>Acount &</span>
+						<span>verifications</span>
+					</p>
 				</Link>
 			</div>
 			<div className="space-y-8">
