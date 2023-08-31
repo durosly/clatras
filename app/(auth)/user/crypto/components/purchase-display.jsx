@@ -7,6 +7,7 @@ import ExchangeSuccessModal from "../../exchange/[type]/modal";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { appwriteClient } from "@/lib/client";
+import QRCode from "react-qr-code";
 
 function PurchaseDisplay({ docs, details, d_rate }) {
 	const [step, setStep] = useState(1);
@@ -137,9 +138,9 @@ function StepOne({
 						<div className="flex justify-between gap-2">
 							<span>Rate</span>
 							<div className="flex flex-col">
-								<span className="font-bold">
+								{/* <span className="font-bold">
 									&#8358; {commaNumber(item?.rate * d_rate)}
-								</span>
+								</span> */}
 								<span className="font-bold text-xs">
 									$ {commaNumber(item?.rate)}
 								</span>
@@ -297,7 +298,14 @@ function StepTwo({
 					<p className="text-xs">{document.network}</p>
 				</div>
 			</div>
-
+			<div className="mx-auto w-full max-w-[200px]">
+				<QRCode
+					size={256}
+					style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+					value={document.address}
+					viewBox={`0 0 256 256`}
+				/>
+			</div>
 			<div>
 				<div className="text-center">
 					<button
