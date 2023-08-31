@@ -209,10 +209,30 @@ function ListItem({ doc, count }) {
 									)}
 									{doc.type === "payment" && (
 										<>
-											<li className="flex flex-wrap gap-2 justify-between">
-												<span>Details</span>
-												<span>**sent via email**</span>
-											</li>
+											{doc?.tag &&
+												doc.tag &&
+												doc.tag !== "nil" && (
+													<li className="flex flex-wrap gap-2 justify-between">
+														<span>Tag</span>
+														<span>{doc.tag}</span>
+													</li>
+												)}
+											{doc?.phone &&
+												doc.phone &&
+												doc.phone !== "nil" && (
+													<li className="flex flex-wrap gap-2 justify-between">
+														<span>Phone</span>
+														<span>{doc.phone}</span>
+													</li>
+												)}
+											{doc?.email &&
+												doc.email &&
+												doc.email !== "nil" && (
+													<li className="flex flex-wrap gap-2 justify-between">
+														<span>Email</span>
+														<span>{doc.email}</span>
+													</li>
+												)}
 										</>
 									)}
 									{(doc.type === "verification" ||
