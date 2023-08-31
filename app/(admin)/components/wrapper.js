@@ -19,10 +19,12 @@ import {
 } from "react-icons/md";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import Header from "./header";
+import { NavigationEvents } from "@/app/components/navigation-event";
 
 function Wrapper({ children }) {
 	return (
 		<>
+			<NavigationEvents />
 			<div className="drawer block lg:flex flex-row-reverse lg:drawer-open ">
 				<input
 					id="my-drawer-2"

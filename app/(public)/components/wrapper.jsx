@@ -3,10 +3,12 @@ import Image from "next/image";
 import Footer from "./footer";
 import Header from "./header";
 import Nav from "./nav";
+import { NavigationEvents } from "@/app/components/navigation-event";
 
 function Wrapper({ children }) {
 	return (
 		<div className="drawer">
+			<NavigationEvents />
 			<input
 				id="my-drawer-3"
 				type="checkbox"
