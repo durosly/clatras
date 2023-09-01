@@ -3,20 +3,14 @@ import axios from "axios";
 import commaNumber from "comma-number";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
-import { BsGoogle } from "react-icons/bs";
-import { GrBitcoin } from "react-icons/gr";
-import { SiCashapp, SiZelle } from "react-icons/si";
+import { MdOutlineMoving } from "react-icons/md";
 
 function TransactionsData() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [interval, setInterval] = useState("24h");
 	const [data, setData] = useState({
 		total: { count: 0, bal: 0 },
-		btc: { per: 0, count: 0, bal: 0 },
-		pi: { per: 0, count: 0, bal: 0 },
-		cashapp: { per: 0, count: 0, bal: 0 },
-		zelle: { per: 0, count: 0, bal: 0 },
-		google: { per: 0, count: 0, bal: 0 },
+		items: {},
 	});
 
 	async function loadTransactionStats(entry) {
@@ -100,91 +94,28 @@ function TransactionsData() {
 					</div>
 				) : (
 					<div className="flex flex-wrap gap-5">
-						<div className="flex gap-2 flex-[200px]">
-							<div className="w-11 aspect-square flex justify-center items-center bg-primary/50 rounded-md">
-								<GrBitcoin className="w-5 h-5" />
-							</div>
-							<div>
-								<div className="flex items-center gap-1">
-									<p className="text-sm">BTC</p>
-									<span className="badge badge-sm badge-primary">
-										{data.btc.per.toFixed(2)}%
-									</span>
+						{Object.keys(data?.items || {}).map((item) => (
+							<div
+								key={JSON.stringify(item)}
+								className="flex gap-2 flex-[200px]"
+							>
+								<div className="w-11 aspect-square flex justify-center items-center bg-primary/50 rounded-full">
+									<MdOutlineMoving className="w-5 h-5" />
 								</div>
-								<p className="text-xs">
-									{data.btc.count} (&#8358;{" "}
-									{commaNumber(data.btc.bal)})
-								</p>
-							</div>
-						</div>
-						<div className="flex gap-2 flex-[200px]">
-							<div className="w-11 aspect-square flex justify-center items-center bg-primary/50 rounded-md">
-								<GrBitcoin className="w-5 h-5" />
-							</div>
-							<div>
-								<div className="flex items-center gap-1">
-									<p className="text-sm">PI coin</p>
-									<span className="badge badge-sm badge-primary">
-										{data.pi.per.toFixed(2)}%
-									</span>
+								<div>
+									<div className="flex items-center gap-1">
+										<p className="text-sm">{item}</p>
+										<span className="badge badge-sm badge-primary">
+											{data.items[item].per.toFixed(2)}%
+										</span>
+									</div>
+									<p className="text-xs">
+										{data.items[item].count} (&#8358;{" "}
+										{commaNumber(data.items[item].bal)})
+									</p>
 								</div>
-								<p className="text-xs">
-									{data.pi.count} (&#8358;{" "}
-									{commaNumber(data.pi.bal)})
-								</p>
 							</div>
-						</div>
-						<div className="flex gap-2 flex-[200px]">
-							<div className="w-11 aspect-square flex justify-center items-center bg-primary/50 rounded-md">
-								<SiCashapp className="w-5 h-5" />
-							</div>
-							<div>
-								<div className="flex items-center gap-1">
-									<p className="text-sm">Cashapp</p>
-									<span className="badge badge-sm badge-primary">
-										{data.cashapp.per.toFixed(2)}%
-									</span>
-								</div>
-								<p className="text-xs">
-									{data.cashapp.count} (&#8358;{" "}
-									{commaNumber(data.cashapp.bal)})
-								</p>
-							</div>
-						</div>
-						<div className="flex gap-2 flex-[200px]">
-							<div className="w-11 aspect-square flex justify-center items-center bg-primary/50 rounded-md">
-								<SiZelle className="w-5 h-5" />
-							</div>
-							<div>
-								<div className="flex items-center gap-1">
-									<p className="text-sm">Zelle</p>
-									<span className="badge badge-sm badge-primary">
-										{data.zelle.per.toFixed(2)}%
-									</span>
-								</div>
-								<p className="text-xs">
-									{data.zelle.count} (&#8358; {data.zelle.bal}
-									)
-								</p>
-							</div>
-						</div>
-						<div className="flex gap-2 flex-[200px]">
-							<div className="w-11 aspect-square flex justify-center items-center bg-primary/50 rounded-md">
-								<BsGoogle className="w-5 h-5" />
-							</div>
-							<div>
-								<div className="flex items-center gap-1">
-									<p className="text-sm">Google Voice</p>
-									<span className="badge badge-sm badge-primary">
-										{data.google.per.toFixed(2)}%
-									</span>
-								</div>
-								<p className="text-xs">
-									{data.google.count} (&#8358;{" "}
-									{commaNumber(data.google.bal)})
-								</p>
-							</div>
-						</div>
+						))}
 					</div>
 				)}
 			</div>

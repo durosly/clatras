@@ -74,6 +74,7 @@ async function getTransactions(request) {
 
 		const data = {
 			total: { count: 0, bal: 0 },
+			items: {},
 			btc: { per: 0, count: 0, bal: 0 },
 			pi: { per: 0, count: 0, bal: 0 },
 			cashapp: { per: 0, count: 0, bal: 0 },
@@ -82,24 +83,28 @@ async function getTransactions(request) {
 		};
 
 		for (const item of doc.documents) {
-			let key = "";
+			let key = item.item_name;
 			data.total.count++;
 			data.total.bal += Number(item.rate) * Number(item.amount);
 
-			if (item.item_name === "Google Voice") key = "google";
-			else if (item.item_name === "Bitcoin") key = "btc";
-			else if (item.item_name === "Zelle") key = "zelle";
-			else if (item.item_name === "Cashapp") key = "cashapp";
-			else if (item.item_name === "PI coin") key = "pi";
-			else continue;
+			if (data.items[key]) {
+				data.items[key].count++;
+				data.items[key].bal += Number(item.rate) * Number(item.amount);
+				// console.log(data.items);
+			} else {
+				data.items[key] = {
+					count: 1,
+					bal: Number(item.rate) * Number(item.amount),
+				};
+				// data.items[key].count = 1;
+				// data.items[key].bal = Number(item.rate) * Number(item.amount);
+			}
 
-			data[key].count++;
-			data[key].bal += Number(item.rate) * Number(item.amount);
+			// data[key].count++;
+			// data[key].bal += Number(item.rate) * Number(item.amount);
 
-			for (const k in data) {
-				if (k !== "total") {
-					data[k].per = (data[k].bal / data.total.bal) * 100;
-				}
+			for (const k in data.items) {
+				data.items[k].per = (data.items[k].bal / data.total.bal) * 100;
 			}
 		}
 
