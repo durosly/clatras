@@ -5,6 +5,10 @@ import Jet from "@/svg/illustrations/jet";
 import Spiral from "@/svg/illustrations/spiral";
 import Streamer from "@/svg/illustrations/streamer";
 import UserJoin from "@/svg/illustrations/user-join";
+import { CgCreditCard } from "react-icons/cg";
+import { RiCustomerService2Fill } from "react-icons/ri";
+import { MdSecurity } from "react-icons/md";
+import { BiSolidPieChart } from "react-icons/bi";
 
 export default function Home() {
 	return (
@@ -13,12 +17,13 @@ export default function Home() {
 				<div className="md:flex mt-20 items-center max-w-6xl">
 					<div className=" max-h-[700px] md:h-auto md:flex-1 text-center md:text-left space-y-14 md:space-y-3 mb-10">
 						<div className="mb-5">
-							<h2 className="max-[340px]:text-4xl text-6xl md:text-8xl font-bold mb-5 md:mb-0">
-								Smart Financial Service
+							<h2 className="max-[340px]:text-3xl text-5xl md:text-7xl font-bold mb-5 md:mb-0">
+								Enjoy a hassle-free Payment Process
 							</h2>
 							<p>
-								Your one stop shop to online payments and
-								related transactions
+								Sell your bitcoins, buy Google Voice accounts,
+								and make unlimited international transactions in
+								just a few clicks
 							</p>
 						</div>
 						<div>
@@ -72,6 +77,57 @@ export default function Home() {
 				</ul>
 			</div>
 
+			<div className="bg-primary my-20 p-10">
+				<div className="max-w-4xl mx-auto">
+					<h3 className="text-xl sm:text-3xl md:text-6xl font-bold mb-4">
+						Why choose us?
+					</h3>
+					<p>
+						Clatras is the leading crypto exchange company that
+						offers a fast, secure, and user-friendly platform for
+						buying bitcoins and other cryptocurrencies from you. You
+						can own a google voice account at affordable rates and
+						make International transaction without limit.
+					</p>
+				</div>
+			</div>
+			<div className="max-w-4xl mx-auto px-5 sm:px-10">
+				<h3 className="text-xl sm:text-2xl font-bold mb-4 text-center">
+					Experience the convenience and reliability of our services.
+				</h3>
+				<div className="flex flex-col sm:flex-row flex-wrap justify-center items-center sm:items-stretch gap-5 ">
+					<div className="card sm:w-1/3 flex-1 max-w-[300px] bg-black/5 p-5 relative">
+						<h4 className="font-bold mb-2 ">Sell your bitcoins</h4>
+						<p className="text-sm">
+							We offer competitive rates for buying your bitcoins
+							and ensure a seamless transaction process directly
+							to your bank account.
+						</p>
+					</div>
+					<div className="card sm:w-1/3 flex-1 max-w-[300px] bg-black/5 p-5 relative">
+						<h4 className="font-bold mb-2 ">
+							Get accounts at unbeatable prices
+						</h4>
+						<p className="text-sm">
+							Purchase Google Voice accounts and international
+							numbers suitable for any form of verification,
+							delivered directly to your email at a fair prices.
+						</p>
+					</div>
+					<div className="card sm:w-1/3 flex-1 max-w-[300px] bg-black/5 p-5 relative">
+						<h4 className="font-bold mb-2 ">
+							Unlimited international transactions
+						</h4>
+						<p className="text-sm">
+							With Clatras, there are no limits when it comes to
+							making international transactions. Expand your
+							business horizons without any boundaries and recieve
+							payment from anywhere in the world.
+						</p>
+					</div>
+				</div>
+			</div>
+
 			<div className="mt-40 md:mt-0 md:min-h-screen flex justify-center items-center">
 				<div className="md:flex px-5 justify-between gap-20 space-y-4 max-w-4xl">
 					<div className="flex-1 space-y-4">
@@ -85,7 +141,7 @@ export default function Home() {
 						</p>
 					</div>
 					<div className="flex-1">
-						<div className="bg-primary space-y-5 p-5 md:p-10 rounded-2xl">
+						<div className="bg-primary space-y-5 p-10 rounded-2xl">
 							<div className="flex justify-center items-center md:w-full">
 								<Jet className="md:w-full max-w-[80px] md:max-w-[200px] h-auto" />
 							</div>
@@ -101,7 +157,81 @@ export default function Home() {
 				</div>
 			</div>
 
-			<div className="md:min-h-screen relative my-40 px-5">
+			<div className=" px-5 my-20">
+				<div className="max-w-4xl mx-auto">
+					<h2 className="font-bold text-xl mb-5">
+						What you&quot;ll get
+					</h2>
+					<div className="space-y-4">
+						<div className="border p-5 sm:p-10 card">
+							<div className="flex gap-5 items-center mb-5 sm:mb-0">
+								<div className="w-14 bg-primary/10 aspect-square rounded-full relative">
+									<CgCreditCard className="w-10 h-10 absolute -right-3 top-1/2 -translate-y-1/2 drop-shadow-lg" />
+								</div>
+								<h3 className="font-bold">
+									Seamless payment process
+								</h3>
+							</div>
+							<p className="sm:pl-10">
+								Say goodbye to long waiting times and experience
+								the convenience of instant transactions. With
+								our advanced technology, we have ensured that
+								every transaction is completed quickly and
+								seamlessly.
+							</p>
+						</div>
+						<div className="border p-5 sm:p-10 card">
+							<div className="flex gap-5 items-center mb-5 sm:mb-0">
+								<div className="w-14 bg-primary/10 aspect-square rounded-full relative">
+									<RiCustomerService2Fill className="w-10 h-10 absolute -right-3 top-1/2 -translate-y-1/2 drop-shadow-lg" />
+								</div>
+								<h3 className="font-bold">
+									24/7 customer service
+								</h3>
+							</div>
+							<p className="sm:pl-10">
+								Get the support you need, whenever you need it.
+								Our dedicated customer service team is available
+								round-the-clock to answer any questions or
+								resolve any issues you may have.
+							</p>
+						</div>
+						<div className="border p-5 sm:p-10 card">
+							<div className="flex gap-5 items-center mb-5 sm:mb-0">
+								<div className="w-14 bg-primary/10 aspect-square rounded-full relative">
+									<MdSecurity className="w-10 h-10 absolute -right-3 top-1/2 -translate-y-1/2 drop-shadow-lg" />
+								</div>
+								<h3 className="font-bold">
+									Top-Notch Security
+								</h3>
+							</div>
+							<p className="sm:pl-10">
+								At Clatras, we ensure top-notch measures to
+								ensure that your funds and personal information
+								are protected at all times. Trade with
+								confidence knowing that you are in safe hands.
+							</p>
+						</div>
+						<div className="border p-5 sm:p-10 card">
+							<div className="flex gap-5 items-center mb-5 sm:mb-0">
+								<div className="w-14 bg-primary/10 aspect-square rounded-full relative">
+									<BiSolidPieChart className="w-10 h-10 absolute -right-3 top-1/2 -translate-y-1/2 drop-shadow-lg" />
+								</div>
+								<h3 className="font-bold">
+									Affordable rates for You
+								</h3>
+							</div>
+							<p className="sm:pl-10">
+								Enjoy cryptocurrencies at fair prices. Start
+								trading with Clatras today and experience the
+								benefits of affordable crypto transactions.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div className="md:min-h-screen relative my-20  px-5">
 				<div className="bg-primary pointer-events-none absolute left-20 aspect-square w-28 md:w-96 rounded-full opacity-20 blur-3xl "></div>
 				<div className="relative md:max-w-4xl mx-auto">
 					<div>
@@ -119,12 +249,59 @@ export default function Home() {
 					</div>
 					<div className="md:flex justify-end">
 						<p className="max-w-sm text-center md:text-left text-xs sm:text-sm md:text-base">
-							Easily make payments without constraints or
-							limitations of your traditional banks
+							Purchase Ecode, google voice, and many more with
+							ease
 						</p>
 					</div>
 				</div>
 				<div className="bg-primary pointer-events-none absolute right-20 bottom-10 aspect-square w-40 rounded-full opacity-50 blur-3xl "></div>
+			</div>
+
+			<div className="px-5 sm:mb-40">
+				<div className="max-w-4xl mx-auto">
+					<div className="mb-4">
+						<h2 className="font-bold text-xl">Who We Are</h2>
+						<p>
+							Clatras is a trusted name in the crypto exchange
+							industry. With 5 years of experience and a strong
+							track record, we have built a reputation for
+							providing reliable and efficient services to our
+							customers. Join us and experience the Clatras
+							difference.
+						</p>
+					</div>
+					<div className="flex flex-col sm:flex-row gap-4">
+						<div className="flex-1 card border p-5">
+							<h3 className="font-bold nb-2">
+								We Are Reliable🛡️
+							</h3>
+							<p className="">
+								You can count on us for secure transactions and
+								prompt customer support.
+							</p>
+						</div>
+						<div className="flex-1 card border p-5">
+							<h3 className="font-bold nb-2">
+								We Are Transparent🪟
+							</h3>
+							<p className="">
+								We believe in keeping our customers informed
+								every step of the way, ensuring clarity and
+								peace of mind.
+							</p>
+						</div>
+						<div className="flex-1 card border p-5">
+							<h3 className="font-bold nb-2">
+								We Are Committed to Your Success📈
+							</h3>
+							<p className="">
+								We are committed to helping you achieve your
+								financial goals by providing top-notch services
+								and opportunities that unlock your potential.
+							</p>
+						</div>
+					</div>
+				</div>
 			</div>
 
 			<div className="bg-primary md:h-[200px] px-5 py-10 md:py-0 relative mt-5 mb-32">
