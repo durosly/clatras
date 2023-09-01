@@ -174,7 +174,7 @@ async function createNewTransaction(request) {
 		await sendEmail(
 			session.user.email,
 			"⌛Pending transaction",
-			"Your transaction is being processed.",
+			"Transaction is being processed.",
 			userEmail,
 			"Thank your for choosing Clatras"
 		);
@@ -182,7 +182,7 @@ async function createNewTransaction(request) {
 		await sendEmail(
 			current,
 			"📌New Pending transaction",
-			"You have a new transaction request",
+			"New transaction request",
 			adminEmail,
 			"Pending transaction"
 		);
