@@ -133,10 +133,18 @@ function StepOne({
 		<>
 			{/* step 1 */}
 			<div className="space-y-5">
-				{item?.rate && (
-					<div>
+				<div>
+					<div className="flex justify-between gap-2">
+						<span>Rate</span>
+						<div className="flex flex-col">
+							<span className="font-bold">
+								&#8358; {commaNumber(d_rate)}/$
+							</span>
+						</div>
+					</div>
+					{item?.rate && (
 						<div className="flex justify-between gap-2">
-							<span>Rate</span>
+							<span>Price</span>
 							<div className="flex flex-col">
 								{/* <span className="font-bold">
 									&#8358; {commaNumber(item?.rate * d_rate)}
@@ -146,8 +154,8 @@ function StepOne({
 								</span>
 							</div>
 						</div>
-					</div>
-				)}
+					)}
+				</div>
 				<div>
 					<div className="form-control mb-2">
 						<label className="label">Coin</label>
