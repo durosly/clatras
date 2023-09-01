@@ -56,11 +56,11 @@ async function updateTransactionStatus(request) {
 			status === "success"
 				? "✅Transaction successful"
 				: "⚠️Transaction declined";
-		const message = `Your transaction request for ${doc.item_name} is ${
+		const message =
 			status === "success"
-				? "successful"
-				: "declined. Please, contact admin to learn more."
-		}.`;
+				? `Your transaction for ${doc.item_name} has been approved. `
+				: `Your transaction for ${doc.item_name} has been declined. Please, contact admin to learn more.`;
+
 		await sendEmail(
 			user.email,
 			title,
