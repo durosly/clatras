@@ -91,12 +91,13 @@ export default function Home() {
 					</p>
 				</div>
 			</div>
+
 			<div className="max-w-4xl mx-auto px-5 sm:px-10">
 				<h3 className="text-xl sm:text-2xl font-bold mb-4 text-center">
 					Experience the convenience and reliability of our services.
 				</h3>
 				<div className="flex flex-col sm:flex-row flex-wrap justify-center items-center sm:items-stretch gap-5 ">
-					<div className="card sm:w-1/3 flex-1 max-w-[300px] bg-black/5 p-5 relative">
+					<div className="card sm:w-1/3 flex-1 sm:max-w-[300px] bg-black/5 p-5 relative">
 						<h4 className="font-bold mb-2 ">Sell your bitcoins</h4>
 						<p className="text-sm">
 							We offer competitive rates for buying your bitcoins
@@ -104,7 +105,7 @@ export default function Home() {
 							to your bank account.
 						</p>
 					</div>
-					<div className="card sm:w-1/3 flex-1 max-w-[300px] bg-black/5 p-5 relative">
+					<div className="card sm:w-1/3 flex-1 sm:max-w-[300px] bg-black/5 p-5 relative">
 						<h4 className="font-bold mb-2 ">
 							Get accounts at unbeatable prices
 						</h4>
@@ -114,7 +115,7 @@ export default function Home() {
 							delivered directly to your email at a fair prices.
 						</p>
 					</div>
-					<div className="card sm:w-1/3 flex-1 max-w-[300px] bg-black/5 p-5 relative">
+					<div className="card sm:w-1/3 flex-1 sm:max-w-[300px] bg-black/5 p-5 relative">
 						<h4 className="font-bold mb-2 ">
 							Unlimited international transactions
 						</h4>
