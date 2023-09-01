@@ -18,8 +18,8 @@ function ExchangeSuccessModal() {
 						<div className="text-center mt-4">
 							<h3 className="font-bold text-lg">Sent</h3>
 							<p>
-								Transaction request has been sent and you would
-								be notified via email on completion
+								Transaction request has been sent. Thank you for
+								choosing Clatras
 							</p>
 						</div>
 						<div className="space-y-2">

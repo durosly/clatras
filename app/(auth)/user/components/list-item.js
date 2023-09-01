@@ -4,6 +4,7 @@ import commaNumber from "comma-number";
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { AiFillEye } from "react-icons/ai";
+import { FaTelegram } from "react-icons/fa";
 import { LiaTimesSolid } from "react-icons/lia";
 
 function ListItem({ doc, count }) {
@@ -265,6 +266,18 @@ function ListItem({ doc, count }) {
 										</>
 									)}
 								</ul>
+								<div className="divider">
+									Issues or Enquires
+								</div>
+
+								<div className="flex justify-center">
+									<a
+										href="https://t.me/officialclatras"
+										target="_blank"
+									>
+										<FaTelegram className="w-5 h-5" />
+									</a>
+								</div>
 							</div>
 
 							<div className="mt-12 sm:hidden"></div>

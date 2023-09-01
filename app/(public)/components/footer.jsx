@@ -26,7 +26,7 @@ function Footer() {
 			<div>
 				<div className="grid grid-flow-col gap-4">
 					<a
-						href="https://twitter.com/Transact"
+						href="https://twitter.com/clatrasteam"
 						target="_blank"
 					>
 						<FaTwitter className="w-5 h-5" />
