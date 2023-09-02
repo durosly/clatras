@@ -141,6 +141,7 @@ function CreateCryptoForm({ c_list }) {
 														}`
 													}
 													value={{
+														...item,
 														name: item.name,
 														abbr: item.symbol,
 														rate: 1,
