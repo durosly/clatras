@@ -5,7 +5,7 @@ function TermsPage() {
 		<div className="max-w-3xl mx-5 sm:mx-10 md:mx-auto px-5 py-10 mt-10 bg-primary rounded-md">
 			<div className="text-center">
 				<h1 className="text-3xl inline-block font-bold text-center relative mb-10">
-					Terms and Conditions{" "}
+					Terms and Conditions
 					<FancyUnderline className="h-5 absolute fill-slate-600 -bottom-4 right-0" />
 				</h1>
 			</div>
@@ -35,6 +35,10 @@ function TermsPage() {
 					Registration numbers and Google VC) e.g rate published=757
 				</li>
 				<li>Average transaction duration:12–25mins</li>
+				<li>
+					To contact us, select transaction history, select the eye
+					icon on the transaction, then click the telegram icon below
+				</li>
 				<li>
 					Clatras is NOT liable for any mismanagement/loss of funds.
 				</li>
