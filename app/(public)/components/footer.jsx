@@ -15,7 +15,10 @@ function Footer() {
 						fill
 					/>
 				</div>
-				<p className="font-bold">Clatras Ltd. </p>
+				<p className="flex flex-col">
+					<span className="font-bold">Clatras Ltd.</span>
+					<span>A subsidiary of Clagk</span>
+				</p>
 				<p className="flex items-center">
 					<MdLocationPin />
 					<span>27 Lil Mak don Avenue 17 dada</span>
