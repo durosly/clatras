@@ -1,9 +1,11 @@
 "use client";
 
 import axios from "axios";
-
-import { useState } from "react";
+import { Listbox, Transition } from "@headlessui/react";
+import { Fragment, useState } from "react";
 import { toast } from "react-hot-toast";
+import { CheckIcon } from "@radix-ui/react-icons";
+import { BsChevronExpand } from "react-icons/bs";
 
 const initialState = {
 	name: "",
@@ -104,35 +106,75 @@ function CreateCryptoForm({ c_list }) {
 			{listType === "predefined" && (
 				<>
 					<div className="form-control">
-						<label className="label">Currency</label>
-						<select
-							className="select select-bordered"
-							value={data.abbr}
-							name="abbr"
-							onChange={(e) =>
-								setData({
-									...data,
-									[e.target.name]: e.target.value,
-								})
-							}
-						>
-							<option>-- token --</option>
-							{c_list.map((c) => (
-								<option
-									key={c.id}
-									value={c.symbol.toLowerCase()}
-									onClick={() => {
-										setData({
-											...data,
-											name: c.name,
-											rate: 1,
-										});
-									}}
-								>
-									{c.name}
-								</option>
-							))}
-						</select>
+						<div className="w-full">
+							<Listbox
+								value={data}
+								onChange={setData}
+							>
+								<div className="relative mt-1">
+									<Listbox.Button className="relative w-full cursor-default border rounded-lg bg-white py-3 pl-3 pr-10 text-left sm:text-sm">
+										<span className="block truncate">
+											{data?.name || "-- select coin--"}
+										</span>
+										<span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+											<BsChevronExpand
+												className="h-5 w-5 text-gray-400"
+												aria-hidden="true"
+											/>
+										</span>
+									</Listbox.Button>
+									<Transition
+										as={Fragment}
+										leave="transition ease-in duration-100"
+										leaveFrom="opacity-100"
+										leaveTo="opacity-0"
+									>
+										<Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+											{c_list.map((item, personIdx) => (
+												<Listbox.Option
+													key={personIdx}
+													className={({ active }) =>
+														`relative cursor-default select-none py-2 pl-10 pr-4 ${
+															active
+																? "bg-primary/10"
+																: "text-gray-900"
+														}`
+													}
+													value={{
+														name: item.name,
+														abbr: item.symbol,
+														rate: 1,
+													}}
+												>
+													{({ selected }) => (
+														<>
+															<span
+																className={`block truncate ${
+																	selected
+																		? "font-medium"
+																		: "font-normal"
+																}`}
+															>
+																{item.name} (
+																{item.symbol})
+															</span>
+															{selected ? (
+																<span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
+																	<CheckIcon
+																		className="h-5 w-5"
+																		aria-hidden="true"
+																	/>
+																</span>
+															) : null}
+														</>
+													)}
+												</Listbox.Option>
+											))}
+										</Listbox.Options>
+									</Transition>
+								</div>
+							</Listbox>
+						</div>
 					</div>
 				</>
 			)}
