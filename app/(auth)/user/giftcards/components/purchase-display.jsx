@@ -7,6 +7,8 @@ import ExchangeSuccessModal from "../../exchange/[type]/modal";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { appwriteClient } from "@/lib/client";
+import CopyToClipboard from "react-copy-to-clipboard";
+import { IoCopyOutline } from "react-icons/io5";
 
 function PurchaseDisplay({ docs, details }) {
 	const [step, setStep] = useState(1);
@@ -266,7 +268,17 @@ function StepTwo({ document, cost, amt, prevStep, showSuccessModal, details }) {
 					</div>
 					<div className="flex gap-2 justify-between flex-wrap items-center">
 						<p className="text-sm">Account Number:</p>
-						<p className="text-xs">{bankDetails.account_number}</p>
+						<p className="text-xs">
+							<span>{bankDetails.account_number}</span>
+							<CopyToClipboard
+								text={bankDetails.account_number}
+								onCopy={() => toast("copied")}
+							>
+								<button className="btn btn-xs btn-ghost btn-square">
+									<IoCopyOutline />
+								</button>
+							</CopyToClipboard>
+						</p>
 					</div>
 
 					<div className="flex gap-2 justify-between flex-wrap items-center">

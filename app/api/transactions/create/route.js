@@ -86,9 +86,10 @@ async function createNewTransaction(request) {
 		} else if (type === "payment") {
 			description = `Sent funds to ${doc.name}`;
 
-			rate = dollar_rate;
+			rate = doc.fee;
 			market = "sell";
-			returns = amt * dollar_rate;
+			returns = amt * doc.fee;
+			dollar_rate = rate;
 		} else if (type === "verification") {
 			description = `Purchase ${amt} ${doc.name}`;
 			rate = doc.fee;
@@ -128,7 +129,7 @@ async function createNewTransaction(request) {
 
 			data.account_number = doc.account_number;
 			if (market === "buy") {
-				data.sending = rate * amt * dollar_rate;
+				data.sending = rate * amt;
 			}
 		} else if (type === "payment" || type === "crypto") {
 			const { bankId } = resData;

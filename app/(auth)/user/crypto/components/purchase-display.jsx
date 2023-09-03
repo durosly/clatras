@@ -8,6 +8,8 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import { appwriteClient } from "@/lib/client";
 import QRCode from "react-qr-code";
+import CopyToClipboard from "react-copy-to-clipboard";
+import { IoCopyOutline } from "react-icons/io5";
 
 function PurchaseDisplay({ docs, details, d_rate }) {
 	const [step, setStep] = useState(1);
@@ -142,19 +144,17 @@ function StepOne({
 							</span>
 						</div>
 					</div>
-					{item?.rate && (
+					{/* {item?.rate && (
 						<div className="flex justify-between gap-2">
 							<span>Price</span>
 							<div className="flex flex-col">
-								{/* <span className="font-bold">
-									&#8358; {commaNumber(item?.rate * d_rate)}
-								</span> */}
+								
 								<span className="font-bold text-xs">
 									$ {commaNumber(item?.rate)}
 								</span>
 							</div>
 						</div>
-					)}
+					)} */}
 				</div>
 				<div>
 					<div className="form-control mb-2">
@@ -298,7 +298,17 @@ function StepTwo({
 				</div>
 				<div className="flex gap-2 justify-between flex-wrap items-center">
 					<p className="text-sm">Address:</p>
-					<p className="text-xs">{document.address}</p>
+					<p className="text-xs">
+						<span>{document.address}</span>
+						<CopyToClipboard
+							text={document.address}
+							onCopy={() => toast("copied")}
+						>
+							<button className="btn btn-xs btn-ghost btn-square">
+								<IoCopyOutline />
+							</button>
+						</CopyToClipboard>
+					</p>
 				</div>
 
 				<div className="flex gap-2 justify-between flex-wrap items-center">

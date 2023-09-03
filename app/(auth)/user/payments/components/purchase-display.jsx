@@ -8,15 +8,17 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import { appwriteClient } from "@/lib/client";
 import { BsInfoCircle } from "react-icons/bs";
+import { IoCopyOutline } from "react-icons/io5";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
-function PurchaseDisplay({ docs, details, d_rate }) {
+function PurchaseDisplay({ docs, details }) {
 	const [step, setStep] = useState(1);
 	const [amt, setAmt] = useState();
 	const [cost, setCost] = useState(null);
 	const [card, setCard] = useState("");
 	const [item, setItem] = useState({});
 	function calculateCost(fee) {
-		let costPrice = amt * d_rate;
+		let costPrice = amt * fee;
 		setCost(costPrice);
 	}
 
@@ -46,7 +48,6 @@ function PurchaseDisplay({ docs, details, d_rate }) {
 					setCard={setCard}
 					item={item}
 					setItem={setItem}
-					d_rate={d_rate}
 				/>
 			)}
 			{step === 2 && (
@@ -75,7 +76,6 @@ function StepOne({
 	setCard,
 	item,
 	setItem,
-	d_rate,
 }) {
 	const [hasCalculated, setHasCalculated] = useState(false);
 
@@ -97,19 +97,21 @@ function StepOne({
 
 	useEffect(() => {
 		setHasCalculated(false);
-	}, [amt]);
+	}, [amt, card]);
 
 	return (
 		<>
 			{/* step 1 */}
 			<div className="space-y-5">
 				<div>
-					<div className="flex justify-between gap-2">
-						<span>Rate</span>
-						<span className="font-bold">
-							&#8358; {commaNumber(d_rate)}/$
-						</span>
-					</div>
+					{item?.fee && (
+						<div className="flex justify-between gap-2">
+							<span>Rate</span>
+							<span className="font-bold">
+								&#8358; {commaNumber(item.fee)}/$
+							</span>
+						</div>
+					)}
 				</div>
 
 				<div>
@@ -239,7 +241,18 @@ function StepTwo({ document, cost, amt, prevStep, showSuccessModal, details }) {
 				{document?.tag && document.tag && document.tag !== "nil" && (
 					<div className="flex flex-wrap justify-between text-sm gap-2">
 						<span>Tag</span>
-						<span className="font-bold">{document.tag}</span>
+						<div>
+							<span className="font-bold">{document.tag}</span>
+
+							<CopyToClipboard
+								text={document.tag}
+								onCopy={() => toast("copied")}
+							>
+								<button className="btn btn-xs btn-ghost btn-square">
+									<IoCopyOutline />
+								</button>
+							</CopyToClipboard>
+						</div>
 					</div>
 				)}
 				{document?.email &&
@@ -247,7 +260,19 @@ function StepTwo({ document, cost, amt, prevStep, showSuccessModal, details }) {
 					document.email !== "nil" && (
 						<div className="flex flex-wrap justify-between text-sm gap-2">
 							<span>Email</span>
-							<span className="font-bold">{document.email}</span>
+							<div>
+								<span className="font-bold">
+									{document.email}
+								</span>
+								<CopyToClipboard
+									text={document.email}
+									onCopy={() => toast("copied")}
+								>
+									<button className="btn btn-xs btn-ghost btn-square">
+										<IoCopyOutline />
+									</button>
+								</CopyToClipboard>
+							</div>
 						</div>
 					)}
 				{document?.phone &&
@@ -255,7 +280,19 @@ function StepTwo({ document, cost, amt, prevStep, showSuccessModal, details }) {
 					document.phone !== "nil" && (
 						<div className="flex flex-wrap justify-between text-sm gap-2">
 							<span>Phone</span>
-							<span className="font-bold">{document.phone}</span>
+							<div>
+								<span className="font-bold">
+									{document.phone}
+								</span>
+								<CopyToClipboard
+									text={document.phone}
+									onCopy={() => toast("copied")}
+								>
+									<button className="btn btn-xs btn-ghost btn-square">
+										<IoCopyOutline />
+									</button>
+								</CopyToClipboard>
+							</div>
 						</div>
 					)}
 			</div>
