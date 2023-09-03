@@ -12,7 +12,7 @@ export const metadata = {
 	metadataBase: new URL(`${process.env.NEXT_PUBLIC_URL}`),
 	themeColor: "#00eaaf",
 	openGraph: {
-		title: "Clatras exchange",
+		title: "Clatras",
 		description:
 			"Your one stop shop to online payments and related transactions",
 
