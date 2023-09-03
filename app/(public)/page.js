@@ -22,9 +22,10 @@ export default function Home() {
 								Enjoy a hassle-free Payment Process
 							</h2>
 							<p>
-								Sell your bitcoins, buy Google Voice accounts,
-								and make unlimited international transactions in
-								just a few clicks
+								Make transactions, sell Bitcoins, buy google
+								voice accounts and verification numbers, make
+								unlimited international transactions in just a
+								few clicks
 							</p>
 						</div>
 						<div>
