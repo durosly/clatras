@@ -10,7 +10,6 @@ import { RiCustomerService2Fill } from "react-icons/ri";
 import { MdCurrencyExchange, MdSecurity } from "react-icons/md";
 import { BiSolidPieChart } from "react-icons/bi";
 import { AiOutlineLineChart, AiOutlineTag } from "react-icons/ai";
-import { GrLineChart } from "react-icons/gr";
 
 export default function Home() {
 	return (

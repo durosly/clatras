@@ -20,6 +20,7 @@ export const metadata = {
 		images: "/meta/open-graph.png",
 		locale: "en_US",
 		type: "website",
+		link: new URL(`${process.env.NEXT_PUBLIC_URL}`),
 	},
 };
 
