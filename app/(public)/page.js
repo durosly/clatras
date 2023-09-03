@@ -73,7 +73,7 @@ export default function Home() {
 					</li>
 					<li className="flex text-sm md:text-base gap-2 md:gap-4 p-1 md:p-3 rounded-full border items-center">
 						<span className="inline-block w-4 h-4 rounded-full bg-pink-500"></span>
-						<span>Zelle</span>
+						<span>CashApp</span>
 						<span className="inline-block w-4 h-4 rounded-full bg-pink-500"></span>
 					</li>
 				</ul>
