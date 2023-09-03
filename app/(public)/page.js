@@ -7,8 +7,10 @@ import Streamer from "@/svg/illustrations/streamer";
 import UserJoin from "@/svg/illustrations/user-join";
 import { CgCreditCard } from "react-icons/cg";
 import { RiCustomerService2Fill } from "react-icons/ri";
-import { MdSecurity } from "react-icons/md";
+import { MdCurrencyExchange, MdSecurity } from "react-icons/md";
 import { BiSolidPieChart } from "react-icons/bi";
+import { AiOutlineLineChart, AiOutlineTag } from "react-icons/ai";
+import { GrLineChart } from "react-icons/gr";
 
 export default function Home() {
 	return (
@@ -97,34 +99,71 @@ export default function Home() {
 					Experience the convenience and reliability of our services.
 				</h3>
 				<div className="flex flex-col sm:flex-row flex-wrap justify-center items-center sm:items-stretch gap-5 ">
-					<div className="card sm:w-1/3 flex-1 sm:max-w-[300px] bg-black/5 p-5 relative">
-						<h4 className="font-bold mb-2 ">Sell your bitcoins</h4>
-						<p className="text-sm">
-							We offer competitive rates for buying your bitcoins
-							and ensure a seamless transaction process directly
-							to your bank account.
-						</p>
+					<div className="card sm:w-1/3 flex-1 sm:max-w-[300px] bg-black/5 p-5">
+						<div>
+							<h4 className="font-bold mb-2 flex items-center gap-2">
+								<MdCurrencyExchange className="w-5 h-5 flex-shrink-0" />
+								<span>Sell your bitcoins</span>
+							</h4>
+							<p className="text-sm">
+								We offer competitive rates for buying your
+								bitcoins and ensure a seamless transaction
+								process directly to your bank account.
+							</p>
+						</div>
+						<svg
+							viewBox="0 -960 960 960"
+							xmlns="http://www.w3.org/2000/svg"
+							className="absolute bottom-4 right-4 w-10 h-10 opacity-10"
+						>
+							<path d="M226-160q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19ZM226-414q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19ZM226-668q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Z"></path>
+						</svg>
 					</div>
-					<div className="card sm:w-1/3 flex-1 sm:max-w-[300px] bg-black/5 p-5 relative">
-						<h4 className="font-bold mb-2 ">
-							Get accounts at unbeatable prices
-						</h4>
-						<p className="text-sm">
-							Purchase Google Voice accounts and international
-							numbers suitable for any form of verification,
-							delivered directly to your email at a fair prices.
-						</p>
+					<div className="card sm:w-1/3 flex-1 sm:max-w-[300px] bg-black/5 p-5">
+						<div>
+							<h4 className="font-bold mb-2 flex items-center gap-2">
+								<AiOutlineTag className="w-5 h-5 flex-shrink-0" />
+								<span>Get accounts at unbeatable prices</span>
+							</h4>
+
+							<p className="text-sm">
+								Purchase Google Voice accounts and international
+								numbers suitable for any form of verification,
+								delivered directly to your email at a fair
+								prices.
+							</p>
+						</div>
+						<svg
+							viewBox="0 -960 960 960"
+							xmlns="http://www.w3.org/2000/svg"
+							className="absolute bottom-4 right-4 w-10 h-10 opacity-10"
+						>
+							<path d="M226-160q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19ZM226-414q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19ZM226-668q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Z"></path>
+						</svg>
 					</div>
-					<div className="card sm:w-1/3 flex-1 sm:max-w-[300px] bg-black/5 p-5 relative">
-						<h4 className="font-bold mb-2 ">
-							Unlimited international transactions
-						</h4>
-						<p className="text-sm">
-							With Clatras, there are no limits when it comes to
-							making international transactions. Expand your
-							business horizons without any boundaries and recieve
-							payment from anywhere in the world.
-						</p>
+					<div className="card sm:w-1/3 flex-1 sm:max-w-[300px] bg-black/5 p-5">
+						<div>
+							<h4 className="font-bold mb-2 flex items-center gap-2">
+								<AiOutlineLineChart className="w-5 h-5 flex-shrink-0" />
+								<span>
+									Unlimited international transactions
+								</span>
+							</h4>
+
+							<p className="text-sm">
+								With Clatras, there are no limits when it comes
+								to making international transactions. Expand
+								your business horizons without any boundaries
+								and recieve payment from anywhere in the world.
+							</p>
+						</div>
+						<svg
+							viewBox="0 -960 960 960"
+							xmlns="http://www.w3.org/2000/svg"
+							className="absolute bottom-4 right-4 w-10 h-10 opacity-10"
+						>
+							<path d="M226-160q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19ZM226-414q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19ZM226-668q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Zm254 0q-28 0-47-19t-19-47q0-28 19-47t47-19q28 0 47 19t19 47q0 28-19 47t-47 19Z"></path>
+						</svg>
 					</div>
 				</div>
 			</div>
@@ -273,7 +312,7 @@ export default function Home() {
 					</div>
 					<div className="flex flex-col sm:flex-row gap-4">
 						<div className="flex-1 card border p-5">
-							<h3 className="font-bold nb-2">
+							<h3 className="font-bold mb-2">
 								We Are Reliable🛡️
 							</h3>
 							<p className="">
@@ -282,7 +321,7 @@ export default function Home() {
 							</p>
 						</div>
 						<div className="flex-1 card border p-5">
-							<h3 className="font-bold nb-2">
+							<h3 className="font-bold mb-2">
 								We Are Transparent🪟
 							</h3>
 							<p className="">
@@ -292,7 +331,7 @@ export default function Home() {
 							</p>
 						</div>
 						<div className="flex-1 card border p-5">
-							<h3 className="font-bold nb-2">
+							<h3 className="font-bold mb-2">
 								We Are Committed to Your Success📈
 							</h3>
 							<p className="">
