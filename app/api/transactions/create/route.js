@@ -177,7 +177,7 @@ async function createNewTransaction(request) {
 			"⌛Pending transaction",
 			"Transaction is being processed.",
 			userEmail,
-			"Thank your for choosing Clatras"
+			"Thank you for choosing Clatras"
 		);
 		const adminEmail = convertObjToMessage(data, "admin");
 		await sendEmail(

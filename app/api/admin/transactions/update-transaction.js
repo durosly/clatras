@@ -66,7 +66,7 @@ async function updateTransactionStatus(request) {
 			title,
 			message,
 			"",
-			"Thank your for choosing Clatras"
+			"Thank you for choosing Clatras"
 		);
 
 		return NextResponse.json({ status: true, message: "Status updated" });
