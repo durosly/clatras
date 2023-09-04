@@ -5,6 +5,9 @@ import { Databases, Query } from "node-appwrite";
 import BankDetailsCreationForm from "./components/bank-details-creation-form";
 import BankDetailsListItem from "./components/bank-details-list-item";
 
+// Opt out of caching for all data requests in the route segment
+export const dynamic = "force-dynamic";
+
 async function BankDetailsPage() {
 	const app = new AppwriteServerClient();
 	app.setKey();
