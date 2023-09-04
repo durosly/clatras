@@ -7,6 +7,9 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { MdOutlineEmail, MdOutlineMarkEmailRead } from "react-icons/md";
 
+// Opt out of caching for all data requests in the route segment
+export const dynamic = "force-dynamic";
+
 function VerifyEmailAddressPage({ searchParams }) {
 	const [isLoading, setIsLoading] = useState(false);
 	const [step, setStep] = useState(1);
