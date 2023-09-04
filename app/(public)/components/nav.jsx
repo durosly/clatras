@@ -23,7 +23,7 @@ function Nav() {
 								Zelle
 							</Link>
 						</li>
-						<li>
+						{/* <li>
 							<Link
 								className="whitespace-nowrap"
 								href="/nice"
@@ -54,7 +54,7 @@ function Nav() {
 							>
 								Gift cards
 							</Link>
-						</li>
+						</li> */}
 					</ul>
 				</details>
 			</li>
