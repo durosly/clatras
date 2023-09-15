@@ -299,7 +299,9 @@ function StepTwo({
 				<div className="flex gap-2 justify-between flex-wrap items-center">
 					<p className="text-sm">Address:</p>
 					<p className="text-xs">
-						<span>{document.address}</span>
+						<span className="break-words break-all">
+							{document.address}
+						</span>
 						<CopyToClipboard
 							text={document.address}
 							onCopy={() => toast("copied")}
