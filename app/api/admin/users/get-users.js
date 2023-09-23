@@ -18,7 +18,13 @@ export default async function getUsers(request) {
 
 		const users = new Users(server);
 
-		const doc = await users.list(queries, query);
+		let doc;
+
+		if (query) {
+			doc = await users.list(queries, query);
+		} else {
+			doc = await users.list(queries);
+		}
 
 		return NextResponse.json({
 			status: true,
