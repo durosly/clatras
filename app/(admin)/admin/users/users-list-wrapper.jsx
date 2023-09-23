@@ -3,6 +3,7 @@
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import ListItem from "./ListItem";
+import toast from "react-hot-toast";
 
 function UsersListWrapper() {
 	const [list, setList] = useState([]);
