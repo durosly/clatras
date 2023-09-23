@@ -19,6 +19,7 @@ function PurchaseDisplay({ docs, details, d_rate }) {
 	const [rate, setRate] = useState(null);
 	const [card, setCard] = useState("");
 	const [item, setItem] = useState({});
+	const [market, setMarket] = useState("sell");
 
 	function calculateCost(fee) {
 		// console.log(amt, fee, d_rate);
@@ -178,6 +179,24 @@ function StepOne({
 									{d.name}
 								</option>
 							))}
+						</select>
+					</div>
+					<div className="form-control mb-2">
+						<label className="label">Market</label>
+						<select
+							// value={card}
+							// onChange={(e) => handleSelect(e.target.value)}
+							className="select select-bordered"
+						>
+							<option
+								value=""
+								disabled
+							>
+								-- select market--
+							</option>
+
+							<option value={"buy"}>Buy</option>
+							<option value="sell">Sell</option>
 						</select>
 					</div>
 					<div className="form-control mb-2">

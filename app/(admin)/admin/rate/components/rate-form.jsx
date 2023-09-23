@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 function RateForm() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [rate, setRate] = useState("");
+	const [market, setMarket] = useState("buy");
 	const router = useRouter();
 
 	async function createRate(e) {
@@ -18,14 +19,23 @@ function RateForm() {
 		setIsLoading(true);
 
 		try {
-			const response = await axios.post("/api/admin/rate", { rate });
+			const response = await axios.post("/api/admin/rate", {
+				rate,
+				market,
+			});
 
-			toast.success("Done", { id: toastId });
-			setRate("");
-			router.refresh();
+			if (response.data.status === true) {
+				toast.success("Done", { id: toastId });
+				setRate("");
+				router.refresh();
+			} else {
+				throw new Error(response.data.message);
+			}
 		} catch (error) {
 			toast.error(
-				error?.response?.data?.message || "Something went wrong",
+				error?.response?.data?.message ||
+					error?.message ||
+					"Something went wrong",
 				{ id: toastId }
 			);
 		} finally {
@@ -48,6 +58,23 @@ function RateForm() {
 					value={rate}
 					onChange={(e) => setRate(e.target.value)}
 				/>
+			</div>
+			<div className="form-control max-w-sm mb-2">
+				<label
+					htmlFor="market"
+					className="label"
+				>
+					Market:
+				</label>
+				<select
+					className="select select-bordered"
+					value={market}
+					onChange={(e) => setMarket(e.target.value)}
+					id="market"
+				>
+					<option value="buy">Buy</option>
+					<option value="sell">Sell</option>
+				</select>
 			</div>
 			<button
 				disabled={isLoading}

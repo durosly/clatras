@@ -4,9 +4,7 @@ import { Databases, ID, Query } from "node-appwrite";
 
 export default async function createUpdateRate(request) {
 	try {
-		const { rate } = await request.json();
-
-		console.log({ rate });
+		const { rate, market } = await request.json();
 
 		if (!rate) {
 			return new Response(
@@ -32,6 +30,30 @@ export default async function createUpdateRate(request) {
 			);
 		}
 
+		if (!market) {
+			return new Response(
+				JSON.stringify({
+					status: false,
+					message: "Please select rate market",
+				}),
+				{
+					status: 400,
+					headers: { "Content-Type": `application/json` },
+				}
+			);
+		} else if (market !== "buy" && market !== "sell") {
+			return new Response(
+				JSON.stringify({
+					status: false,
+					message: "Invalid market entry",
+				}),
+				{
+					status: 400,
+					headers: { "Content-Type": `application/json` },
+				}
+			);
+		}
+
 		const app = new AppwriteServerClient();
 		app.setKey();
 		const server = app.getServer();
@@ -44,16 +66,15 @@ export default async function createUpdateRate(request) {
 
 		const doc = await databases.listDocuments(databaseId, collectionId, [
 			Query.limit(1),
+			Query.equal("market", market),
 		]);
-
-		console.log(doc);
 
 		if (doc.total === 0) {
 			await databases.createDocument(
 				databaseId,
 				collectionId,
 				ID.unique(),
-				{ rate }
+				{ rate, market }
 			);
 		} else {
 			const id = doc.documents[0].$id;
