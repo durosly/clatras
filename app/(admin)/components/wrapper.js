@@ -143,6 +143,14 @@ function Wrapper({ children }) {
 									<span>E-mail Notification</span>
 								</Link>
 							</li>
+							<li>
+								<Link href="/admin/notification/site">
+									<span>
+										<MdNotificationsNone className="w-6 h-6 stroke-current" />
+									</span>
+									<span>Site Notification</span>
+								</Link>
+							</li>
 
 							<li>
 								<LogoutButton className="link-error">
