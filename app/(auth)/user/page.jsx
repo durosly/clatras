@@ -7,6 +7,7 @@ import { MdOutlinePayment, MdOutlineVerifiedUser } from "react-icons/md";
 import ListItemContainer from "./components/list-item-container";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/options";
+import NoticeDisplay from "./components/notice-display";
 
 // Opt out of caching for all data requests in the route segment
 export const dynamic = "force-dynamic";
@@ -49,10 +50,7 @@ async function UserHomePage() {
 			</div> */}
 			<p>Hi, {name}</p>
 
-			<div className="bg-primary/10 p-5 rounded-2xl">
-				<h2 className="text-xl font-bold">Welcome to Clatras</h2>
-				<p className="text-sm">Experience fast and easy transactions</p>
-			</div>
+			<NoticeDisplay />
 			<div className="flex flex-wrap justify-center gap-4">
 				<Link
 					href="/user/payments"
