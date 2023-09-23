@@ -1,0 +1,53 @@
+import clientServer from "@/lib/client-server";
+import { NextResponse } from "next/server";
+import { AppwriteException, Databases, Query } from "node-appwrite";
+
+async function getNotice() {
+	try {
+		clientServer.setKey(process.env.APPWRITE_API_KEY);
+
+		const databases = new Databases(clientServer);
+
+		let databaseId = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID;
+		let collectionId =
+			process.env.NEXT_PUBLIC_APPRWRITE_ADMIN_USER_NOTICE_COLLECTION_ID;
+
+		const currentDate = new Date();
+		const isoDate = currentDate.toISOString();
+		// console.log(isoDate);
+
+		const notice = await databases.listDocuments(databaseId, collectionId, [
+			Query.greaterThanEqual("ends_at", isoDate),
+			Query.limit(5),
+		]);
+
+		return NextResponse.json({
+			status: true,
+			message: "Notice success",
+			notice,
+		});
+	} catch (error) {
+		let message = "Something went wrong";
+		let code = 500;
+		// console.log(error);
+		if (error instanceof AppwriteException) {
+			message = error.response.message;
+			code = error.code;
+		}
+
+		return new Response(
+			JSON.stringify({
+				status: false,
+				message,
+			}),
+			{
+				status: code,
+				headers: {
+					"Content-Type": "application/json",
+				},
+			}
+		);
+	}
+}
+
+export default getNotice;
