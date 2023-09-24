@@ -2,7 +2,7 @@ import clientServer from "@/lib/client-server";
 import { NextResponse } from "next/server";
 import { AppwriteException, Databases, Query } from "node-appwrite";
 
-export async function GET() {
+async function getNotice() {
 	try {
 		clientServer.setKey(process.env.APPWRITE_API_KEY);
 
@@ -49,3 +49,5 @@ export async function GET() {
 		);
 	}
 }
+
+export { getNotice as GET };
