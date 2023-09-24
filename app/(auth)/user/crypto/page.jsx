@@ -34,6 +34,11 @@ async function UserCryptoPage() {
 		process.env.NEXT_PUBLIC_APPRWRITE_DOLLAR_RATE_COLLECTION_ID
 	);
 
+	const rates = {};
+	for (const rate of d_rate.documents) {
+		rates[rate.market] = rate.rate;
+	}
+
 	return (
 		<div className="max-w-[400px] mx-auto mt-10 px-4  mb-10">
 			<div className="border px-8 py-10 rounded-md space-y-10">
@@ -48,7 +53,7 @@ async function UserCryptoPage() {
 					<PurchaseDisplay
 						docs={docs.documents}
 						details={doc1.documents[0]}
-						d_rate={d_rate?.documents[0]?.rate || 1}
+						d_rate={rates}
 					/>
 				) : (
 					<div className="text-center space-y-4">

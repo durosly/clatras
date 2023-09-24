@@ -1,6 +1,6 @@
 import clientServer from "@/lib/client-server";
 import { NextResponse } from "next/server";
-import { AppwriteException, Databases, Query } from "node-appwrite";
+import { Databases, Query } from "node-appwrite";
 
 async function getNotice() {
 	try {
@@ -29,11 +29,11 @@ async function getNotice() {
 	} catch (error) {
 		let message = "Something went wrong";
 		let code = 500;
-		// console.log(error);
-		if (error instanceof AppwriteException) {
-			message = error.response.message;
-			code = error.code;
-		}
+		console.log(error);
+		// if (error instanceof AppwriteException) {
+		// 	message = error.response.message;
+		// 	code = error.code;
+		// }
 
 		return new Response(
 			JSON.stringify({
