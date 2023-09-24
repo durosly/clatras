@@ -1,6 +1,8 @@
 import { AppwriteServerClient } from "@/lib/client-server";
 import { NextResponse } from "next/server";
-import { Databases, Query, Users } from "node-appwrite";
+import { Databases, Query } from "node-appwrite";
+
+export const dynamic = "force-dynamic";
 
 function formatDate(date) {
 	const isoDate = new Date(date).toISOString();

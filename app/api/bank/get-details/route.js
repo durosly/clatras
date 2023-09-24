@@ -4,6 +4,8 @@ import { NextResponse } from "next/server";
 import { Databases, Query } from "node-appwrite";
 import { authOptions } from "@/auth/options";
 
+export const dynamic = "force-dynamic";
+
 async function getBankDetails(request) {
 	try {
 		const session = await getServerSession(authOptions);
