@@ -11,7 +11,7 @@ import QRCode from "react-qr-code";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { IoCopyOutline } from "react-icons/io5";
 
-function PurchaseDisplay({ docs, details, d_rate }) {
+function PurchaseDisplay({ docs, details, d_rate, adminDetails }) {
 	const [step, setStep] = useState(1);
 	const [amt, setAmt] = useState("");
 	const [qty, setQty] = useState("");
@@ -23,7 +23,7 @@ function PurchaseDisplay({ docs, details, d_rate }) {
 
 	function calculateCost(fee) {
 		// console.log(amt, fee, d_rate);
-		let costPrice = qty * parseFloat(fee) * d_rate;
+		let costPrice = qty * parseFloat(fee) * d_rate[market];
 		setCost(costPrice);
 	}
 
@@ -56,6 +56,8 @@ function PurchaseDisplay({ docs, details, d_rate }) {
 					qty={qty}
 					setQty={setQty}
 					d_rate={d_rate}
+					market={market}
+					setMarket={setMarket}
 				/>
 			)}
 			{step === 2 && (
@@ -68,6 +70,8 @@ function PurchaseDisplay({ docs, details, d_rate }) {
 					details={details}
 					qty={qty}
 					setQty={setQty}
+					market={market}
+					adminDetails={adminDetails}
 				/>
 			)}
 			{step === 3 && <ExchangeSuccessModal />}
@@ -89,6 +93,8 @@ function StepOne({
 	qty,
 	setQty,
 	d_rate,
+	market,
+	setMarket,
 }) {
 	const [hasCalculated, setHasCalculated] = useState(false);
 
@@ -130,7 +136,7 @@ function StepOne({
 
 	useEffect(() => {
 		setHasCalculated(false);
-	}, [amt]);
+	}, [amt, market, item]);
 
 	return (
 		<>
@@ -141,7 +147,7 @@ function StepOne({
 						<span>Rate</span>
 						<div className="flex flex-col">
 							<span className="font-bold">
-								&#8358; {commaNumber(d_rate)}/$
+								&#8358; {commaNumber(d_rate[market])}/$
 							</span>
 						</div>
 					</div>
@@ -184,8 +190,8 @@ function StepOne({
 					<div className="form-control mb-2">
 						<label className="label">Market</label>
 						<select
-							// value={card}
-							// onChange={(e) => handleSelect(e.target.value)}
+							value={market}
+							onChange={(e) => setMarket(e.target.value)}
 							className="select select-bordered"
 						>
 							<option
@@ -195,8 +201,8 @@ function StepOne({
 								-- select market--
 							</option>
 
-							<option value={"buy"}>Buy</option>
 							<option value="sell">Sell</option>
+							<option value="buy">Buy</option>
 						</select>
 					</div>
 					<div className="form-control mb-2">
@@ -233,7 +239,7 @@ function StepOne({
 				</div>
 				{!!amt && hasCalculated ? (
 					<div className="text-center space-y-2">
-						<p>Returns</p>
+						<p>{market === "sell" ? "Returns" : "Sending"}</p>
 						<p className="text-2xl font-bold">
 							&#8358; {commaNumber(Number(cost).toFixed(2))}
 						</p>
@@ -260,8 +266,23 @@ function StepTwo({
 	showSuccessModal,
 	details,
 	qty,
+	market,
+	adminDetails,
 }) {
 	const [isLoading, setIsLoading] = useState(false);
+	const [bankDetails, setBankDetails] = useState({});
+	const [bankId, setBankId] = useState("");
+	const [wallet, setWallet] = useState("");
+	const [network, setNetwork] = useState("");
+
+	function handleSelect(id) {
+		if (!id) return;
+		let selectedItem =
+			adminDetails?.find((document) => document.$id === id) || {};
+
+		setBankDetails(selectedItem);
+		setBankId(id);
+	}
 
 	async function handleSubmit() {
 		if (isLoading) return;
@@ -269,13 +290,18 @@ function StepTwo({
 
 		try {
 			const token = await appwriteClient.getJWT();
-			const response = await axios.post("/api/transactions/create", {
-				type: "crypto",
-				doc_id: document.$id,
-				amt,
-				user_jwt: token.jwt,
-				bankId: details.$id,
-			});
+			const response = await axios.post(
+				"/api/transactions/create/crypto",
+				{
+					doc_id: document.$id,
+					amt,
+					user_jwt: token.jwt,
+					bankId: market === "sell" ? details.$id : bankId,
+					market,
+					wallet,
+					network,
+				}
+			);
 			// console.log(response);
 			if (response.data.status) {
 				showSuccessModal();
@@ -285,7 +311,7 @@ function StepTwo({
 			}
 		} catch (error) {
 			console.log(error);
-			toast.error(error.message);
+			toast.error(error?.response?.data?.message || error.message);
 		} finally {
 			setIsLoading(false);
 		}
@@ -297,54 +323,182 @@ function StepTwo({
 					<span>Sending</span>
 
 					<span className="uppercase">
-						<span>{commaNumber(Number(qty).toFixed(6))}</span>
-						{document?.abbr}
+						{market === "sell" ? (
+							<>
+								<span>
+									{commaNumber(Number(qty).toFixed(6))}
+								</span>
+								{document?.abbr}
+							</>
+						) : (
+							<>
+								<span>&#8358;</span>
+								{commaNumber(Number(cost).toFixed(2))}
+							</>
+						)}
 					</span>
 				</div>
 				<div className="flex justify-between text-sm gap-2">
 					<span>Returns</span>
 					<span className="uppercase">
-						<span>&#8358;</span>
-						{commaNumber(Number(cost).toFixed(2))}
+						{market === "sell" ? (
+							<>
+								<span>&#8358;</span>
+								{commaNumber(Number(cost).toFixed(2))}
+							</>
+						) : (
+							<>
+								<span>
+									{commaNumber(Number(qty).toFixed(6))}
+								</span>
+								{document?.abbr}
+							</>
+						)}
 					</span>
 				</div>
 			</div>
 
-			<div>
-				<div className="flex gap-2 justify-between flex-wrap items-center">
-					<p className="text-sm">Coin:</p>
-					<p className="text-xs">{document.name}</p>
-				</div>
-				<div className="flex gap-2 justify-between flex-wrap items-center">
-					<p className="text-sm">Address:</p>
-					<p className="text-xs">
-						<span className="break-words break-all">
-							{document.address}
-						</span>
-						<CopyToClipboard
-							text={document.address}
-							onCopy={() => toast("copied")}
-						>
-							<button className="btn btn-xs btn-ghost btn-square">
-								<IoCopyOutline />
-							</button>
-						</CopyToClipboard>
-					</p>
-				</div>
+			{market === "sell" ? (
+				<>
+					<div>
+						<div className="flex gap-2 justify-between flex-wrap items-center">
+							<p className="text-sm">Coin:</p>
+							<p className="text-xs">{document.name}</p>
+						</div>
+						<div className="flex gap-2 justify-between flex-wrap items-center">
+							<p className="text-sm">Address:</p>
+							<p className="text-xs">
+								<span className="break-words break-all">
+									{document.address}
+								</span>
+								<CopyToClipboard
+									text={document.address}
+									onCopy={() => toast("copied")}
+								>
+									<button className="btn btn-xs btn-ghost btn-square">
+										<IoCopyOutline />
+									</button>
+								</CopyToClipboard>
+							</p>
+						</div>
 
-				<div className="flex gap-2 justify-between flex-wrap items-center">
-					<p className="text-sm">Network:</p>
-					<p className="text-xs">{document.network}</p>
-				</div>
-			</div>
-			<div className="mx-auto w-full max-w-[200px]">
-				<QRCode
-					size={256}
-					style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-					value={document.address}
-					viewBox={`0 0 256 256`}
-				/>
-			</div>
+						<div className="flex gap-2 justify-between flex-wrap items-center">
+							<p className="text-sm">Network:</p>
+							<p className="text-xs">{document.network}</p>
+						</div>
+					</div>
+					<div className="mx-auto w-full max-w-[200px]">
+						<QRCode
+							size={256}
+							style={{
+								height: "auto",
+								maxWidth: "100%",
+								width: "100%",
+							}}
+							value={document.address}
+							viewBox={`0 0 256 256`}
+						/>
+					</div>
+				</>
+			) : (
+				<>
+					<div>
+						<div className="flex gap-2 justify-between flex-wrap items-center">
+							<p className="text-sm">Coin:</p>
+							<p className="text-xs">{document.name}</p>
+						</div>
+						<div className="flex gap-2 justify-between flex-wrap items-center">
+							<p className="text-sm">Market:</p>
+							<p className="text-xs">{market}</p>
+						</div>
+					</div>
+					<div>
+						<div className="form-control mb-2">
+							<select
+								value={bankId}
+								onChange={(e) => handleSelect(e.target.value)}
+								className="select select-bordered"
+							>
+								<option
+									value=""
+									disabled
+								>
+									-- select bank --
+								</option>
+								{adminDetails.map((d) => (
+									<option
+										key={d.$id}
+										value={d.$id}
+									>
+										{d.bank_name}
+									</option>
+								))}
+							</select>
+						</div>
+
+						{Object.keys(bankDetails).length > 0 && (
+							<div>
+								<div className="flex gap-2 justify-between flex-wrap items-center">
+									<p className="text-sm">Bank Name:</p>
+									<p className="text-xs">
+										{bankDetails.bank_name}
+									</p>
+								</div>
+								<div className="flex gap-2 justify-between flex-wrap items-center">
+									<p className="text-sm">Account Number:</p>
+									<p className="text-xs">
+										{bankDetails.account_number}
+									</p>
+								</div>
+
+								<div className="flex gap-2 justify-between flex-wrap items-center">
+									<p className="text-sm">Account Name:</p>
+									<p className="text-xs">
+										{bankDetails.account_name}
+									</p>
+								</div>
+							</div>
+						)}
+					</div>
+					<div>
+						<p className="text-xs">
+							Enter recieving wallet address
+						</p>
+						<div className="form-control">
+							<label
+								htmlFor="wallet"
+								className="label justify-start"
+							>
+								Wallet<span className="text-error">*</span>
+							</label>
+							<input
+								type="text"
+								className="input input-bordered"
+								id="wallet"
+								name="wallet"
+								value={wallet}
+								onChange={(e) => setWallet(e.target.value)}
+							/>
+						</div>
+						<div className="form-control">
+							<label
+								htmlFor="network"
+								className="label"
+							>
+								Network
+							</label>
+							<input
+								type="text"
+								className="input input-bordered"
+								id="network"
+								name="network"
+								value={network}
+								onChange={(e) => setNetwork(e.target.value)}
+							/>
+						</div>
+					</div>
+				</>
+			)}
 			<div>
 				<div className="text-center">
 					<button
