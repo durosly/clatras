@@ -78,8 +78,14 @@ function ListItem({ doc, count }) {
 									{doc.status}
 								</span>
 								{doc?.remark && doc.remark && (
-									<p className="text-error text-xs font-bold">
-										Reason: {doc.remark}
+									<p
+										className={`${
+											doc.status === "declined"
+												? "text-error"
+												: "text-success"
+										} text-xs font-bold`}
+									>
+										Remark: {doc.remark}
 									</p>
 								)}
 								<ul className="list-disc list-inside my-5">

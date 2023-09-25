@@ -148,8 +148,14 @@ function ListItem({ doc, count, update }) {
 								) : (
 									doc?.remark &&
 									doc.remark && (
-										<p className="text-error text-xs font-bold">
-											Reason: {doc.remark}
+										<p
+											className={`${
+												doc.status === "declined"
+													? "text-error"
+													: "text-success"
+											} text-xs font-bold`}
+										>
+											Remark: {doc.remark}
 										</p>
 									)
 								)}
