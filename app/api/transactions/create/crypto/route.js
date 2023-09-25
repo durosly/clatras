@@ -25,8 +25,12 @@ async function createNewTransaction(request) {
 			throw new Error("token error");
 		}
 
-		if (!doc_id || !amt || !userAddress) {
+		if (!doc_id || !amt) {
 			throw new Error("Enter all fields");
+		}
+
+		if (market === "buy" && !userAddress) {
+			throw new Error("Enter wallet address");
 		}
 
 		if (!Number(amt)) {
