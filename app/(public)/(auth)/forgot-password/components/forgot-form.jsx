@@ -6,7 +6,6 @@ import toast from "react-hot-toast";
 function ForgotForm() {
 	const [email, setEmail] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
-	const [retry, setRetry] = useState(false);
 
 	const client = new Client();
 
@@ -23,6 +22,7 @@ function ForgotForm() {
 		setIsLoading(true);
 		try {
 			if (!email) throw new Error("Enter your email address");
+
 			await account.createRecovery(
 				email,
 				`${process.env.NEXT_PUBLIC_URL}/forgot-password/reset`
@@ -36,10 +36,7 @@ function ForgotForm() {
 		}
 	}
 	return (
-		<form
-			onSubmit={sendEmail}
-			action="/forgot-password"
-		>
+		<form onSubmit={sendEmail}>
 			<div className="form-control">
 				<label
 					htmlFor="email"
