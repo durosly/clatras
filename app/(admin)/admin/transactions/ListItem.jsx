@@ -36,6 +36,7 @@ function ListItem({ doc, count, update }) {
 				toast.success("Success", { id: toastId });
 				doc.status = status;
 				update(doc);
+				doc.remark = remark;
 				setShowDetails(false);
 			} else {
 				throw new Error(response.data.message);
