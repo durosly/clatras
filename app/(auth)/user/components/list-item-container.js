@@ -21,20 +21,14 @@ async function ListItemContainer() {
 		]
 	);
 
-	const d_rate = await databases.listDocuments(
-		process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
-		process.env.NEXT_PUBLIC_APPRWRITE_DOLLAR_RATE_COLLECTION_ID
-	);
-
 	return (
-		<tbody>
+		<>
 			{documents.documents.length > 0 ? (
 				documents.documents.map((d, i) => (
 					<ListItem
 						key={d.$id}
 						doc={d}
 						count={i + 1}
-						d_rate={d_rate?.documents[0]?.rate || 1}
 					/>
 				))
 			) : (
@@ -42,7 +36,7 @@ async function ListItemContainer() {
 					<td colSpan={5}>No Transaction history</td>
 				</tr>
 			)}
-		</tbody>
+		</>
 	);
 }
 
