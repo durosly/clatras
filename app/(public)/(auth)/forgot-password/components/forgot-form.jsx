@@ -12,8 +12,6 @@ function ForgotForm() {
 
 	const account = new Account(client);
 
-	const url = new URL(`${process.env.NEXT_PUBLIC_URL}/forgot-password/reset`);
-
 	client
 		.setEndpoint(process.env.NEXT_PUBLIC_APPRWRITE_ENDPOINT) // Your API Endpoint
 		.setProject(process.env.NEXT_PUBLIC_APPRWRITE_PROJECT_ID); // Your project ID
@@ -25,7 +23,10 @@ function ForgotForm() {
 		setIsLoading(true);
 		try {
 			if (!email) throw new Error("Enter your email address");
-			await account.createRecovery(email, url.href);
+			await account.createRecovery(
+				email,
+				`${process.env.NEXT_PUBLIC_URL}/forgot-password/reset`
+			);
 
 			toast.success("Verification email sent", { id: toastId });
 		} catch (error) {
