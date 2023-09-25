@@ -1,19 +1,11 @@
 "use client";
 import { useState } from "react";
-import { Client, Account } from "appwrite";
 import toast from "react-hot-toast";
+import { appwriteClient } from "@/lib/client";
 
 function ForgotForm() {
 	const [email, setEmail] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
-
-	const client = new Client();
-
-	const account = new Account(client);
-
-	client
-		.setEndpoint(process.env.NEXT_PUBLIC_APPRWRITE_ENDPOINT) // Your API Endpoint
-		.setProject(process.env.NEXT_PUBLIC_APPRWRITE_PROJECT_ID); // Your project ID
 
 	async function sendEmail(e) {
 		e.preventDefault();
@@ -23,10 +15,7 @@ function ForgotForm() {
 		try {
 			if (!email) throw new Error("Enter your email address");
 
-			await account.createRecovery(
-				email,
-				`${process.env.NEXT_PUBLIC_URL}/forgot-password/reset`
-			);
+			await appwriteClient.sendPasswordRecoveryEmail(email);
 
 			toast.success("Verification email sent", { id: toastId });
 		} catch (error) {
@@ -35,6 +24,7 @@ function ForgotForm() {
 			setIsLoading(false);
 		}
 	}
+
 	return (
 		<form onSubmit={sendEmail}>
 			<div className="form-control">
