@@ -77,6 +77,11 @@ function ListItem({ doc, count }) {
 								>
 									{doc.status}
 								</span>
+								{doc?.remark && doc.remark && (
+									<p className="text-error text-xs font-bold">
+										Reason: {doc.remark}
+									</p>
+								)}
 								<ul className="list-disc list-inside my-5">
 									<li className="flex gap-2 justify-between border-b py-3 last:border-b-0">
 										<span>Type</span>
@@ -85,6 +90,12 @@ function ListItem({ doc, count }) {
 									<li className="flex gap-2 justify-between border-b py-3 last:border-b-0">
 										<span>Item</span>
 										<span>{doc.item_name}</span>
+									</li>
+									<li className="flex gap-2 justify-between border-b py-3 last:border-b-0">
+										<span>Market</span>
+										<span className="uppercase">
+											{doc.market}
+										</span>
 									</li>
 									<li className="flex flex-wrap gap-2 justify-between border-b py-3 last:border-b-0">
 										<span>Amount</span>
@@ -158,6 +169,24 @@ function ListItem({ doc, count }) {
 													{doc.item_name}
 												</span>
 											</>
+										) : doc.type === "crypto" ? (
+											<>
+												{doc.market === "buy" ? (
+													<span className="">
+														{commaNumber(
+															doc.sending
+														)}{" "}
+														{doc.item_name}
+													</span>
+												) : (
+													<span>
+														<span>&#8358;</span>
+														{commaNumber(
+															doc.returns
+														)}
+													</span>
+												)}
+											</>
 										) : (
 											<span>
 												<span>&#8358;</span>
@@ -181,10 +210,21 @@ function ListItem({ doc, count }) {
 											</>
 										) : doc.type === "crypto" ? (
 											<>
-												<span className="">
-													{commaNumber(doc.sending)}{" "}
-													{doc.item_name}
-												</span>
+												{doc.market === "sell" ? (
+													<span className="">
+														{commaNumber(
+															doc.sending
+														)}{" "}
+														{doc.item_name}
+													</span>
+												) : (
+													<span>
+														<span>&#8358;</span>
+														{commaNumber(
+															doc.returns
+														)}
+													</span>
+												)}
 											</>
 										) : doc.type === "payment" ? (
 											<>

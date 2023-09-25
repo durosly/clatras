@@ -10,6 +10,7 @@ import { LiaTimesSolid } from "react-icons/lia";
 function ListItem({ doc, count, update }) {
 	const [showDetails, setShowDetails] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
+	const [remark, setRemark] = useState("");
 	let type = "badge-warning";
 	if (doc.status === "declined") {
 		type = "badge-error";
@@ -19,12 +20,17 @@ function ListItem({ doc, count, update }) {
 
 	async function updateState(status) {
 		if (isLoading) return;
+
 		const toastId = toast.loading("Updating");
 		setIsLoading(true);
 		try {
+			if (status === "declined" && !remark) {
+				throw new Error("Enter reason for declined transaction");
+			}
 			const response = await axios.post("/api/admin/transactions", {
 				status,
 				id: doc.$id,
+				remark,
 			});
 			if (response.data.status) {
 				toast.success("Success", { id: toastId });
@@ -103,27 +109,49 @@ function ListItem({ doc, count, update }) {
 								>
 									{doc.status}
 								</span>
-								{doc.status === "pending" && (
-									<div className="mt-2 space-x-2">
-										<button
-											onClick={() =>
-												updateState("success")
-											}
-											disabled={isLoading}
-											className="btn btn-primary btn-outline btn-sm btn-square"
-										>
-											<BsCheck2 />
-										</button>
-										<button
-											onClick={() =>
-												updateState("declined")
-											}
-											disabled={isLoading}
-											className="btn btn-error btn-outline btn-sm btn-square"
-										>
-											<LiaTimesSolid />
-										</button>
+								{doc.status === "pending" ? (
+									<div className="mt-2">
+										<div className="form-control ">
+											<input
+												type="text"
+												name="remark"
+												id="remark"
+												className="input input-bordered"
+												placeholder="Remark"
+												value={remark}
+												onChange={(e) =>
+													setRemark(e.target.value)
+												}
+											/>
+										</div>
+										<div className="space-x-2 mt-2">
+											<button
+												onClick={() =>
+													updateState("success")
+												}
+												disabled={isLoading}
+												className="btn btn-primary btn-outline btn-sm btn-square"
+											>
+												<BsCheck2 />
+											</button>
+											<button
+												onClick={() =>
+													updateState("declined")
+												}
+												disabled={isLoading}
+												className="btn btn-error btn-outline btn-sm btn-square"
+											>
+												<LiaTimesSolid />
+											</button>
+										</div>
 									</div>
+								) : (
+									doc?.remark &&
+									doc.remark && (
+										<p className="text-error text-xs font-bold">
+											Reason: {doc.remark}
+										</p>
+									)
 								)}
 								<ul className="list-disc list-inside my-5">
 									<li className="flex gap-2 justify-between border-b py-3 last:border-b-0">
@@ -134,16 +162,35 @@ function ListItem({ doc, count, update }) {
 										<span>Item</span>
 										<span>{doc.item_name}</span>
 									</li>
+									<li className="flex gap-2 justify-between border-b py-3 last:border-b-0">
+										<span>Market</span>
+										<span className="uppercase">
+											{doc.market}
+										</span>
+									</li>
 									<li className="flex flex-wrap gap-2 justify-between border-b py-3 last:border-b-0">
 										<span>Amount</span>
 										<span>
 											{doc.type === "crypto" ? (
-												<>
-													<span className="mr-1">
-														{doc.sending}
-													</span>
-													<span>{doc.item_name}</span>
-												</>
+												doc.market === "sell" ? (
+													<>
+														<span className="mr-1">
+															{doc.sending}
+														</span>
+														<span>
+															{doc.item_name}
+														</span>
+													</>
+												) : (
+													<>
+														<span>
+															&#8358;{" "}
+															{commaNumber(
+																doc.returns
+															)}
+														</span>
+													</>
+												)
 											) : doc.type === "gift-card" ? (
 												<>
 													<span>${doc.amount}</span>
@@ -203,6 +250,20 @@ function ListItem({ doc, count, update }) {
 													{doc.item_name}
 												</span>
 											</>
+										) : doc.type === "crypto" ? (
+											doc.market === "sell" ? (
+												<span>
+													<span>&#8358;</span>
+													{commaNumber(doc.returns)}
+												</span>
+											) : (
+												<span>
+													<span className="mr-1">
+														{doc.sending}
+													</span>
+													<span>{doc.item_name}</span>
+												</span>
+											)
 										) : (
 											<span>
 												<span>&#8358;</span>
@@ -213,12 +274,44 @@ function ListItem({ doc, count, update }) {
 								</ul>
 								<div className="divider">Payment details</div>
 								<ul className="">
-									{doc.type === "crypto" && (
-										<li className="flex flex-wrap gap-2 justify-between">
-											<span>Address</span>
-											<span>{doc.address}</span>
-										</li>
-									)}
+									{doc.type === "crypto" &&
+										(doc.market === "sell" ? (
+											<li className="flex flex-wrap gap-2 justify-between">
+												<span>Address</span>
+												<span>{doc.address}</span>
+											</li>
+										) : (
+											<>
+												{doc?.account_bank && (
+													<li className="flex flex-wrap gap-2 justify-between">
+														<span>Bank name</span>
+														<span>
+															{doc.account_bank}
+														</span>
+													</li>
+												)}
+												{doc?.account_number && (
+													<li className="flex flex-wrap gap-2 justify-between">
+														<span>
+															Account Number
+														</span>
+														<span>
+															{doc.account_number}
+														</span>
+													</li>
+												)}
+												{doc?.account_name && (
+													<li className="flex flex-wrap gap-2 justify-between">
+														<span>
+															Account Name
+														</span>
+														<span>
+															{doc.account_name}
+														</span>
+													</li>
+												)}
+											</>
+										))}
 									{doc.type === "payment" && (
 										<>
 											{doc?.tag &&
@@ -279,8 +372,7 @@ function ListItem({ doc, count, update }) {
 								</ul>
 								<div className="divider">Customer details</div>
 								<ul className="">
-									{(doc.type === "crypto" ||
-										doc.type === "payment") && (
+									{doc.type === "payment" && (
 										<>
 											{doc?.user?.account?.bank_name && (
 												<li className="flex flex-wrap gap-2 justify-between">
@@ -319,7 +411,56 @@ function ListItem({ doc, count, update }) {
 											)}
 										</>
 									)}
-
+									{doc.type === "crypto" &&
+										(doc.market === "sell" ? (
+											<>
+												{doc?.user?.account
+													?.bank_name && (
+													<li className="flex flex-wrap gap-2 justify-between">
+														<span>Bank name</span>
+														<span>
+															{
+																doc.user.account
+																	.bank_name
+															}
+														</span>
+													</li>
+												)}
+												{doc?.user?.account
+													?.account_number && (
+													<li className="flex flex-wrap gap-2 justify-between">
+														<span>
+															Account Number
+														</span>
+														<span>
+															{
+																doc.user.account
+																	.account_number
+															}
+														</span>
+													</li>
+												)}
+												{doc?.user?.account
+													?.account_name && (
+													<li className="flex flex-wrap gap-2 justify-between">
+														<span>
+															Account Name
+														</span>
+														<span>
+															{
+																doc.user.account
+																	.account_name
+															}
+														</span>
+													</li>
+												)}
+											</>
+										) : (
+											<li className="flex flex-wrap gap-2 justify-between">
+												<span>Address</span>
+												<span>{doc.address}</span>
+											</li>
+										))}
 									{(doc.type === "gift-card" ||
 										doc.type === "verification" ||
 										doc.type === "payment") && (
