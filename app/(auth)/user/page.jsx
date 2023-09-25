@@ -180,18 +180,20 @@ async function UserHomePage() {
 									<th>Date/Time</th>
 								</tr>
 							</thead>
-							<Suspense
-								fallback={
-									<tr>
-										<td
-											className="bg-slate-400 animate-pulse"
-											colSpan={5}
-										></td>
-									</tr>
-								}
-							>
-								<ListItemContainer />
-							</Suspense>
+							<tbody>
+								<Suspense
+									fallback={
+										<tr>
+											<td
+												className="bg-slate-400 animate-pulse"
+												colSpan={5}
+											></td>
+										</tr>
+									}
+								>
+									<ListItemContainer />
+								</Suspense>
+							</tbody>
 						</table>
 					</div>
 					<div className="text-right">
