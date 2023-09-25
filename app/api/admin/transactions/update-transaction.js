@@ -5,7 +5,7 @@ import { Databases, Users } from "node-appwrite";
 
 async function updateTransactionStatus(request) {
 	try {
-		const { status, id } = await request.json();
+		const { status, id, remark } = await request.json();
 		if (status !== "success" && status !== "declined") {
 			return new Response(
 				JSON.stringify({
@@ -31,6 +31,18 @@ async function updateTransactionStatus(request) {
 				}
 			);
 		}
+		if (status === "declined" && !remark) {
+			return new Response(
+				JSON.stringify({
+					status: false,
+					message: "Please, enter reason for declining transaction",
+				}),
+				{
+					status: 401,
+					headers: { "Content-Type": `application/json` },
+				}
+			);
+		}
 
 		const app = new AppwriteServerClient();
 		app.setKey();
@@ -44,6 +56,7 @@ async function updateTransactionStatus(request) {
 
 		await databases.updateDocument(databaseId, collectionId, id, {
 			status,
+			remark,
 		});
 
 		const doc = await databases.getDocument(databaseId, collectionId, id);
