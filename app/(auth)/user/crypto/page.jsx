@@ -28,6 +28,11 @@ async function UserCryptoPage() {
 		Query.equal("userId", userId),
 		Query.limit(1),
 	]);
+	const adminDetails = await database.listDocuments(
+		database_id,
+		bank_collection_id,
+		[Query.equal("userId", "admin")]
+	);
 
 	const d_rate = await database.listDocuments(
 		process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
@@ -47,13 +52,14 @@ async function UserCryptoPage() {
 						<FaBitcoin className="w-7 h-7" />
 					</div>
 					<h2 className="uppercase font-bold">Cryptocurrency</h2>
-					<p className="text-xs">Easily sell your cryptocurrencies</p>
+					<p className="text-xs">Easily sell/buy cryptocurrencies</p>
 				</div>
 				{doc1.total > 0 ? (
 					<PurchaseDisplay
 						docs={docs.documents}
 						details={doc1.documents[0]}
 						d_rate={rates}
+						adminDetails={adminDetails.documents}
 					/>
 				) : (
 					<div className="text-center space-y-4">
