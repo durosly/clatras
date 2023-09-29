@@ -44,11 +44,11 @@ async function UserGiftcardPage() {
 					<h2 className="uppercase font-bold">Ecode</h2>
 					<p className="text-xs">Purchase Ecode</p>
 				</div>
-				{user.emailVerification ? (
-					<PurchaseDisplay
-						docs={docs.documents}
-						details={bankDocs.documents}
-					/>
+				<PurchaseDisplay
+					docs={docs.documents}
+					details={bankDocs.documents}
+				/>
+				{/* {user.emailVerification ? (
 				) : (
 					<div className="text-center space-y-4">
 						<p>Please, verify your email address to continue</p>
@@ -59,7 +59,7 @@ async function UserGiftcardPage() {
 							Profile
 						</Link>
 					</div>
-				)}
+				)} */}
 			</div>
 		</div>
 	);
