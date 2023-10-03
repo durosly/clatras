@@ -5,7 +5,7 @@ import { Databases, ID, Query } from "node-appwrite";
 import { authOptions } from "@/auth/options";
 import sendEmail from "@/lib/send-email";
 import convertObjToMessage from "@/lib/serialize-to-message";
-
+export const dynamic = "force-dynamic";
 async function createNewTransaction(request) {
 	try {
 		const session = await getServerSession(authOptions);

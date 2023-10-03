@@ -3,6 +3,7 @@ import UserSchema from "@/validators/signupSchema";
 import { NextResponse } from "next/server";
 import { phone } from "phone";
 import { AppwriteException, Users, ID } from "node-appwrite";
+export const dynamic = "force-dynamic";
 
 export async function POST(request) {
 	try {

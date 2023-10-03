@@ -3,7 +3,7 @@ import { AppwriteServerClient } from "@/lib/client-server";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { Databases, ID, Query } from "node-appwrite";
-
+export const dynamic = "force-dynamic";
 async function setBankDetails(request) {
 	try {
 		const session = await getServerSession(authOptions);

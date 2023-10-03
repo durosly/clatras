@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import CoinMarketCap from "coinmarketcap-api";
 import { Databases, Query } from "node-appwrite";
 import { AppwriteServerClient } from "@/lib/client-server";
-
+export const dynamic = "force-dynamic";
 export async function GET() {
 	const app = new AppwriteServerClient();
 	app.setKey();

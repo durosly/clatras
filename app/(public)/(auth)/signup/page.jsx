@@ -1,6 +1,6 @@
 import Link from "next/link";
 import SignupForm from "./form";
-
+export const dynamic = "force-dynamic";
 function SignupPage() {
 	return (
 		<div>
