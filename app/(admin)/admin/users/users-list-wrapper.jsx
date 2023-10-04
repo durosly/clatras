@@ -138,7 +138,7 @@ function UsersListWrapper() {
 									<ListItem
 										key={d.$id}
 										doc={d}
-										count={i + 1}
+										count={list.length - i}
 										update={updateItemInList}
 									/>
 								))}
