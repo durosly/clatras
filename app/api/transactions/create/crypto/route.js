@@ -55,6 +55,22 @@ async function createNewTransaction(request) {
 			doc_id
 		);
 
+		if (!doc) {
+			throw new Error("Token not found");
+		}
+
+		if (market === "sell" && doc?.min_sell_purchase) {
+			if (amt < doc.min_sell_purchase)
+				throw new Error(
+					`Minimum sell purchase is ${doc.min_sell_purchase}`
+				);
+		} else if (market === "buy" && doc?.min_buy_purchase) {
+			if (amt < doc.min_buy_purchase)
+				throw new Error(
+					`Minimum buy purchase is ${doc.min_buy_purchase} `
+				);
+		}
+
 		const d_rate = await databases.listDocuments(
 			process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID,
 			process.env.NEXT_PUBLIC_APPRWRITE_DOLLAR_RATE_COLLECTION_ID,

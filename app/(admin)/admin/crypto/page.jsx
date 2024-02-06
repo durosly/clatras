@@ -29,7 +29,7 @@ async function AdminCryptoPage() {
 				Add new
 			</Link>
 
-			<div className="overflow-x-auto mt-4">
+			<div className="overflow-x-auto mt-4 max-w-[1000px]">
 				<table className="table table-zebra">
 					{/* head */}
 					<thead>
@@ -39,6 +39,7 @@ async function AdminCryptoPage() {
 							<th>Network</th>
 							<th>Address</th>
 							<th>Rate($)</th>
+							<th>Min purchase($)</th>
 							<td>Action</td>
 						</tr>
 					</thead>

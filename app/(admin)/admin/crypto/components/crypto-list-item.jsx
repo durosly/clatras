@@ -15,7 +15,15 @@ function CryptoListItem({ doc, count }) {
 	const [showModal, setShowModal] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [isDeleting, setIsDeleting] = useState(false);
-	const { name, abbr, network, address, rate } = doc;
+	const {
+		name,
+		abbr,
+		network,
+		address,
+		rate,
+		min_sell_purchase,
+		min_buy_purchase,
+	} = doc;
 
 	async function updateToken(e) {
 		e.preventDefault();
@@ -69,21 +77,33 @@ function CryptoListItem({ doc, count }) {
 				<td>{network ?? "nil"}</td>
 				<td>{address}</td>
 				<td>{rate}</td>
-				<td className="flex gap-2">
-					<button
-						onClick={() => setShowModal(true)}
-						disabled={isDeleting}
-						className="btn btn-sm btn-primary btn-square btn-outline"
-					>
-						<AiOutlineEdit />
-					</button>
-					<button
-						disabled={isDeleting}
-						onClick={() => deleteToken()}
-						className="btn btn-sm btn-error btn-square btn-outline"
-					>
-						<BsTrash3 />
-					</button>
+				<td>
+					<div className="flex flex-col">
+						<span className="badge badge-success">
+							Sell: {min_sell_purchase}
+						</span>
+						<span className="badge badge-neutral">
+							Buy: {min_buy_purchase}
+						</span>
+					</div>
+				</td>
+				<td>
+					<div className="flex gap-2">
+						<button
+							onClick={() => setShowModal(true)}
+							disabled={isDeleting}
+							className="btn btn-sm btn-primary btn-square btn-outline"
+						>
+							<AiOutlineEdit />
+						</button>
+						<button
+							disabled={isDeleting}
+							onClick={() => deleteToken()}
+							className="btn btn-sm btn-error btn-square btn-outline"
+						>
+							<BsTrash3 />
+						</button>
+					</div>
 				</td>
 			</tr>
 			{showModal &&
@@ -169,6 +189,40 @@ function CryptoListItem({ doc, count }) {
 										className="input input-bordered"
 										name="rate"
 										value={data.rate}
+										onChange={(e) =>
+											setData({
+												...data,
+												[e.target.name]: e.target.value,
+											})
+										}
+									/>
+								</div>
+								<div className="form-control">
+									<label className="label">
+										Min buy purchase($)
+									</label>
+									<input
+										type="text"
+										className="input input-bordered"
+										name="min_buy_purchase"
+										value={data.min_buy_purchase}
+										onChange={(e) =>
+											setData({
+												...data,
+												[e.target.name]: e.target.value,
+											})
+										}
+									/>
+								</div>
+								<div className="form-control">
+									<label className="label">
+										Min sell purchase($)
+									</label>
+									<input
+										type="text"
+										className="input input-bordered"
+										name="min_sell_purchase"
+										value={data.min_sell_purchase}
 										onChange={(e) =>
 											setData({
 												...data,

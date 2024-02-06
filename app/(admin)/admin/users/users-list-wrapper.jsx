@@ -30,8 +30,6 @@ function UsersListWrapper() {
 					},
 				});
 
-				console.log(response.data);
-
 				if (response.data.status) {
 					if (loadMore) {
 						handleMoreList(response.data.doc);
@@ -138,7 +136,7 @@ function UsersListWrapper() {
 									<ListItem
 										key={d.$id}
 										doc={d}
-										count={list.length - i}
+										count={i + 1}
 										update={updateItemInList}
 									/>
 								))}
@@ -155,7 +153,7 @@ function UsersListWrapper() {
 					)
 				)}
 			</div>
-			<div>
+			<div className="mt-5">
 				<button
 					onClick={loadMore}
 					disabled={isLoadingMore}

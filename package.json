@@ -24,7 +24,7 @@
 		"eslint": "8.46.0",
 		"eslint-config-next": "^13.5.2",
 		"lodash": "^4.17.21",
-		"next": "^13.5.2",
+		"next": "^14.1.0",
 		"next-auth": "^4.22.3",
 		"node-appwrite": "^9.0.0",
 		"node-fetch": "^3.3.2",
