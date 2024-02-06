@@ -20,11 +20,14 @@ import {
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import Header from "./header";
 import { NavigationEvents } from "@/app/components/navigation-event";
+import { Suspense } from "react";
 
 function Wrapper({ children }) {
 	return (
 		<>
-			<NavigationEvents />
+			<Suspense>
+				<NavigationEvents />
+			</Suspense>
 			<div className="drawer block lg:flex flex-row-reverse lg:drawer-open ">
 				<input
 					id="my-drawer-3"

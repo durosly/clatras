@@ -4,12 +4,15 @@ import Header from "./header";
 import Nav from "./nav";
 import BottomNav from "./bottom-nav";
 import { NavigationEvents } from "../../components/navigation-event";
+import { Suspense } from "react";
 
 function Wrapper({ children }) {
 	return (
 		<>
 			<div className="drawer block">
-				<NavigationEvents />
+				<Suspense>
+					<NavigationEvents />
+				</Suspense>
 				<input
 					id="my-drawer-3"
 					type="checkbox"
