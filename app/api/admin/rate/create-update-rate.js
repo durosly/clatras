@@ -74,11 +74,13 @@ export default async function createUpdateRate(request) {
 				databaseId,
 				collectionId,
 				ID.unique(),
-				{ rate, market }
+				{ rate: parseInt(rate), market }
 			);
 		} else {
 			const id = doc.documents[0].$id;
-			databases.updateDocument(databaseId, collectionId, id, { rate });
+			databases.updateDocument(databaseId, collectionId, id, {
+				rate: parseInt(rate),
+			});
 		}
 
 		return NextResponse.json({
